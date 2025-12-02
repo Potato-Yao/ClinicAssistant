@@ -1,0 +1,303 @@
+[
+  {
+    "Id": "/intelcpu/0/temperature/0",
+    "Name": "Core Max",
+    "Index": 0,
+    "Type": "Temp",
+    "Info": "Core Max"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/1",
+    "Name": "Core Average",
+    "Index": 1,
+    "Type": "Temp",
+    "Info": "Core Average"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/2",
+    "Name": "CPU Core #1",
+    "Index": 2,
+    "Type": "Temp",
+    "Info": "CPU Core #1"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/3",
+    "Name": "CPU Core #2",
+    "Index": 3,
+    "Type": "Temp",
+    "Info": "CPU Core #2"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/4",
+    "Name": "CPU Core #3",
+    "Index": 4,
+    "Type": "Temp",
+    "Info": "CPU Core #3"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/5",
+    "Name": "CPU Core #4",
+    "Index": 5,
+    "Type": "Temp",
+    "Info": "CPU Core #4"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/6",
+    "Name": "CPU Core #5",
+    "Index": 6,
+    "Type": "Temp",
+    "Info": "CPU Core #5"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/7",
+    "Name": "CPU Core #6",
+    "Index": 7,
+    "Type": "Temp",
+    "Info": "CPU Core #6"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/8",
+    "Name": "CPU Core #7",
+    "Index": 8,
+    "Type": "Temp",
+    "Info": "CPU Core #7"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/9",
+    "Name": "CPU Core #8",
+    "Index": 9,
+    "Type": "Temp",
+    "Info": "CPU Core #8"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/10",
+    "Name": "CPU Core #9",
+    "Index": 10,
+    "Type": "Temp",
+    "Info": "CPU Core #9"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/11",
+    "Name": "CPU Core #10",
+    "Index": 11,
+    "Type": "Temp",
+    "Info": "CPU Core #10"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/12",
+    "Name": "CPU Core #11",
+    "Index": 12,
+    "Type": "Temp",
+    "Info": "CPU Core #11"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/13",
+    "Name": "CPU Core #12",
+    "Index": 13,
+    "Type": "Temp",
+    "Info": "CPU Core #12"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/14",
+    "Name": "CPU Core #13",
+    "Index": 14,
+    "Type": "Temp",
+    "Info": "CPU Core #13"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/15",
+    "Name": "CPU Core #14",
+    "Index": 15,
+    "Type": "Temp",
+    "Info": "CPU Core #14"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/16",
+    "Name": "CPU Core #15",
+    "Index": 16,
+    "Type": "Temp",
+    "Info": "CPU Core #15"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/17",
+    "Name": "CPU Core #16",
+    "Index": 17,
+    "Type": "Temp",
+    "Info": "CPU Core #16"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/18",
+    "Name": "CPU Package",
+    "Index": 18,
+    "Type": "Temp",
+    "Info": "CPU Package"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/19",
+    "Name": "CPU Core #1 Distance to TjMax",
+    "Index": 19,
+    "Type": "Temp",
+    "Info": "CPU Core #1 Distance to TjMax"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/20",
+    "Name": "CPU Core #2 Distance to TjMax",
+    "Index": 20,
+    "Type": "Temp",
+    "Info": "CPU Core #2 Distance to TjMax"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/21",
+    "Name": "CPU Core #3 Distance to TjMax",
+    "Index": 21,
+    "Type": "Temp",
+    "Info": "CPU Core #3 Distance to TjMax"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/22",
+    "Name": "CPU Core #4 Distance to TjMax",
+    "Index": 22,
+    "Type": "Temp",
+    "Info": "CPU Core #4 Distance to TjMax"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/23",
+    "Name": "CPU Core #5 Distance to TjMax",
+    "Index": 23,
+    "Type": "Temp",
+    "Info": "CPU Core #5 Distance to TjMax"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/24",
+    "Name": "CPU Core #6 Distance to TjMax",
+    "Index": 24,
+    "Type": "Temp",
+    "Info": "CPU Core #6 Distance to TjMax"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/25",
+    "Name": "CPU Core #7 Distance to TjMax",
+    "Index": 25,
+    "Type": "Temp",
+    "Info": "CPU Core #7 Distance to TjMax"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/26",
+    "Name": "CPU Core #8 Distance to TjMax",
+    "Index": 26,
+    "Type": "Temp",
+    "Info": "CPU Core #8 Distance to TjMax"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/27",
+    "Name": "CPU Core #9 Distance to TjMax",
+    "Index": 27,
+    "Type": "Temp",
+    "Info": "CPU Core #9 Distance to TjMax"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/28",
+    "Name": "CPU Core #10 Distance to TjMax",
+    "Index": 28,
+    "Type": "Temp",
+    "Info": "CPU Core #10 Distance to TjMax"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/29",
+    "Name": "CPU Core #11 Distance to TjMax",
+    "Index": 29,
+    "Type": "Temp",
+    "Info": "CPU Core #11 Distance to TjMax"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/30",
+    "Name": "CPU Core #12 Distance to TjMax",
+    "Index": 30,
+    "Type": "Temp",
+    "Info": "CPU Core #12 Distance to TjMax"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/31",
+    "Name": "CPU Core #13 Distance to TjMax",
+    "Index": 31,
+    "Type": "Temp",
+    "Info": "CPU Core #13 Distance to TjMax"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/32",
+    "Name": "CPU Core #14 Distance to TjMax",
+    "Index": 32,
+    "Type": "Temp",
+    "Info": "CPU Core #14 Distance to TjMax"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/33",
+    "Name": "CPU Core #15 Distance to TjMax",
+    "Index": 33,
+    "Type": "Temp",
+    "Info": "CPU Core #15 Distance to TjMax"
+  },
+  {
+    "Id": "/intelcpu/0/temperature/34",
+    "Name": "CPU Core #16 Distance to TjMax",
+    "Index": 34,
+    "Type": "Temp",
+    "Info": "CPU Core #16 Distance to TjMax"
+  },
+  {
+    "Id": "/gpu-nvidia/0/temperature/0",
+    "Name": "GPU Core",
+    "Index": 35,
+    "Type": "Temp",
+    "Info": "GPU Core"
+  },
+  {
+    "Id": "/gpu-nvidia/0/temperature/2",
+    "Name": "GPU Hot Spot",
+    "Index": 36,
+    "Type": "Temp",
+    "Info": "GPU Hot Spot"
+  },
+  {
+    "Id": "/nvme/0/temperature/0",
+    "Name": "Temperature",
+    "Index": 37,
+    "Type": "Temp",
+    "Info": "Temperature"
+  },
+  {
+    "Id": "/nvme/0/temperature/6",
+    "Name": "Temperature 1",
+    "Index": 38,
+    "Type": "Temp",
+    "Info": "Temperature 1"
+  },
+  {
+    "Id": "/nvme/0/temperature/7",
+    "Name": "Temperature 2",
+    "Index": 39,
+    "Type": "Temp",
+    "Info": "Temperature 2"
+  },
+  {
+    "Id": "/nvme/1/temperature/0",
+    "Name": "Temperature",
+    "Index": 40,
+    "Type": "Temp",
+    "Info": "Temperature"
+  },
+  {
+    "Id": "/nvme/1/temperature/6",
+    "Name": "Temperature 1",
+    "Index": 41,
+    "Type": "Temp",
+    "Info": "Temperature 1"
+  },
+  {
+    "Id": "/nvme/1/temperature/7",
+    "Name": "Temperature 2",
+    "Index": 42,
+    "Type": "Temp",
+    "Info": "Temperature 2"
+  }
+]
