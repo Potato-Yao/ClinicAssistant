@@ -68,49 +68,68 @@ public class HardwareResearcher : IVisitor
         if (!_isStarted)
             throw new Exception();
 
-        var nbControl = 0;
-        var nbFan = 0;
-        var nbTemp = 0;
-        var nbTot = 0;
+        // ugly, has no reusability, i use array instead
+        // var nbControl = 0;
+        // var nbFan = 0;
+        // var nbTemp = 0;
+        // var nbTot = 0;
+        var totInd = 0;
+        var counterList = new int[Enum.GetNames<SensorType>().Length + 1];
         var hardwareList = new List<BaseHardware>();
 
         void AddHardware(ISensor sensor)
         {
-            Logger.Info("detect sensor's type " + sensor.SensorType);
-            Logger.Info("detect sensor's name " + sensor.Name);
-            if (sensor.SensorType != SensorType.Control && sensor.SensorType != SensorType.Temperature &&
-                sensor.SensorType != SensorType.Fan)
-                return;
+            Logger.Debug("detect sensor's type " + sensor.SensorType + " with name " + sensor.Name + " with id " +
+                         sensor.Identifier);
+            // if (sensor.SensorType != SensorType.Control && sensor.SensorType != SensorType.Temperature &&
+            //     sensor.SensorType != SensorType.Fan)
+            //     return;
 
             var id = sensor.Identifier.ToString();
             var name = sensor.Name.Length > 0 ? sensor.Name : sensor.SensorType.ToString();
-            switch (sensor.SensorType)
-            {
-                case SensorType.Control:
-                    id ??= SensorType.Control.ToString() + nbControl;
-                    hardwareList.Add(new Control(id, name, name, sensor, nbTot));
-                    nbControl += 1;
-                    break;
-                case SensorType.Fan:
-                    id ??= SensorType.Fan.ToString() + nbFan;
-                    hardwareList.Add(new Sensor(id, name, name, sensor, nbTot, HardwareType.Fan));
-                    nbFan += 1;
-                    break;
-                case SensorType.Temperature:
-                    id ??= SensorType.Temperature.ToString() + nbTemp;
-                    hardwareList.Add(new Sensor(id, name, name, sensor, nbTot, HardwareType.Temp));
-                    nbTemp += 1;
-                    break;
 
-                default: throw new Exception("wrong sensor type");
+            if (sensor.SensorType == SensorType.Control)
+            {
+                // todo
+            }
+            else
+            {
+                id = sensor.SensorType.ToString() + counterList[(int)sensor.SensorType];
+                hardwareList.Add(new Sensor(id, sensor.Name, sensor.SensorType.ToString(), sensor, totInd));
+
+                ++totInd;
+                ++counterList[(int)sensor.SensorType];
             }
 
-            nbTot += 1;
+            // the original implementation is so fucking ugly
+            //     switch (sensor.SensorType)
+            //     {
+            //         case SensorType.Control:
+            //             id ??= SensorType.Control.ToString() + nbControl;
+            //             hardwareList.Add(new Control(id, name, name, sensor, nbTot));
+            //             nbControl += 1;
+            //             break;
+            //         case SensorType.Fan:
+            //             id ??= SensorType.Fan.ToString() + nbFan;
+            //             hardwareList.Add(new Sensor(id, name, name, sensor, nbTot, HardwareType.Fan));
+            //             nbFan += 1;
+            //             break;
+            //         case SensorType.Temperature:
+            //             id ??= SensorType.Temperature.ToString() + nbTemp;
+            //             hardwareList.Add(new Sensor(id, name, name, sensor, nbTot, HardwareType.Temp));
+            //             nbTemp += 1;
+            //             break;
+            //
+            //         default: throw new Exception("wrong sensor type");
+            //     }
+            //
+            //     nbTot += 1;
         }
 
         var hardwareArray = _mComputer.Hardware;
         foreach (var hardware in hardwareArray)
         {
+            Logger.Info("reach hardware: " + hardware.Name + " with type " + hardware.HardwareType);
             var sensorArray = hardware.Sensors;
             foreach (var sensor in sensorArray) AddHardware(sensor);
 
@@ -122,7 +141,12 @@ public class HardwareResearcher : IVisitor
             }
         }
 
-        Logger.Info("Control: " + nbControl + ", Fans: " + nbFan + ", Temps: " + nbTemp);
+        // Logger.Info("Control: " + nbControl + ", Fans: " + nbFan + ", Temps: " + nbTemp);
+        foreach (var hardware in hardwareList)
+        {
+            Logger.Info("Restore type " + hardware.Type + " with name " + hardware.Name);
+        }
+
         return hardwareList;
     }
 

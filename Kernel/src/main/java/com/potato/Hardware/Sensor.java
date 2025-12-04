@@ -9,46 +9,25 @@ public class Sensor {
     @SerializedName("Name")
     private String name;
 
-    @SerializedName("Type")
-    private String type;
-
-    @SerializedName("Value")
-    private double value;
-
-    @SerializedName("Min")
-    private double min;
-
-    @SerializedName("Max")
-    private double max;
-
     @SerializedName("Index")
-    private int index;
+    private  int index;
 
-    public String getId() {
-        return id;
+    @SerializedName("Info")
+    private String info;
+
+    public String getInfo() {
+        return info;
+    }
+
+    public int getIndex() {
+        return index;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public double getValue() {
-        return value;
-    }
-
-    public double getMin() {
-        return min;
-    }
-
-    public double getMax() {
-        return max;
-    }
-
-    public int getIndex() {
-        return index;
+    public String getId() {
+        return id;
     }
 }

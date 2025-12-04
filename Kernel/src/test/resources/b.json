@@ -1,261 +1,2319 @@
 [
   {
-    "Id": "/intelcpu/0/temperature/0",
-    "Name": "Core Max",
-    "Index": 0,
-    "Type": "Temp",
-    "Info": "Core Max"
-  },
-  {
-    "Id": "/intelcpu/0/temperature/1",
-    "Name": "Core Average",
-    "Index": 1,
-    "Type": "Temp",
-    "Info": "Core Average"
-  },
-  {
-    "Id": "/intelcpu/0/temperature/2",
+    "Id": "Load0",
     "Name": "CPU Core #1",
-    "Index": 2,
-    "Type": "Temp",
+    "Index": 0,
+    "Type": "Sensor",
     "Info": "CPU Core #1"
   },
   {
-    "Id": "/intelcpu/0/temperature/3",
+    "Id": "Load1",
     "Name": "CPU Core #2",
-    "Index": 3,
-    "Type": "Temp",
+    "Index": 1,
+    "Type": "Sensor",
     "Info": "CPU Core #2"
   },
   {
-    "Id": "/intelcpu/0/temperature/4",
+    "Id": "Load2",
     "Name": "CPU Core #3",
-    "Index": 4,
-    "Type": "Temp",
+    "Index": 2,
+    "Type": "Sensor",
     "Info": "CPU Core #3"
   },
   {
-    "Id": "/intelcpu/0/temperature/5",
+    "Id": "Load3",
     "Name": "CPU Core #4",
-    "Index": 5,
-    "Type": "Temp",
+    "Index": 3,
+    "Type": "Sensor",
     "Info": "CPU Core #4"
   },
   {
-    "Id": "/intelcpu/0/temperature/6",
+    "Id": "Load4",
     "Name": "CPU Core #5",
-    "Index": 6,
-    "Type": "Temp",
+    "Index": 4,
+    "Type": "Sensor",
     "Info": "CPU Core #5"
   },
   {
-    "Id": "/intelcpu/0/temperature/7",
+    "Id": "Load5",
     "Name": "CPU Core #6",
-    "Index": 7,
-    "Type": "Temp",
+    "Index": 5,
+    "Type": "Sensor",
     "Info": "CPU Core #6"
   },
   {
-    "Id": "/intelcpu/0/temperature/8",
+    "Id": "Load6",
     "Name": "CPU Core #7",
-    "Index": 8,
-    "Type": "Temp",
+    "Index": 6,
+    "Type": "Sensor",
     "Info": "CPU Core #7"
   },
   {
-    "Id": "/intelcpu/0/temperature/9",
+    "Id": "Load7",
     "Name": "CPU Core #8",
-    "Index": 9,
-    "Type": "Temp",
+    "Index": 7,
+    "Type": "Sensor",
     "Info": "CPU Core #8"
   },
   {
-    "Id": "/intelcpu/0/temperature/10",
-    "Name": "CPU Core #9",
+    "Id": "Load8",
+    "Name": "CPU Core #9 Thread #1",
+    "Index": 8,
+    "Type": "Sensor",
+    "Info": "CPU Core #9 Thread #1"
+  },
+  {
+    "Id": "Load9",
+    "Name": "CPU Core #9 Thread #2",
+    "Index": 9,
+    "Type": "Sensor",
+    "Info": "CPU Core #9 Thread #2"
+  },
+  {
+    "Id": "Load10",
+    "Name": "CPU Core #10 Thread #1",
     "Index": 10,
-    "Type": "Temp",
-    "Info": "CPU Core #9"
+    "Type": "Sensor",
+    "Info": "CPU Core #10 Thread #1"
   },
   {
-    "Id": "/intelcpu/0/temperature/11",
-    "Name": "CPU Core #10",
+    "Id": "Load11",
+    "Name": "CPU Core #10 Thread #2",
     "Index": 11,
-    "Type": "Temp",
-    "Info": "CPU Core #10"
+    "Type": "Sensor",
+    "Info": "CPU Core #10 Thread #2"
   },
   {
-    "Id": "/intelcpu/0/temperature/12",
-    "Name": "CPU Core #11",
+    "Id": "Load12",
+    "Name": "CPU Core #11 Thread #1",
     "Index": 12,
-    "Type": "Temp",
-    "Info": "CPU Core #11"
+    "Type": "Sensor",
+    "Info": "CPU Core #11 Thread #1"
   },
   {
-    "Id": "/intelcpu/0/temperature/13",
-    "Name": "CPU Core #12",
+    "Id": "Load13",
+    "Name": "CPU Core #11 Thread #2",
     "Index": 13,
-    "Type": "Temp",
-    "Info": "CPU Core #12"
+    "Type": "Sensor",
+    "Info": "CPU Core #11 Thread #2"
   },
   {
-    "Id": "/intelcpu/0/temperature/14",
-    "Name": "CPU Core #13",
+    "Id": "Load14",
+    "Name": "CPU Core #12 Thread #1",
     "Index": 14,
-    "Type": "Temp",
-    "Info": "CPU Core #13"
+    "Type": "Sensor",
+    "Info": "CPU Core #12 Thread #1"
   },
   {
-    "Id": "/intelcpu/0/temperature/15",
-    "Name": "CPU Core #14",
+    "Id": "Load15",
+    "Name": "CPU Core #12 Thread #2",
     "Index": 15,
-    "Type": "Temp",
-    "Info": "CPU Core #14"
+    "Type": "Sensor",
+    "Info": "CPU Core #12 Thread #2"
   },
   {
-    "Id": "/intelcpu/0/temperature/16",
-    "Name": "CPU Core #15",
+    "Id": "Load16",
+    "Name": "CPU Core #13 Thread #1",
     "Index": 16,
-    "Type": "Temp",
+    "Type": "Sensor",
+    "Info": "CPU Core #13 Thread #1"
+  },
+  {
+    "Id": "Load17",
+    "Name": "CPU Core #13 Thread #2",
+    "Index": 17,
+    "Type": "Sensor",
+    "Info": "CPU Core #13 Thread #2"
+  },
+  {
+    "Id": "Load18",
+    "Name": "CPU Core #14 Thread #1",
+    "Index": 18,
+    "Type": "Sensor",
+    "Info": "CPU Core #14 Thread #1"
+  },
+  {
+    "Id": "Load19",
+    "Name": "CPU Core #14 Thread #2",
+    "Index": 19,
+    "Type": "Sensor",
+    "Info": "CPU Core #14 Thread #2"
+  },
+  {
+    "Id": "Load20",
+    "Name": "CPU Core #15",
+    "Index": 20,
+    "Type": "Sensor",
     "Info": "CPU Core #15"
   },
   {
-    "Id": "/intelcpu/0/temperature/17",
+    "Id": "Load21",
     "Name": "CPU Core #16",
-    "Index": 17,
-    "Type": "Temp",
+    "Index": 21,
+    "Type": "Sensor",
     "Info": "CPU Core #16"
   },
   {
-    "Id": "/intelcpu/0/temperature/18",
+    "Id": "Load22",
+    "Name": "CPU Total",
+    "Index": 22,
+    "Type": "Sensor",
+    "Info": "CPU Total"
+  },
+  {
+    "Id": "Load23",
+    "Name": "CPU Core Max",
+    "Index": 23,
+    "Type": "Sensor",
+    "Info": "CPU Core Max"
+  },
+  {
+    "Id": "Temperature0",
+    "Name": "Core Max",
+    "Index": 24,
+    "Type": "Sensor",
+    "Info": "Core Max"
+  },
+  {
+    "Id": "Temperature1",
+    "Name": "Core Average",
+    "Index": 25,
+    "Type": "Sensor",
+    "Info": "Core Average"
+  },
+  {
+    "Id": "Temperature2",
+    "Name": "CPU Core #1",
+    "Index": 26,
+    "Type": "Sensor",
+    "Info": "CPU Core #1"
+  },
+  {
+    "Id": "Temperature3",
+    "Name": "CPU Core #2",
+    "Index": 27,
+    "Type": "Sensor",
+    "Info": "CPU Core #2"
+  },
+  {
+    "Id": "Temperature4",
+    "Name": "CPU Core #3",
+    "Index": 28,
+    "Type": "Sensor",
+    "Info": "CPU Core #3"
+  },
+  {
+    "Id": "Temperature5",
+    "Name": "CPU Core #4",
+    "Index": 29,
+    "Type": "Sensor",
+    "Info": "CPU Core #4"
+  },
+  {
+    "Id": "Temperature6",
+    "Name": "CPU Core #5",
+    "Index": 30,
+    "Type": "Sensor",
+    "Info": "CPU Core #5"
+  },
+  {
+    "Id": "Temperature7",
+    "Name": "CPU Core #6",
+    "Index": 31,
+    "Type": "Sensor",
+    "Info": "CPU Core #6"
+  },
+  {
+    "Id": "Temperature8",
+    "Name": "CPU Core #7",
+    "Index": 32,
+    "Type": "Sensor",
+    "Info": "CPU Core #7"
+  },
+  {
+    "Id": "Temperature9",
+    "Name": "CPU Core #8",
+    "Index": 33,
+    "Type": "Sensor",
+    "Info": "CPU Core #8"
+  },
+  {
+    "Id": "Temperature10",
+    "Name": "CPU Core #9",
+    "Index": 34,
+    "Type": "Sensor",
+    "Info": "CPU Core #9"
+  },
+  {
+    "Id": "Temperature11",
+    "Name": "CPU Core #10",
+    "Index": 35,
+    "Type": "Sensor",
+    "Info": "CPU Core #10"
+  },
+  {
+    "Id": "Temperature12",
+    "Name": "CPU Core #11",
+    "Index": 36,
+    "Type": "Sensor",
+    "Info": "CPU Core #11"
+  },
+  {
+    "Id": "Temperature13",
+    "Name": "CPU Core #12",
+    "Index": 37,
+    "Type": "Sensor",
+    "Info": "CPU Core #12"
+  },
+  {
+    "Id": "Temperature14",
+    "Name": "CPU Core #13",
+    "Index": 38,
+    "Type": "Sensor",
+    "Info": "CPU Core #13"
+  },
+  {
+    "Id": "Temperature15",
+    "Name": "CPU Core #14",
+    "Index": 39,
+    "Type": "Sensor",
+    "Info": "CPU Core #14"
+  },
+  {
+    "Id": "Temperature16",
+    "Name": "CPU Core #15",
+    "Index": 40,
+    "Type": "Sensor",
+    "Info": "CPU Core #15"
+  },
+  {
+    "Id": "Temperature17",
+    "Name": "CPU Core #16",
+    "Index": 41,
+    "Type": "Sensor",
+    "Info": "CPU Core #16"
+  },
+  {
+    "Id": "Temperature18",
     "Name": "CPU Package",
-    "Index": 18,
-    "Type": "Temp",
+    "Index": 42,
+    "Type": "Sensor",
     "Info": "CPU Package"
   },
   {
-    "Id": "/intelcpu/0/temperature/19",
+    "Id": "Temperature19",
     "Name": "CPU Core #1 Distance to TjMax",
-    "Index": 19,
-    "Type": "Temp",
+    "Index": 43,
+    "Type": "Sensor",
     "Info": "CPU Core #1 Distance to TjMax"
   },
   {
-    "Id": "/intelcpu/0/temperature/20",
+    "Id": "Temperature20",
     "Name": "CPU Core #2 Distance to TjMax",
-    "Index": 20,
-    "Type": "Temp",
+    "Index": 44,
+    "Type": "Sensor",
     "Info": "CPU Core #2 Distance to TjMax"
   },
   {
-    "Id": "/intelcpu/0/temperature/21",
+    "Id": "Temperature21",
     "Name": "CPU Core #3 Distance to TjMax",
-    "Index": 21,
-    "Type": "Temp",
+    "Index": 45,
+    "Type": "Sensor",
     "Info": "CPU Core #3 Distance to TjMax"
   },
   {
-    "Id": "/intelcpu/0/temperature/22",
+    "Id": "Temperature22",
     "Name": "CPU Core #4 Distance to TjMax",
-    "Index": 22,
-    "Type": "Temp",
+    "Index": 46,
+    "Type": "Sensor",
     "Info": "CPU Core #4 Distance to TjMax"
   },
   {
-    "Id": "/intelcpu/0/temperature/23",
+    "Id": "Temperature23",
     "Name": "CPU Core #5 Distance to TjMax",
-    "Index": 23,
-    "Type": "Temp",
+    "Index": 47,
+    "Type": "Sensor",
     "Info": "CPU Core #5 Distance to TjMax"
   },
   {
-    "Id": "/intelcpu/0/temperature/24",
+    "Id": "Temperature24",
     "Name": "CPU Core #6 Distance to TjMax",
-    "Index": 24,
-    "Type": "Temp",
+    "Index": 48,
+    "Type": "Sensor",
     "Info": "CPU Core #6 Distance to TjMax"
   },
   {
-    "Id": "/intelcpu/0/temperature/25",
+    "Id": "Temperature25",
     "Name": "CPU Core #7 Distance to TjMax",
-    "Index": 25,
-    "Type": "Temp",
+    "Index": 49,
+    "Type": "Sensor",
     "Info": "CPU Core #7 Distance to TjMax"
   },
   {
-    "Id": "/intelcpu/0/temperature/26",
+    "Id": "Temperature26",
     "Name": "CPU Core #8 Distance to TjMax",
-    "Index": 26,
-    "Type": "Temp",
+    "Index": 50,
+    "Type": "Sensor",
     "Info": "CPU Core #8 Distance to TjMax"
   },
   {
-    "Id": "/intelcpu/0/temperature/27",
+    "Id": "Temperature27",
     "Name": "CPU Core #9 Distance to TjMax",
-    "Index": 27,
-    "Type": "Temp",
+    "Index": 51,
+    "Type": "Sensor",
     "Info": "CPU Core #9 Distance to TjMax"
   },
   {
-    "Id": "/intelcpu/0/temperature/28",
+    "Id": "Temperature28",
     "Name": "CPU Core #10 Distance to TjMax",
-    "Index": 28,
-    "Type": "Temp",
+    "Index": 52,
+    "Type": "Sensor",
     "Info": "CPU Core #10 Distance to TjMax"
   },
   {
-    "Id": "/intelcpu/0/temperature/29",
+    "Id": "Temperature29",
     "Name": "CPU Core #11 Distance to TjMax",
-    "Index": 29,
-    "Type": "Temp",
+    "Index": 53,
+    "Type": "Sensor",
     "Info": "CPU Core #11 Distance to TjMax"
   },
   {
-    "Id": "/intelcpu/0/temperature/30",
+    "Id": "Temperature30",
     "Name": "CPU Core #12 Distance to TjMax",
-    "Index": 30,
-    "Type": "Temp",
+    "Index": 54,
+    "Type": "Sensor",
     "Info": "CPU Core #12 Distance to TjMax"
   },
   {
-    "Id": "/intelcpu/0/temperature/31",
+    "Id": "Temperature31",
     "Name": "CPU Core #13 Distance to TjMax",
-    "Index": 31,
-    "Type": "Temp",
+    "Index": 55,
+    "Type": "Sensor",
     "Info": "CPU Core #13 Distance to TjMax"
   },
   {
-    "Id": "/intelcpu/0/temperature/32",
+    "Id": "Temperature32",
     "Name": "CPU Core #14 Distance to TjMax",
-    "Index": 32,
-    "Type": "Temp",
+    "Index": 56,
+    "Type": "Sensor",
     "Info": "CPU Core #14 Distance to TjMax"
   },
   {
-    "Id": "/intelcpu/0/temperature/33",
+    "Id": "Temperature33",
     "Name": "CPU Core #15 Distance to TjMax",
-    "Index": 33,
-    "Type": "Temp",
+    "Index": 57,
+    "Type": "Sensor",
     "Info": "CPU Core #15 Distance to TjMax"
   },
   {
-    "Id": "/intelcpu/0/temperature/34",
+    "Id": "Temperature34",
     "Name": "CPU Core #16 Distance to TjMax",
-    "Index": 34,
-    "Type": "Temp",
+    "Index": 58,
+    "Type": "Sensor",
     "Info": "CPU Core #16 Distance to TjMax"
   },
   {
-    "Id": "/gpu-nvidia/0/temperature/0",
+    "Id": "Clock0",
+    "Name": "CPU Core #1",
+    "Index": 59,
+    "Type": "Sensor",
+    "Info": "CPU Core #1"
+  },
+  {
+    "Id": "Clock1",
+    "Name": "CPU Core #2",
+    "Index": 60,
+    "Type": "Sensor",
+    "Info": "CPU Core #2"
+  },
+  {
+    "Id": "Clock2",
+    "Name": "CPU Core #3",
+    "Index": 61,
+    "Type": "Sensor",
+    "Info": "CPU Core #3"
+  },
+  {
+    "Id": "Clock3",
+    "Name": "CPU Core #4",
+    "Index": 62,
+    "Type": "Sensor",
+    "Info": "CPU Core #4"
+  },
+  {
+    "Id": "Clock4",
+    "Name": "CPU Core #5",
+    "Index": 63,
+    "Type": "Sensor",
+    "Info": "CPU Core #5"
+  },
+  {
+    "Id": "Clock5",
+    "Name": "CPU Core #6",
+    "Index": 64,
+    "Type": "Sensor",
+    "Info": "CPU Core #6"
+  },
+  {
+    "Id": "Clock6",
+    "Name": "CPU Core #7",
+    "Index": 65,
+    "Type": "Sensor",
+    "Info": "CPU Core #7"
+  },
+  {
+    "Id": "Clock7",
+    "Name": "CPU Core #8",
+    "Index": 66,
+    "Type": "Sensor",
+    "Info": "CPU Core #8"
+  },
+  {
+    "Id": "Clock8",
+    "Name": "CPU Core #9",
+    "Index": 67,
+    "Type": "Sensor",
+    "Info": "CPU Core #9"
+  },
+  {
+    "Id": "Clock9",
+    "Name": "CPU Core #10",
+    "Index": 68,
+    "Type": "Sensor",
+    "Info": "CPU Core #10"
+  },
+  {
+    "Id": "Clock10",
+    "Name": "CPU Core #11",
+    "Index": 69,
+    "Type": "Sensor",
+    "Info": "CPU Core #11"
+  },
+  {
+    "Id": "Clock11",
+    "Name": "CPU Core #12",
+    "Index": 70,
+    "Type": "Sensor",
+    "Info": "CPU Core #12"
+  },
+  {
+    "Id": "Clock12",
+    "Name": "CPU Core #13",
+    "Index": 71,
+    "Type": "Sensor",
+    "Info": "CPU Core #13"
+  },
+  {
+    "Id": "Clock13",
+    "Name": "CPU Core #14",
+    "Index": 72,
+    "Type": "Sensor",
+    "Info": "CPU Core #14"
+  },
+  {
+    "Id": "Clock14",
+    "Name": "CPU Core #15",
+    "Index": 73,
+    "Type": "Sensor",
+    "Info": "CPU Core #15"
+  },
+  {
+    "Id": "Clock15",
+    "Name": "CPU Core #16",
+    "Index": 74,
+    "Type": "Sensor",
+    "Info": "CPU Core #16"
+  },
+  {
+    "Id": "Data0",
+    "Name": "Memory Used",
+    "Index": 75,
+    "Type": "Sensor",
+    "Info": "Memory Used"
+  },
+  {
+    "Id": "Data1",
+    "Name": "Memory Available",
+    "Index": 76,
+    "Type": "Sensor",
+    "Info": "Memory Available"
+  },
+  {
+    "Id": "Load24",
+    "Name": "Memory",
+    "Index": 77,
+    "Type": "Sensor",
+    "Info": "Memory"
+  },
+  {
+    "Id": "Data2",
+    "Name": "Memory Used",
+    "Index": 78,
+    "Type": "Sensor",
+    "Info": "Memory Used"
+  },
+  {
+    "Id": "Data3",
+    "Name": "Memory Available",
+    "Index": 79,
+    "Type": "Sensor",
+    "Info": "Memory Available"
+  },
+  {
+    "Id": "Load25",
+    "Name": "Memory",
+    "Index": 80,
+    "Type": "Sensor",
+    "Info": "Memory"
+  },
+  {
+    "Id": "Temperature35",
     "Name": "GPU Core",
-    "Index": 35,
-    "Type": "Temp",
+    "Index": 81,
+    "Type": "Sensor",
     "Info": "GPU Core"
   },
   {
-    "Id": "/gpu-nvidia/0/temperature/2",
+    "Id": "Clock16",
+    "Name": "GPU Core",
+    "Index": 82,
+    "Type": "Sensor",
+    "Info": "GPU Core"
+  },
+  {
+    "Id": "Clock17",
+    "Name": "GPU Memory",
+    "Index": 83,
+    "Type": "Sensor",
+    "Info": "GPU Memory"
+  },
+  {
+    "Id": "Load26",
+    "Name": "GPU Core",
+    "Index": 84,
+    "Type": "Sensor",
+    "Info": "GPU Core"
+  },
+  {
+    "Id": "Load27",
+    "Name": "GPU Memory Controller",
+    "Index": 85,
+    "Type": "Sensor",
+    "Info": "GPU Memory Controller"
+  },
+  {
+    "Id": "Load28",
+    "Name": "GPU Video Engine",
+    "Index": 86,
+    "Type": "Sensor",
+    "Info": "GPU Video Engine"
+  },
+  {
+    "Id": "Load29",
+    "Name": "GPU Bus",
+    "Index": 87,
+    "Type": "Sensor",
+    "Info": "GPU Bus"
+  },
+  {
+    "Id": "SmallData0",
+    "Name": "D3D Dedicated Memory Used",
+    "Index": 88,
+    "Type": "Sensor",
+    "Info": "D3D Dedicated Memory Used"
+  },
+  {
+    "Id": "SmallData1",
+    "Name": "D3D Shared Memory Used",
+    "Index": 89,
+    "Type": "Sensor",
+    "Info": "D3D Shared Memory Used"
+  },
+  {
+    "Id": "Load30",
+    "Name": "D3D 3D",
+    "Index": 90,
+    "Type": "Sensor",
+    "Info": "D3D 3D"
+  },
+  {
+    "Id": "Load31",
+    "Name": "D3D Overlay",
+    "Index": 91,
+    "Type": "Sensor",
+    "Info": "D3D Overlay"
+  },
+  {
+    "Id": "Load32",
+    "Name": "D3D Video Decode",
+    "Index": 92,
+    "Type": "Sensor",
+    "Info": "D3D Video Decode"
+  },
+  {
+    "Id": "Load33",
+    "Name": "D3D Copy",
+    "Index": 93,
+    "Type": "Sensor",
+    "Info": "D3D Copy"
+  },
+  {
+    "Id": "Load34",
+    "Name": "D3D Copy",
+    "Index": 94,
+    "Type": "Sensor",
+    "Info": "D3D Copy"
+  },
+  {
+    "Id": "Load35",
+    "Name": "D3D Security",
+    "Index": 95,
+    "Type": "Sensor",
+    "Info": "D3D Security"
+  },
+  {
+    "Id": "Load36",
+    "Name": "D3D Video Encode",
+    "Index": 96,
+    "Type": "Sensor",
+    "Info": "D3D Video Encode"
+  },
+  {
+    "Id": "Load37",
+    "Name": "D3D NVEnc_1",
+    "Index": 97,
+    "Type": "Sensor",
+    "Info": "D3D NVEnc_1"
+  },
+  {
+    "Id": "Load38",
+    "Name": "D3D OFA_0",
+    "Index": 98,
+    "Type": "Sensor",
+    "Info": "D3D OFA_0"
+  },
+  {
+    "Id": "Load39",
+    "Name": "D3D VR",
+    "Index": 99,
+    "Type": "Sensor",
+    "Info": "D3D VR"
+  },
+  {
+    "Id": "Temperature36",
     "Name": "GPU Hot Spot",
-    "Index": 36,
-    "Type": "Temp",
+    "Index": 100,
+    "Type": "Sensor",
     "Info": "GPU Hot Spot"
+  },
+  {
+    "Id": "SmallData2",
+    "Name": "GPU Memory Total",
+    "Index": 101,
+    "Type": "Sensor",
+    "Info": "GPU Memory Total"
+  },
+  {
+    "Id": "SmallData3",
+    "Name": "GPU Memory Free",
+    "Index": 102,
+    "Type": "Sensor",
+    "Info": "GPU Memory Free"
+  },
+  {
+    "Id": "SmallData4",
+    "Name": "GPU Memory Used",
+    "Index": 103,
+    "Type": "Sensor",
+    "Info": "GPU Memory Used"
+  },
+  {
+    "Id": "Load40",
+    "Name": "GPU Memory",
+    "Index": 104,
+    "Type": "Sensor",
+    "Info": "GPU Memory"
+  },
+  {
+    "Id": "Power0",
+    "Name": "GPU Package",
+    "Index": 105,
+    "Type": "Sensor",
+    "Info": "GPU Package"
+  },
+  {
+    "Id": "Throughput0",
+    "Name": "GPU PCIe Rx",
+    "Index": 106,
+    "Type": "Sensor",
+    "Info": "GPU PCIe Rx"
+  },
+  {
+    "Id": "Throughput1",
+    "Name": "GPU PCIe Tx",
+    "Index": 107,
+    "Type": "Sensor",
+    "Info": "GPU PCIe Tx"
+  },
+  {
+    "Id": "SmallData5",
+    "Name": "D3D Shared Memory Total",
+    "Index": 108,
+    "Type": "Sensor",
+    "Info": "D3D Shared Memory Total"
+  },
+  {
+    "Id": "SmallData6",
+    "Name": "D3D Shared Memory Free",
+    "Index": 109,
+    "Type": "Sensor",
+    "Info": "D3D Shared Memory Free"
+  },
+  {
+    "Id": "SmallData7",
+    "Name": "D3D Shared Memory Used",
+    "Index": 110,
+    "Type": "Sensor",
+    "Info": "D3D Shared Memory Used"
+  },
+  {
+    "Id": "Load41",
+    "Name": "D3D 3D",
+    "Index": 111,
+    "Type": "Sensor",
+    "Info": "D3D 3D"
+  },
+  {
+    "Id": "Load42",
+    "Name": "D3D Video Decode",
+    "Index": 112,
+    "Type": "Sensor",
+    "Info": "D3D Video Decode"
+  },
+  {
+    "Id": "Load43",
+    "Name": "D3D Copy",
+    "Index": 113,
+    "Type": "Sensor",
+    "Info": "D3D Copy"
+  },
+  {
+    "Id": "Load44",
+    "Name": "D3D Video Processing",
+    "Index": 114,
+    "Type": "Sensor",
+    "Info": "D3D Video Processing"
+  },
+  {
+    "Id": "Load45",
+    "Name": "D3D Video Decode",
+    "Index": 115,
+    "Type": "Sensor",
+    "Info": "D3D Video Decode"
+  },
+  {
+    "Id": "Load46",
+    "Name": "D3D Compute",
+    "Index": 116,
+    "Type": "Sensor",
+    "Info": "D3D Compute"
+  },
+  {
+    "Id": "Load47",
+    "Name": "D3D GSC",
+    "Index": 117,
+    "Type": "Sensor",
+    "Info": "D3D GSC"
+  },
+  {
+    "Id": "Load48",
+    "Name": "D3D Other",
+    "Index": 118,
+    "Type": "Sensor",
+    "Info": "D3D Other"
+  },
+  {
+    "Id": "Load49",
+    "Name": "D3D Other",
+    "Index": 119,
+    "Type": "Sensor",
+    "Info": "D3D Other"
+  },
+  {
+    "Id": "Load50",
+    "Name": "D3D Other",
+    "Index": 120,
+    "Type": "Sensor",
+    "Info": "D3D Other"
+  },
+  {
+    "Id": "Load51",
+    "Name": "D3D Other",
+    "Index": 121,
+    "Type": "Sensor",
+    "Info": "D3D Other"
+  },
+  {
+    "Id": "Load52",
+    "Name": "D3D Other",
+    "Index": 122,
+    "Type": "Sensor",
+    "Info": "D3D Other"
+  },
+  {
+    "Id": "Data4",
+    "Name": "Data Uploaded",
+    "Index": 123,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data5",
+    "Name": "Data Downloaded",
+    "Index": 124,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput2",
+    "Name": "Upload Speed",
+    "Index": 125,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput3",
+    "Name": "Download Speed",
+    "Index": 126,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load53",
+    "Name": "Network Utilization",
+    "Index": 127,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data6",
+    "Name": "Data Uploaded",
+    "Index": 128,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data7",
+    "Name": "Data Downloaded",
+    "Index": 129,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput4",
+    "Name": "Upload Speed",
+    "Index": 130,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput5",
+    "Name": "Download Speed",
+    "Index": 131,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load54",
+    "Name": "Network Utilization",
+    "Index": 132,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data8",
+    "Name": "Data Uploaded",
+    "Index": 133,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data9",
+    "Name": "Data Downloaded",
+    "Index": 134,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput6",
+    "Name": "Upload Speed",
+    "Index": 135,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput7",
+    "Name": "Download Speed",
+    "Index": 136,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load55",
+    "Name": "Network Utilization",
+    "Index": 137,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data10",
+    "Name": "Data Uploaded",
+    "Index": 138,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data11",
+    "Name": "Data Downloaded",
+    "Index": 139,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput8",
+    "Name": "Upload Speed",
+    "Index": 140,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput9",
+    "Name": "Download Speed",
+    "Index": 141,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load56",
+    "Name": "Network Utilization",
+    "Index": 142,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data12",
+    "Name": "Data Uploaded",
+    "Index": 143,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data13",
+    "Name": "Data Downloaded",
+    "Index": 144,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput10",
+    "Name": "Upload Speed",
+    "Index": 145,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput11",
+    "Name": "Download Speed",
+    "Index": 146,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load57",
+    "Name": "Network Utilization",
+    "Index": 147,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data14",
+    "Name": "Data Uploaded",
+    "Index": 148,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data15",
+    "Name": "Data Downloaded",
+    "Index": 149,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput12",
+    "Name": "Upload Speed",
+    "Index": 150,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput13",
+    "Name": "Download Speed",
+    "Index": 151,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load58",
+    "Name": "Network Utilization",
+    "Index": 152,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data16",
+    "Name": "Data Uploaded",
+    "Index": 153,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data17",
+    "Name": "Data Downloaded",
+    "Index": 154,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput14",
+    "Name": "Upload Speed",
+    "Index": 155,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput15",
+    "Name": "Download Speed",
+    "Index": 156,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load59",
+    "Name": "Network Utilization",
+    "Index": 157,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data18",
+    "Name": "Data Uploaded",
+    "Index": 158,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data19",
+    "Name": "Data Downloaded",
+    "Index": 159,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput16",
+    "Name": "Upload Speed",
+    "Index": 160,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput17",
+    "Name": "Download Speed",
+    "Index": 161,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load60",
+    "Name": "Network Utilization",
+    "Index": 162,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data20",
+    "Name": "Data Uploaded",
+    "Index": 163,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data21",
+    "Name": "Data Downloaded",
+    "Index": 164,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput18",
+    "Name": "Upload Speed",
+    "Index": 165,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput19",
+    "Name": "Download Speed",
+    "Index": 166,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load61",
+    "Name": "Network Utilization",
+    "Index": 167,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data22",
+    "Name": "Data Uploaded",
+    "Index": 168,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data23",
+    "Name": "Data Downloaded",
+    "Index": 169,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput20",
+    "Name": "Upload Speed",
+    "Index": 170,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput21",
+    "Name": "Download Speed",
+    "Index": 171,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load62",
+    "Name": "Network Utilization",
+    "Index": 172,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data24",
+    "Name": "Data Uploaded",
+    "Index": 173,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data25",
+    "Name": "Data Downloaded",
+    "Index": 174,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput22",
+    "Name": "Upload Speed",
+    "Index": 175,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput23",
+    "Name": "Download Speed",
+    "Index": 176,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load63",
+    "Name": "Network Utilization",
+    "Index": 177,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data26",
+    "Name": "Data Uploaded",
+    "Index": 178,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data27",
+    "Name": "Data Downloaded",
+    "Index": 179,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput24",
+    "Name": "Upload Speed",
+    "Index": 180,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput25",
+    "Name": "Download Speed",
+    "Index": 181,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load64",
+    "Name": "Network Utilization",
+    "Index": 182,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data28",
+    "Name": "Data Uploaded",
+    "Index": 183,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data29",
+    "Name": "Data Downloaded",
+    "Index": 184,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput26",
+    "Name": "Upload Speed",
+    "Index": 185,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput27",
+    "Name": "Download Speed",
+    "Index": 186,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load65",
+    "Name": "Network Utilization",
+    "Index": 187,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data30",
+    "Name": "Data Uploaded",
+    "Index": 188,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data31",
+    "Name": "Data Downloaded",
+    "Index": 189,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput28",
+    "Name": "Upload Speed",
+    "Index": 190,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput29",
+    "Name": "Download Speed",
+    "Index": 191,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load66",
+    "Name": "Network Utilization",
+    "Index": 192,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data32",
+    "Name": "Data Uploaded",
+    "Index": 193,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data33",
+    "Name": "Data Downloaded",
+    "Index": 194,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput30",
+    "Name": "Upload Speed",
+    "Index": 195,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput31",
+    "Name": "Download Speed",
+    "Index": 196,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load67",
+    "Name": "Network Utilization",
+    "Index": 197,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data34",
+    "Name": "Data Uploaded",
+    "Index": 198,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data35",
+    "Name": "Data Downloaded",
+    "Index": 199,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput32",
+    "Name": "Upload Speed",
+    "Index": 200,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput33",
+    "Name": "Download Speed",
+    "Index": 201,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load68",
+    "Name": "Network Utilization",
+    "Index": 202,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data36",
+    "Name": "Data Uploaded",
+    "Index": 203,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data37",
+    "Name": "Data Downloaded",
+    "Index": 204,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput34",
+    "Name": "Upload Speed",
+    "Index": 205,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput35",
+    "Name": "Download Speed",
+    "Index": 206,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load69",
+    "Name": "Network Utilization",
+    "Index": 207,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data38",
+    "Name": "Data Uploaded",
+    "Index": 208,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data39",
+    "Name": "Data Downloaded",
+    "Index": 209,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput36",
+    "Name": "Upload Speed",
+    "Index": 210,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput37",
+    "Name": "Download Speed",
+    "Index": 211,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load70",
+    "Name": "Network Utilization",
+    "Index": 212,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data40",
+    "Name": "Data Uploaded",
+    "Index": 213,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data41",
+    "Name": "Data Downloaded",
+    "Index": 214,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput38",
+    "Name": "Upload Speed",
+    "Index": 215,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput39",
+    "Name": "Download Speed",
+    "Index": 216,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load71",
+    "Name": "Network Utilization",
+    "Index": 217,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data42",
+    "Name": "Data Uploaded",
+    "Index": 218,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data43",
+    "Name": "Data Downloaded",
+    "Index": 219,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput40",
+    "Name": "Upload Speed",
+    "Index": 220,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput41",
+    "Name": "Download Speed",
+    "Index": 221,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load72",
+    "Name": "Network Utilization",
+    "Index": 222,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data44",
+    "Name": "Data Uploaded",
+    "Index": 223,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data45",
+    "Name": "Data Downloaded",
+    "Index": 224,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput42",
+    "Name": "Upload Speed",
+    "Index": 225,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput43",
+    "Name": "Download Speed",
+    "Index": 226,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load73",
+    "Name": "Network Utilization",
+    "Index": 227,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data46",
+    "Name": "Data Uploaded",
+    "Index": 228,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data47",
+    "Name": "Data Downloaded",
+    "Index": 229,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput44",
+    "Name": "Upload Speed",
+    "Index": 230,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput45",
+    "Name": "Download Speed",
+    "Index": 231,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load74",
+    "Name": "Network Utilization",
+    "Index": 232,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data48",
+    "Name": "Data Uploaded",
+    "Index": 233,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data49",
+    "Name": "Data Downloaded",
+    "Index": 234,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput46",
+    "Name": "Upload Speed",
+    "Index": 235,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput47",
+    "Name": "Download Speed",
+    "Index": 236,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load75",
+    "Name": "Network Utilization",
+    "Index": 237,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data50",
+    "Name": "Data Uploaded",
+    "Index": 238,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data51",
+    "Name": "Data Downloaded",
+    "Index": 239,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput48",
+    "Name": "Upload Speed",
+    "Index": 240,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput49",
+    "Name": "Download Speed",
+    "Index": 241,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load76",
+    "Name": "Network Utilization",
+    "Index": 242,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data52",
+    "Name": "Data Uploaded",
+    "Index": 243,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data53",
+    "Name": "Data Downloaded",
+    "Index": 244,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput50",
+    "Name": "Upload Speed",
+    "Index": 245,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput51",
+    "Name": "Download Speed",
+    "Index": 246,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load77",
+    "Name": "Network Utilization",
+    "Index": 247,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data54",
+    "Name": "Data Uploaded",
+    "Index": 248,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data55",
+    "Name": "Data Downloaded",
+    "Index": 249,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput52",
+    "Name": "Upload Speed",
+    "Index": 250,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput53",
+    "Name": "Download Speed",
+    "Index": 251,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load78",
+    "Name": "Network Utilization",
+    "Index": 252,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data56",
+    "Name": "Data Uploaded",
+    "Index": 253,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data57",
+    "Name": "Data Downloaded",
+    "Index": 254,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput54",
+    "Name": "Upload Speed",
+    "Index": 255,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput55",
+    "Name": "Download Speed",
+    "Index": 256,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load79",
+    "Name": "Network Utilization",
+    "Index": 257,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data58",
+    "Name": "Data Uploaded",
+    "Index": 258,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data59",
+    "Name": "Data Downloaded",
+    "Index": 259,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput56",
+    "Name": "Upload Speed",
+    "Index": 260,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput57",
+    "Name": "Download Speed",
+    "Index": 261,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load80",
+    "Name": "Network Utilization",
+    "Index": 262,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data60",
+    "Name": "Data Uploaded",
+    "Index": 263,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data61",
+    "Name": "Data Downloaded",
+    "Index": 264,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput58",
+    "Name": "Upload Speed",
+    "Index": 265,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput59",
+    "Name": "Download Speed",
+    "Index": 266,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load81",
+    "Name": "Network Utilization",
+    "Index": 267,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data62",
+    "Name": "Data Uploaded",
+    "Index": 268,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data63",
+    "Name": "Data Downloaded",
+    "Index": 269,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput60",
+    "Name": "Upload Speed",
+    "Index": 270,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput61",
+    "Name": "Download Speed",
+    "Index": 271,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load82",
+    "Name": "Network Utilization",
+    "Index": 272,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data64",
+    "Name": "Data Uploaded",
+    "Index": 273,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data65",
+    "Name": "Data Downloaded",
+    "Index": 274,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput62",
+    "Name": "Upload Speed",
+    "Index": 275,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput63",
+    "Name": "Download Speed",
+    "Index": 276,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load83",
+    "Name": "Network Utilization",
+    "Index": 277,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data66",
+    "Name": "Data Uploaded",
+    "Index": 278,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data67",
+    "Name": "Data Downloaded",
+    "Index": 279,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput64",
+    "Name": "Upload Speed",
+    "Index": 280,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput65",
+    "Name": "Download Speed",
+    "Index": 281,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load84",
+    "Name": "Network Utilization",
+    "Index": 282,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data68",
+    "Name": "Data Uploaded",
+    "Index": 283,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data69",
+    "Name": "Data Downloaded",
+    "Index": 284,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput66",
+    "Name": "Upload Speed",
+    "Index": 285,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput67",
+    "Name": "Download Speed",
+    "Index": 286,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load85",
+    "Name": "Network Utilization",
+    "Index": 287,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data70",
+    "Name": "Data Uploaded",
+    "Index": 288,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data71",
+    "Name": "Data Downloaded",
+    "Index": 289,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput68",
+    "Name": "Upload Speed",
+    "Index": 290,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput69",
+    "Name": "Download Speed",
+    "Index": 291,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load86",
+    "Name": "Network Utilization",
+    "Index": 292,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data72",
+    "Name": "Data Uploaded",
+    "Index": 293,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data73",
+    "Name": "Data Downloaded",
+    "Index": 294,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput70",
+    "Name": "Upload Speed",
+    "Index": 295,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput71",
+    "Name": "Download Speed",
+    "Index": 296,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load87",
+    "Name": "Network Utilization",
+    "Index": 297,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data74",
+    "Name": "Data Uploaded",
+    "Index": 298,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data75",
+    "Name": "Data Downloaded",
+    "Index": 299,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput72",
+    "Name": "Upload Speed",
+    "Index": 300,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput73",
+    "Name": "Download Speed",
+    "Index": 301,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load88",
+    "Name": "Network Utilization",
+    "Index": 302,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data76",
+    "Name": "Data Uploaded",
+    "Index": 303,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data77",
+    "Name": "Data Downloaded",
+    "Index": 304,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput74",
+    "Name": "Upload Speed",
+    "Index": 305,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput75",
+    "Name": "Download Speed",
+    "Index": 306,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load89",
+    "Name": "Network Utilization",
+    "Index": 307,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data78",
+    "Name": "Data Uploaded",
+    "Index": 308,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data79",
+    "Name": "Data Downloaded",
+    "Index": 309,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput76",
+    "Name": "Upload Speed",
+    "Index": 310,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput77",
+    "Name": "Download Speed",
+    "Index": 311,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load90",
+    "Name": "Network Utilization",
+    "Index": 312,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data80",
+    "Name": "Data Uploaded",
+    "Index": 313,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data81",
+    "Name": "Data Downloaded",
+    "Index": 314,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput78",
+    "Name": "Upload Speed",
+    "Index": 315,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput79",
+    "Name": "Download Speed",
+    "Index": 316,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load91",
+    "Name": "Network Utilization",
+    "Index": 317,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Data82",
+    "Name": "Data Uploaded",
+    "Index": 318,
+    "Type": "Sensor",
+    "Info": "Data Uploaded"
+  },
+  {
+    "Id": "Data83",
+    "Name": "Data Downloaded",
+    "Index": 319,
+    "Type": "Sensor",
+    "Info": "Data Downloaded"
+  },
+  {
+    "Id": "Throughput80",
+    "Name": "Upload Speed",
+    "Index": 320,
+    "Type": "Sensor",
+    "Info": "Upload Speed"
+  },
+  {
+    "Id": "Throughput81",
+    "Name": "Download Speed",
+    "Index": 321,
+    "Type": "Sensor",
+    "Info": "Download Speed"
+  },
+  {
+    "Id": "Load92",
+    "Name": "Network Utilization",
+    "Index": 322,
+    "Type": "Sensor",
+    "Info": "Network Utilization"
+  },
+  {
+    "Id": "Energy0",
+    "Name": "Designed Capacity",
+    "Index": 323,
+    "Type": "Sensor",
+    "Info": "Designed Capacity"
+  },
+  {
+    "Id": "Energy1",
+    "Name": "Fully-Charged Capacity",
+    "Index": 324,
+    "Type": "Sensor",
+    "Info": "Fully-Charged Capacity"
+  },
+  {
+    "Id": "Level0",
+    "Name": "Degradation Level",
+    "Index": 325,
+    "Type": "Sensor",
+    "Info": "Degradation Level"
+  },
+  {
+    "Id": "Energy2",
+    "Name": "Remaining Capacity",
+    "Index": 326,
+    "Type": "Sensor",
+    "Info": "Remaining Capacity"
+  },
+  {
+    "Id": "Level1",
+    "Name": "Charge Level",
+    "Index": 327,
+    "Type": "Sensor",
+    "Info": "Charge Level"
+  },
+  {
+    "Id": "Voltage0",
+    "Name": "Voltage",
+    "Index": 328,
+    "Type": "Sensor",
+    "Info": "Voltage"
+  },
+  {
+    "Id": "Current0",
+    "Name": "Charge/Discharge Current",
+    "Index": 329,
+    "Type": "Sensor",
+    "Info": "Charge/Discharge Current"
+  },
+  {
+    "Id": "Power1",
+    "Name": "Charge/Discharge Rate",
+    "Index": 330,
+    "Type": "Sensor",
+    "Info": "Charge/Discharge Rate"
   }
 ]

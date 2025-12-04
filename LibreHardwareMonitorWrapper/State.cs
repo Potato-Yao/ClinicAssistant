@@ -5,8 +5,7 @@
 public enum HardwareType
 {
     Control = 1,
-    Fan = 2,
-    Temp = 3
+    Sensor = 2,
 }
 
 public abstract class BaseHardware

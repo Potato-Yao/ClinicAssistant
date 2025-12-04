@@ -2,7 +2,6 @@
 using Microsoft.Win32;
 
 
-
 HardwareManager hardwareManager = null!;
 Server server = null!;
 
@@ -53,6 +52,7 @@ catch (Exception e)
     {
         Logger.Error("Cancel server task: " + e.Message);
     }
+
     ShutDown();
     return 1;
 }
@@ -70,11 +70,11 @@ catch (Exception e)
 
 if (!isServerStarted || !isHardwareManagerStarted)
 {
-    Logger.Error("Weird state: server started: " + isServerStarted + ", hardware manager started: " + isHardwareManagerStarted);
+    Logger.Error("Weird state: server started: " + isServerStarted + ", hardware manager started: " +
+                 isHardwareManagerStarted);
     ShutDown();
     return 1;
 }
-
 
 
 var updateCts = new CancellationTokenSource();
@@ -95,7 +95,6 @@ catch (Exception e)
 updateCts.Cancel();
 ShutDown();
 return 0;
-
 
 
 void ShutDown()
@@ -122,8 +121,7 @@ void SetupLog()
     {
         Logger.LogLevel = LogLevel.Debug;
     }
-    else
-    if (args.Contains("--log=info"))
+    else if (args.Contains("--log=info"))
     {
         Logger.LogLevel = LogLevel.Info;
     }
@@ -138,7 +136,9 @@ void SetupLog()
             if (maybeLogFilePath == null) return;
             var logFileNameWithoutExtension = Path.GetFileNameWithoutExtension(maybeLogFilePath);
             var logFileName = logFileNameWithoutExtension + "-lhm.txt";
-            var lhmLogFilePath = Path.Combine(Path.GetDirectoryName(maybeLogFilePath) ?? throw new InvalidOperationException(), logFileName);
+            var lhmLogFilePath =
+                Path.Combine(Path.GetDirectoryName(maybeLogFilePath) ?? throw new InvalidOperationException(),
+                    logFileName);
             Logger.LogToFile(lhmLogFilePath);
         }
         catch (Exception)

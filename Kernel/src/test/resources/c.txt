@@ -1,0 +1,380 @@
+Load0 name CPU Core #1 info Load index 0
+Load1 name CPU Core #2 info Load index 1
+Load2 name CPU Core #3 info Load index 2
+Load3 name CPU Core #4 info Load index 3
+Load4 name CPU Core #5 info Load index 4
+Load5 name CPU Core #6 info Load index 5
+Load6 name CPU Core #7 info Load index 6
+Load7 name CPU Core #8 info Load index 7
+Load8 name CPU Core #9 Thread #1 info Load index 8
+Load9 name CPU Core #9 Thread #2 info Load index 9
+Load10 name CPU Core #10 Thread #1 info Load index 10
+Load11 name CPU Core #10 Thread #2 info Load index 11
+Load12 name CPU Core #11 Thread #1 info Load index 12
+Load13 name CPU Core #11 Thread #2 info Load index 13
+Load14 name CPU Core #12 Thread #1 info Load index 14
+Load15 name CPU Core #12 Thread #2 info Load index 15
+Load16 name CPU Core #13 Thread #1 info Load index 16
+Load17 name CPU Core #13 Thread #2 info Load index 17
+Load18 name CPU Core #14 Thread #1 info Load index 18
+Load19 name CPU Core #14 Thread #2 info Load index 19
+Load20 name CPU Core #15 info Load index 20
+Load21 name CPU Core #16 info Load index 21
+Load22 name CPU Total info Load index 22
+Load23 name CPU Core Max info Load index 23
+Temperature0 name Core Max info Temperature index 24
+Temperature1 name Core Average info Temperature index 25
+Temperature2 name CPU Core #1 info Temperature index 26
+Temperature3 name CPU Core #2 info Temperature index 27
+Temperature4 name CPU Core #3 info Temperature index 28
+Temperature5 name CPU Core #4 info Temperature index 29
+Temperature6 name CPU Core #5 info Temperature index 30
+Temperature7 name CPU Core #6 info Temperature index 31
+Temperature8 name CPU Core #7 info Temperature index 32
+Temperature9 name CPU Core #8 info Temperature index 33
+Temperature10 name CPU Core #9 info Temperature index 34
+Temperature11 name CPU Core #10 info Temperature index 35
+Temperature12 name CPU Core #11 info Temperature index 36
+Temperature13 name CPU Core #12 info Temperature index 37
+Temperature14 name CPU Core #13 info Temperature index 38
+Temperature15 name CPU Core #14 info Temperature index 39
+Temperature16 name CPU Core #15 info Temperature index 40
+Temperature17 name CPU Core #16 info Temperature index 41
+Temperature18 name CPU Package info Temperature index 42
+Temperature19 name CPU Core #1 Distance to TjMax info Temperature index 43
+Temperature20 name CPU Core #2 Distance to TjMax info Temperature index 44
+Temperature21 name CPU Core #3 Distance to TjMax info Temperature index 45
+Temperature22 name CPU Core #4 Distance to TjMax info Temperature index 46
+Temperature23 name CPU Core #5 Distance to TjMax info Temperature index 47
+Temperature24 name CPU Core #6 Distance to TjMax info Temperature index 48
+Temperature25 name CPU Core #7 Distance to TjMax info Temperature index 49
+Temperature26 name CPU Core #8 Distance to TjMax info Temperature index 50
+Temperature27 name CPU Core #9 Distance to TjMax info Temperature index 51
+Temperature28 name CPU Core #10 Distance to TjMax info Temperature index 52
+Temperature29 name CPU Core #11 Distance to TjMax info Temperature index 53
+Temperature30 name CPU Core #12 Distance to TjMax info Temperature index 54
+Temperature31 name CPU Core #13 Distance to TjMax info Temperature index 55
+Temperature32 name CPU Core #14 Distance to TjMax info Temperature index 56
+Temperature33 name CPU Core #15 Distance to TjMax info Temperature index 57
+Temperature34 name CPU Core #16 Distance to TjMax info Temperature index 58
+Clock0 name CPU Core #1 info Clock index 59
+Clock1 name CPU Core #2 info Clock index 60
+Clock2 name CPU Core #3 info Clock index 61
+Clock3 name CPU Core #4 info Clock index 62
+Clock4 name CPU Core #5 info Clock index 63
+Clock5 name CPU Core #6 info Clock index 64
+Clock6 name CPU Core #7 info Clock index 65
+Clock7 name CPU Core #8 info Clock index 66
+Clock8 name CPU Core #9 info Clock index 67
+Clock9 name CPU Core #10 info Clock index 68
+Clock10 name CPU Core #11 info Clock index 69
+Clock11 name CPU Core #12 info Clock index 70
+Clock12 name CPU Core #13 info Clock index 71
+Clock13 name CPU Core #14 info Clock index 72
+Clock14 name CPU Core #15 info Clock index 73
+Clock15 name CPU Core #16 info Clock index 74
+Power0 name CPU Package info Power index 75
+Power1 name CPU Cores info Power index 76
+Power2 name CPU Memory info Power index 77
+Power3 name CPU Platform info Power index 78
+Voltage0 name CPU Core info Voltage index 79
+Voltage1 name CPU Core #1 info Voltage index 80
+Voltage2 name CPU Core #2 info Voltage index 81
+Voltage3 name CPU Core #3 info Voltage index 82
+Voltage4 name CPU Core #4 info Voltage index 83
+Voltage5 name CPU Core #5 info Voltage index 84
+Voltage6 name CPU Core #6 info Voltage index 85
+Voltage7 name CPU Core #7 info Voltage index 86
+Voltage8 name CPU Core #8 info Voltage index 87
+Voltage9 name CPU Core #9 info Voltage index 88
+Voltage10 name CPU Core #10 info Voltage index 89
+Voltage11 name CPU Core #11 info Voltage index 90
+Voltage12 name CPU Core #12 info Voltage index 91
+Voltage13 name CPU Core #13 info Voltage index 92
+Voltage14 name CPU Core #14 info Voltage index 93
+Clock16 name Bus Speed info Clock index 94
+Data0 name Memory Used info Data index 95
+Data1 name Memory Available info Data index 96
+Load24 name Memory info Load index 97
+Data2 name Memory Used info Data index 98
+Data3 name Memory Available info Data index 99
+Load25 name Memory info Load index 100
+Temperature35 name GPU Core info Temperature index 101
+Clock17 name GPU Core info Clock index 102
+Clock18 name GPU Memory info Clock index 103
+Load26 name GPU Core info Load index 104
+Load27 name GPU Memory Controller info Load index 105
+Load28 name GPU Video Engine info Load index 106
+Load29 name GPU Bus info Load index 107
+SmallData0 name D3D Dedicated Memory Used info SmallData index 108
+SmallData1 name D3D Shared Memory Used info SmallData index 109
+Load30 name D3D 3D info Load index 110
+Load31 name D3D Overlay info Load index 111
+Load32 name D3D Video Decode info Load index 112
+Load33 name D3D Copy info Load index 113
+Load34 name D3D Copy info Load index 114
+Load35 name D3D Security info Load index 115
+Load36 name D3D Video Encode info Load index 116
+Load37 name D3D NVEnc_1 info Load index 117
+Load38 name D3D OFA_0 info Load index 118
+Load39 name D3D VR info Load index 119
+Temperature36 name GPU Hot Spot info Temperature index 120
+SmallData2 name GPU Memory Total info SmallData index 121
+SmallData3 name GPU Memory Free info SmallData index 122
+SmallData4 name GPU Memory Used info SmallData index 123
+Load40 name GPU Memory info Load index 124
+Power4 name GPU Package info Power index 125
+Throughput0 name GPU PCIe Rx info Throughput index 126
+Throughput1 name GPU PCIe Tx info Throughput index 127
+Power5 name GPU Power info Power index 128
+SmallData5 name D3D Shared Memory Total info SmallData index 129
+SmallData6 name D3D Shared Memory Free info SmallData index 130
+SmallData7 name D3D Shared Memory Used info SmallData index 131
+Load41 name D3D 3D info Load index 132
+Load42 name D3D Video Decode info Load index 133
+Load43 name D3D Copy info Load index 134
+Load44 name D3D Video Processing info Load index 135
+Load45 name D3D Video Decode info Load index 136
+Load46 name D3D Compute info Load index 137
+Load47 name D3D GSC info Load index 138
+Load48 name D3D Other info Load index 139
+Load49 name D3D Other info Load index 140
+Load50 name D3D Other info Load index 141
+Load51 name D3D Other info Load index 142
+Load52 name D3D Other info Load index 143
+Temperature37 name Temperature info Temperature index 144
+Level0 name Available Spare info Level index 145
+Level1 name Available Spare Threshold info Level index 146
+Level2 name Percentage Used info Level index 147
+Data4 name Data Read info Data index 148
+Data5 name Data Written info Data index 149
+Temperature38 name Temperature 1 info Temperature index 150
+Temperature39 name Temperature 2 info Temperature index 151
+Load53 name Used Space info Load index 152
+Load54 name Read Activity info Load index 153
+Load55 name Write Activity info Load index 154
+Load56 name Total Activity info Load index 155
+Throughput2 name Read Rate info Throughput index 156
+Throughput3 name Write Rate info Throughput index 157
+Temperature40 name Temperature info Temperature index 158
+Level3 name Available Spare info Level index 159
+Level4 name Available Spare Threshold info Level index 160
+Level5 name Percentage Used info Level index 161
+Data6 name Data Read info Data index 162
+Data7 name Data Written info Data index 163
+Temperature41 name Temperature 1 info Temperature index 164
+Temperature42 name Temperature 2 info Temperature index 165
+Load57 name Used Space info Load index 166
+Load58 name Read Activity info Load index 167
+Load59 name Write Activity info Load index 168
+Load60 name Total Activity info Load index 169
+Throughput4 name Read Rate info Throughput index 170
+Throughput5 name Write Rate info Throughput index 171
+Data8 name Data Uploaded info Data index 172
+Data9 name Data Downloaded info Data index 173
+Throughput6 name Upload Speed info Throughput index 174
+Throughput7 name Download Speed info Throughput index 175
+Load61 name Network Utilization info Load index 176
+Data10 name Data Uploaded info Data index 177
+Data11 name Data Downloaded info Data index 178
+Throughput8 name Upload Speed info Throughput index 179
+Throughput9 name Download Speed info Throughput index 180
+Load62 name Network Utilization info Load index 181
+Data12 name Data Uploaded info Data index 182
+Data13 name Data Downloaded info Data index 183
+Throughput10 name Upload Speed info Throughput index 184
+Throughput11 name Download Speed info Throughput index 185
+Load63 name Network Utilization info Load index 186
+Data14 name Data Uploaded info Data index 187
+Data15 name Data Downloaded info Data index 188
+Throughput12 name Upload Speed info Throughput index 189
+Throughput13 name Download Speed info Throughput index 190
+Load64 name Network Utilization info Load index 191
+Data16 name Data Uploaded info Data index 192
+Data17 name Data Downloaded info Data index 193
+Throughput14 name Upload Speed info Throughput index 194
+Throughput15 name Download Speed info Throughput index 195
+Load65 name Network Utilization info Load index 196
+Data18 name Data Uploaded info Data index 197
+Data19 name Data Downloaded info Data index 198
+Throughput16 name Upload Speed info Throughput index 199
+Throughput17 name Download Speed info Throughput index 200
+Load66 name Network Utilization info Load index 201
+Data20 name Data Uploaded info Data index 202
+Data21 name Data Downloaded info Data index 203
+Throughput18 name Upload Speed info Throughput index 204
+Throughput19 name Download Speed info Throughput index 205
+Load67 name Network Utilization info Load index 206
+Data22 name Data Uploaded info Data index 207
+Data23 name Data Downloaded info Data index 208
+Throughput20 name Upload Speed info Throughput index 209
+Throughput21 name Download Speed info Throughput index 210
+Load68 name Network Utilization info Load index 211
+Data24 name Data Uploaded info Data index 212
+Data25 name Data Downloaded info Data index 213
+Throughput22 name Upload Speed info Throughput index 214
+Throughput23 name Download Speed info Throughput index 215
+Load69 name Network Utilization info Load index 216
+Data26 name Data Uploaded info Data index 217
+Data27 name Data Downloaded info Data index 218
+Throughput24 name Upload Speed info Throughput index 219
+Throughput25 name Download Speed info Throughput index 220
+Load70 name Network Utilization info Load index 221
+Data28 name Data Uploaded info Data index 222
+Data29 name Data Downloaded info Data index 223
+Throughput26 name Upload Speed info Throughput index 224
+Throughput27 name Download Speed info Throughput index 225
+Load71 name Network Utilization info Load index 226
+Data30 name Data Uploaded info Data index 227
+Data31 name Data Downloaded info Data index 228
+Throughput28 name Upload Speed info Throughput index 229
+Throughput29 name Download Speed info Throughput index 230
+Load72 name Network Utilization info Load index 231
+Data32 name Data Uploaded info Data index 232
+Data33 name Data Downloaded info Data index 233
+Throughput30 name Upload Speed info Throughput index 234
+Throughput31 name Download Speed info Throughput index 235
+Load73 name Network Utilization info Load index 236
+Data34 name Data Uploaded info Data index 237
+Data35 name Data Downloaded info Data index 238
+Throughput32 name Upload Speed info Throughput index 239
+Throughput33 name Download Speed info Throughput index 240
+Load74 name Network Utilization info Load index 241
+Data36 name Data Uploaded info Data index 242
+Data37 name Data Downloaded info Data index 243
+Throughput34 name Upload Speed info Throughput index 244
+Throughput35 name Download Speed info Throughput index 245
+Load75 name Network Utilization info Load index 246
+Data38 name Data Uploaded info Data index 247
+Data39 name Data Downloaded info Data index 248
+Throughput36 name Upload Speed info Throughput index 249
+Throughput37 name Download Speed info Throughput index 250
+Load76 name Network Utilization info Load index 251
+Data40 name Data Uploaded info Data index 252
+Data41 name Data Downloaded info Data index 253
+Throughput38 name Upload Speed info Throughput index 254
+Throughput39 name Download Speed info Throughput index 255
+Load77 name Network Utilization info Load index 256
+Data42 name Data Uploaded info Data index 257
+Data43 name Data Downloaded info Data index 258
+Throughput40 name Upload Speed info Throughput index 259
+Throughput41 name Download Speed info Throughput index 260
+Load78 name Network Utilization info Load index 261
+Data44 name Data Uploaded info Data index 262
+Data45 name Data Downloaded info Data index 263
+Throughput42 name Upload Speed info Throughput index 264
+Throughput43 name Download Speed info Throughput index 265
+Load79 name Network Utilization info Load index 266
+Data46 name Data Uploaded info Data index 267
+Data47 name Data Downloaded info Data index 268
+Throughput44 name Upload Speed info Throughput index 269
+Throughput45 name Download Speed info Throughput index 270
+Load80 name Network Utilization info Load index 271
+Data48 name Data Uploaded info Data index 272
+Data49 name Data Downloaded info Data index 273
+Throughput46 name Upload Speed info Throughput index 274
+Throughput47 name Download Speed info Throughput index 275
+Load81 name Network Utilization info Load index 276
+Data50 name Data Uploaded info Data index 277
+Data51 name Data Downloaded info Data index 278
+Throughput48 name Upload Speed info Throughput index 279
+Throughput49 name Download Speed info Throughput index 280
+Load82 name Network Utilization info Load index 281
+Data52 name Data Uploaded info Data index 282
+Data53 name Data Downloaded info Data index 283
+Throughput50 name Upload Speed info Throughput index 284
+Throughput51 name Download Speed info Throughput index 285
+Load83 name Network Utilization info Load index 286
+Data54 name Data Uploaded info Data index 287
+Data55 name Data Downloaded info Data index 288
+Throughput52 name Upload Speed info Throughput index 289
+Throughput53 name Download Speed info Throughput index 290
+Load84 name Network Utilization info Load index 291
+Data56 name Data Uploaded info Data index 292
+Data57 name Data Downloaded info Data index 293
+Throughput54 name Upload Speed info Throughput index 294
+Throughput55 name Download Speed info Throughput index 295
+Load85 name Network Utilization info Load index 296
+Data58 name Data Uploaded info Data index 297
+Data59 name Data Downloaded info Data index 298
+Throughput56 name Upload Speed info Throughput index 299
+Throughput57 name Download Speed info Throughput index 300
+Load86 name Network Utilization info Load index 301
+Data60 name Data Uploaded info Data index 302
+Data61 name Data Downloaded info Data index 303
+Throughput58 name Upload Speed info Throughput index 304
+Throughput59 name Download Speed info Throughput index 305
+Load87 name Network Utilization info Load index 306
+Data62 name Data Uploaded info Data index 307
+Data63 name Data Downloaded info Data index 308
+Throughput60 name Upload Speed info Throughput index 309
+Throughput61 name Download Speed info Throughput index 310
+Load88 name Network Utilization info Load index 311
+Data64 name Data Uploaded info Data index 312
+Data65 name Data Downloaded info Data index 313
+Throughput62 name Upload Speed info Throughput index 314
+Throughput63 name Download Speed info Throughput index 315
+Load89 name Network Utilization info Load index 316
+Data66 name Data Uploaded info Data index 317
+Data67 name Data Downloaded info Data index 318
+Throughput64 name Upload Speed info Throughput index 319
+Throughput65 name Download Speed info Throughput index 320
+Load90 name Network Utilization info Load index 321
+Data68 name Data Uploaded info Data index 322
+Data69 name Data Downloaded info Data index 323
+Throughput66 name Upload Speed info Throughput index 324
+Throughput67 name Download Speed info Throughput index 325
+Load91 name Network Utilization info Load index 326
+Data70 name Data Uploaded info Data index 327
+Data71 name Data Downloaded info Data index 328
+Throughput68 name Upload Speed info Throughput index 329
+Throughput69 name Download Speed info Throughput index 330
+Load92 name Network Utilization info Load index 331
+Data72 name Data Uploaded info Data index 332
+Data73 name Data Downloaded info Data index 333
+Throughput70 name Upload Speed info Throughput index 334
+Throughput71 name Download Speed info Throughput index 335
+Load93 name Network Utilization info Load index 336
+Data74 name Data Uploaded info Data index 337
+Data75 name Data Downloaded info Data index 338
+Throughput72 name Upload Speed info Throughput index 339
+Throughput73 name Download Speed info Throughput index 340
+Load94 name Network Utilization info Load index 341
+Data76 name Data Uploaded info Data index 342
+Data77 name Data Downloaded info Data index 343
+Throughput74 name Upload Speed info Throughput index 344
+Throughput75 name Download Speed info Throughput index 345
+Load95 name Network Utilization info Load index 346
+Data78 name Data Uploaded info Data index 347
+Data79 name Data Downloaded info Data index 348
+Throughput76 name Upload Speed info Throughput index 349
+Throughput77 name Download Speed info Throughput index 350
+Load96 name Network Utilization info Load index 351
+Data80 name Data Uploaded info Data index 352
+Data81 name Data Downloaded info Data index 353
+Throughput78 name Upload Speed info Throughput index 354
+Throughput79 name Download Speed info Throughput index 355
+Load97 name Network Utilization info Load index 356
+Data82 name Data Uploaded info Data index 357
+Data83 name Data Downloaded info Data index 358
+Throughput80 name Upload Speed info Throughput index 359
+Throughput81 name Download Speed info Throughput index 360
+Load98 name Network Utilization info Load index 361
+Data84 name Data Uploaded info Data index 362
+Data85 name Data Downloaded info Data index 363
+Throughput82 name Upload Speed info Throughput index 364
+Throughput83 name Download Speed info Throughput index 365
+Load99 name Network Utilization info Load index 366
+Data86 name Data Uploaded info Data index 367
+Data87 name Data Downloaded info Data index 368
+Throughput84 name Upload Speed info Throughput index 369
+Throughput85 name Download Speed info Throughput index 370
+Load100 name Network Utilization info Load index 371
+Energy0 name Designed Capacity info Energy index 372
+Energy1 name Fully-Charged Capacity info Energy index 373
+Level6 name Degradation Level info Level index 374
+Energy2 name Remaining Capacity info Energy index 375
+Level7 name Charge Level info Level index 376
+Voltage15 name Voltage info Voltage index 377
+Current0 name Charge/Discharge Current info Current index 378
+Power6 name Charge/Discharge Rate info Power index 379

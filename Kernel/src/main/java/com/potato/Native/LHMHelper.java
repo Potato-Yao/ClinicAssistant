@@ -26,11 +26,19 @@ public class LHMHelper {
     }
 
     public static LHMHelper connect() throws IOException {
-        ProcessBuilder processBuilder = new ProcessBuilder("./src/main/resources/LibreHardwareMonitorWrapper.exe", "--log=info");
+        ProcessBuilder processBuilder = new ProcessBuilder("./src/main/resources/LibreHardwareMonitorWrapper.exe", "--log=debug").inheritIO();
         Process process = processBuilder.start();
 
         Socket socket = new Socket();
         int port = DEFAULT_PORT;
+
+        // fixme connection
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
         while (port < 65535) {  // to match the implementation of wrapper
             try {
                 socket.connect(new InetSocketAddress(IP, DEFAULT_PORT));
@@ -38,6 +46,9 @@ public class LHMHelper {
             } catch (IOException e) {
                 port++;
             }
+        }
+        if (port == 65535) {
+            throw new IOException("Could not connect to server");
         }
 
         OutputStream outputStream = socket.getOutputStream();

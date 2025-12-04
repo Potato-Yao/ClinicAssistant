@@ -1,10 +1,6 @@
-﻿using System;
-using System.IO;
-using System.Net;
+﻿using System.Net;
 using System.Net.Sockets;
 using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace LibreHardwareMonitorWrapper;
 
@@ -46,6 +42,7 @@ public class Server
             var res = block_read();
 
             var command = (Command)res;
+            Logger.Debug(command.ToString());
 
             int value;
             int index;
@@ -76,6 +73,7 @@ public class Server
                 case Command.Shutdown:
                     return;
                 case Command.Update:
+                    Logger.Debug("Received update command");
                     if (!isUpdateRunning)
                     {
                         Task.Run(() =>
@@ -85,6 +83,7 @@ public class Server
                             isUpdateRunning = false;
                         }, updateCts.Token);
                     }
+                    Logger.Debug("Update command handled");
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(command), command, "Unknown command");

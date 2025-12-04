@@ -9,6 +9,8 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 
+import static com.potato.Utils.Admin.*;
+
 enum Command {
     GetHardware(0),
     SetAuto(1),
@@ -253,14 +255,5 @@ public class LHMTest {
         System.out.println("Value: " + value);
 
         helper.disconnect();
-    }
-
-    public static boolean isAdmin() {
-        String groups[] = (new com.sun.security.auth.module.NTSystem()).getGroupIDs();
-        for (String group : groups) {
-            if (group.equals("S-1-5-32-544"))
-                return true;
-        }
-        return false;
     }
 }

@@ -29,8 +29,7 @@ public class HardwareManager
         return hardware.Type switch
         {
             HardwareType.Control => (hardware as Control)!.Value(),
-            HardwareType.Fan => (hardware as Sensor)!.Value(),
-            HardwareType.Temp => (hardware as Sensor)!.Value(),
+            HardwareType.Sensor => (hardware as Sensor)!.Value(),
             _ => throw new ArgumentOutOfRangeException(nameof(hardware.Type), hardware.Type, "Unknown hardware type")
         };
     }
@@ -65,6 +64,7 @@ public class HardwareManager
         var jsonText = JsonSerializer.Serialize(_hardwareList, serializerOptions);
 
         var stringBuilder = new StringBuilder(jsonText);
+        // stringBuilder.Insert(1, "{\"Timestamp\":" + DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + "},");
         stringBuilder.Append('\n');
         return stringBuilder.ToString();
     }
