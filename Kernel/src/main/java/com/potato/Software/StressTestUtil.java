@@ -1,4 +1,4 @@
-package com.potato.Utils;
+package com.potato.Software;
 
 import com.potato.External.CPUBurnHelper;
 import com.potato.External.FurmarkHelper;

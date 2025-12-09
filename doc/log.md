@@ -72,3 +72,11 @@ HardwareInfoManager的constructor和update()里都需要处理硬件信息。同
 试着用JavaFX写界面，但是如果是修改IDEA默认给出的配置文件，把gui和kernel放到平级，gui就会报找不到javafx runtime，死活修不好，所以先不做界面了
 
 写了烤鸡和判定的方法，为此复习了Java多线程的各种知识。但是不知道为什么程序全部运行完主线程不自行停止，查了process expleror也没看明白有什么没有杀掉的线程
+
+## 12.10 凌晨
+
+今天在写磁盘和注册表相关的东西。需要用到diskpart，是用process的BufferedWriter和BufferedReader交互的。这东西不太聪明，最开始的实现会卡住，认真看了这俩的文档发现我的用法有问题。后来明明已经consume了最开始的几行但是它仍旧会被读到。于是尝试了一些小妙招但是要么又卡住，要么返回空字符串，不会解决了
+
+想着一个char一个char读来debug，没想到这样就能得到正确结果了，莫名其妙解决问题了
+
+值得一提的是，这个过程中我一直在问sonnet 4.5，但是它给的方法并无什么用。让它debug十分钟不如我自己写几个println来debug两分钟。感觉是我没有掌握正确用法导致的，不然这也太菜了
