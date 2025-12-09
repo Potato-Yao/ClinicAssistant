@@ -1,6 +1,6 @@
 package com.potato.Hardware;
 
-public class GPU {
+public class GPU extends HardwareItem {
     public GPU(String name, double temperature, double maxTemperature, double power, double speed, double memTotal, double memFree, double memUsed, double memUsage) {
         this.name = name;
         this.temperature = temperature;

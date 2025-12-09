@@ -64,3 +64,11 @@ HardwareInfoManager的constructor和update()里都需要处理硬件信息。同
 另外就是CPU、GPU这些类里成员变量很多，起初想用lombok简化Getter和Setter，但是不知道为什么过不了编译，干脆就用IDEA生成了一堆Getter和Setter，以后再折腾这个
 
 写了个test，现在的update()平均需要跑2ms，感觉还有优化空间（虽然完全够用了）
+
+## 12.9 上午
+
+最近几天干了这些事情：
+
+试着用JavaFX写界面，但是如果是修改IDEA默认给出的配置文件，把gui和kernel放到平级，gui就会报找不到javafx runtime，死活修不好，所以先不做界面了
+
+写了烤鸡和判定的方法，为此复习了Java多线程的各种知识。但是不知道为什么程序全部运行完主线程不自行停止，查了process expleror也没看明白有什么没有杀掉的线程

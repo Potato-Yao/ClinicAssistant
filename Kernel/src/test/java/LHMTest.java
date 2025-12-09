@@ -1,4 +1,4 @@
-import com.potato.Native.LHMHelper;
+import com.potato.External.LHMHelper;
 import org.junit.jupiter.api.Test;
 
 import java.io.EOFException;

@@ -1,4 +1,4 @@
-package com.potato.Native;
+package com.potato.External;
 
 import java.io.*;
 import java.net.InetSocketAddress;

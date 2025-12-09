@@ -1,7 +1,7 @@
 package com.potato.Hardware;
 
 import com.google.gson.Gson;
-import com.potato.Native.LHMHelper;
+import com.potato.External.LHMHelper;
 
 import static com.potato.Utils.Admin.*;
 

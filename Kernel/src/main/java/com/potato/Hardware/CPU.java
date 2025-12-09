@@ -1,6 +1,6 @@
 package com.potato.Hardware;
 
-public class CPU {
+public class CPU extends HardwareItem {
     private String name;
     private double usage;
     private double packageTemperature;
