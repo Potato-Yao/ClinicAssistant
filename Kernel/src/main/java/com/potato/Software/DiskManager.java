@@ -32,7 +32,7 @@ public class DiskManager {
         updateDisks();
     }
 
-    private String executeCommand(String command) throws IOException {
+    private String executeDPCommand(String command) throws IOException {
         if (!hasLoadInterpreter) {
             throw new IOException("DiskManager has not connected to diskpart.");
         }
@@ -72,8 +72,9 @@ public class DiskManager {
     private void updateDisks() throws IOException {
         diskItems.clear();
 
-        String re = executeCommand("list disk");
+        String re = executeDPCommand("list disk");
         String[] responses = re.split("\n");
+
         /*
         sample:
           Disk ###  Status         Size     Free     Dyn  Gpt
@@ -81,7 +82,6 @@ public class DiskManager {
           Disk 0    Online         1863 GB    50 GB        *
           Disk 1    Online          953 GB  1024 KB        *
          */
-
         for (int i = 2; i < responses.length; ++i) {
             String[] temp = responses[i].trim().split("\\s+");
             try {
@@ -90,6 +90,170 @@ public class DiskManager {
                 break;
             }
         }
+
+        ProcessBuilder processBuilder = new ProcessBuilder("manage-bde", "-status");
+        Process process = processBuilder.start();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        partitionItems = parsePartitions(reader);
+    }
+
+    private ArrayList<PartitionItem> parsePartitions(BufferedReader reader) throws IOException {
+        /*
+        sample:
+        BitLocker Drive Encryption: Configuration Tool version 10.0.22621
+        Copyright (C) 2013 Microsoft Corporation. All rights reserved.
+
+        Disk volumes that can be protected with
+        BitLocker Drive Encryption:
+        Volume D: [Document]
+        [Data Volume]
+
+            Size:                 839.01 GB
+            BitLocker Version:    None
+            Conversion Status:    Fully Decrypted
+            Percentage Encrypted: 0.0%
+            Encryption Method:    None
+            Protection Status:    Protection Off
+            Lock Status:          Unlocked
+            Identification Field: None
+            Automatic Unlock:     Disabled
+            Key Protectors:       None Found
+
+        Volume E: [SharedFile]
+        [Data Volume]
+
+            Size:                 50.00 GB
+            BitLocker Version:    None
+            Conversion Status:    Fully Decrypted
+            Percentage Encrypted: 0.0%
+            Encryption Method:    None
+            Protection Status:    Protection Off
+            Lock Status:          Unlocked
+            Identification Field: None
+            Automatic Unlock:     Disabled
+            Key Protectors:       None Found
+
+        Volume C: [OS]
+        [OS Volume]
+
+            Size:                 926.17 GB
+            BitLocker Version:    None
+            Conversion Status:    Fully Decrypted
+            Percentage Encrypted: 0.0%
+            Encryption Method:    None
+            Protection Status:    Protection Off
+            Lock Status:          Unlocked
+            Identification Field: None
+            Key Protectors:       None Found
+         */
+        /*
+        what we need to take care:
+        Volume D: [Document]
+        Size:                 839.01 GB
+        Percentage Encrypted: 0.0%
+         */
+        String currentPartition = null;
+        int currentSize = -1;
+        double currentPercentage = -1;
+
+        String line;
+        ArrayList<PartitionItem> partitionItems = new ArrayList<>();
+        // to avoid missing detecting a missed info, we use state machine
+        int state = 0;  // 0: looking for volume, 1: looking for size, 2: looking for percentage
+        while ((line = reader.readLine()) != null) {
+            String[] lines = line.trim().split("\\s+");
+            if (lines.length < 2) {
+                continue;
+            }
+
+            if (state == 0) {
+                if (lines[0].equals("Volume")) {
+                    currentPartition = lines[1].substring(0, 1);
+                    state = 1;
+                }
+            } else if (state == 1) {
+                if (lines[0].equals("Size:")) {
+                    assert lines.length == 3;
+                    if (lines[2].equals("MB")) {
+                        currentSize = Integer.parseInt(lines[1]);
+                        state = 2;
+                    } else if (lines[2].equals("GB")) {
+                        currentSize = (int) (Double.parseDouble(lines[1]) * 1024);
+                        state = 2;
+                    }
+                }
+            } else if (state == 2) {
+                if (lines[0].equals("Percentage")) {
+                    assert lines.length == 3;
+                    currentPercentage = Double.parseDouble(lines[2].substring(0, lines[2].length() - 1));
+
+                    state = 0;
+                }
+            }
+
+            if (currentPartition != null && currentSize != -1 && currentPercentage != -1) {
+                partitionItems.add(new PartitionItem(currentSize, currentPartition, currentPercentage));
+
+                currentPartition = null;
+                currentSize = -1;
+                currentPercentage = -1;
+            }
+        }
+
+        return partitionItems;
+    }
+
+    /**
+     * Only start the process to unlock
+     * @param label
+     */
+    public void unlockBitlocker(String label) throws IOException {
+        ArrayList<String> labels = new ArrayList<>();
+        partitionItems.forEach((partitionItem -> labels.add(partitionItem.getLabel())));
+        if (!labels.contains(label)) {
+            throw new IllegalArgumentException("Label " + label + " not found.");
+        }
+
+        if (partitionItems.get(labels.indexOf(label)).getBitlockerPercentage() == 0) {
+            return;
+        }
+
+        ProcessBuilder processBuilder = new ProcessBuilder("manage-bde", "-off", label + ":");
+        processBuilder.start();
+    }
+
+    public void unlockBitlockerUntilDone(String label) throws InterruptedException {
+        Thread thread = new Thread(() -> {
+            try {
+                unlockBitlocker(label);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+            ArrayList<String> labels = new ArrayList<>();
+            partitionItems.forEach((partitionItem -> labels.add(partitionItem.getLabel())));
+            while (true) {
+                try {
+                    updateDisks();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                double percentage = partitionItems.get(labels.indexOf(label)).getBitlockerPercentage();
+                if (percentage == 0) {
+                    break;
+                }
+
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+
+        thread.start();
+        thread.join();
     }
 
     public void connect() throws IOException {

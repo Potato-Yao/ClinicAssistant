@@ -71,7 +71,7 @@ HardwareInfoManager的constructor和update()里都需要处理硬件信息。同
 
 试着用JavaFX写界面，但是如果是修改IDEA默认给出的配置文件，把gui和kernel放到平级，gui就会报找不到javafx runtime，死活修不好，所以先不做界面了
 
-写了烤鸡和判定的方法，为此复习了Java多线程的各种知识。但是不知道为什么程序全部运行完主线程不自行停止，查了process expleror也没看明白有什么没有杀掉的线程
+写了烤鸡和判定的方法，为此复习了Java多线程的各种知识。但是不知道为什么程序全部运行完主线程不自行停止，查了process explorer也没看明白有什么没有杀掉的线程
 
 ## 12.10 凌晨
 

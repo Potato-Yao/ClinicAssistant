@@ -1,5 +1,6 @@
 import com.potato.Software.DiskItem;
 import com.potato.Software.DiskManager;
+import com.potato.Software.PartitionItem;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -7,11 +8,24 @@ import java.util.ArrayList;
 
 public class DiskManagerTest {
     @Test
-    void test() throws IOException {
+    void getInfoTest() throws IOException {
         DiskManager manager = DiskManager.getDiskManager();
         ArrayList<DiskItem> diskItems = manager.getDiskItems();
         for (DiskItem diskItem : diskItems) {
             System.out.println("Disk ID: " + diskItem.getId() + " size: " + diskItem.getSize());
         }
+
+        ArrayList<PartitionItem> partitionItems = manager.getPartitionItems();
+        for (PartitionItem partitionItem : partitionItems) {
+            System.out.println("Partition on Disk label: " + partitionItem.getLabel() + " with size: " + partitionItem.getSize() + " and encrypted percentage: " + partitionItem.getBitlockerPercentage());
+        }
+
+        manager.disconnect();
+    }
+
+    @Test
+    void bitlockerTest() throws IOException, InterruptedException {
+        DiskManager manager = DiskManager.getDiskManager();
+        manager.unlockBitlockerUntilDone("E");  // i have a E: with bitlocker on
     }
 }

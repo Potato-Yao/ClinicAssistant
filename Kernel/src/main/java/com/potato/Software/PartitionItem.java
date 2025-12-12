@@ -10,4 +10,16 @@ public class PartitionItem {
         this.label = label;
         this.bitlockerPercentage = bitlockerPercentage;
     }
+
+    public int getSize() {
+        return size;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public double getBitlockerPercentage() {
+        return bitlockerPercentage;
+    }
 }
