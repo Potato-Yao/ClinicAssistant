@@ -80,3 +80,9 @@ HardwareInfoManager的constructor和update()里都需要处理硬件信息。同
 想着一个char一个char读来debug，没想到这样就能得到正确结果了，莫名其妙解决问题了
 
 值得一提的是，这个过程中我一直在问sonnet 4.5，但是它给的方法并无什么用。让它debug十分钟不如我自己写几个println来debug两分钟。感觉是我没有掌握正确用法导致的，不然这也太菜了
+
+## 12.12 晚上
+
+用class来模拟硬件是正确的设计，这样能充分利用面向对象的作用。今天实现了Disk，比较顺利
+
+现在还差一键windows和office激活要写。诊所的标准方法是用`irm https://get.activated.win | iex`，我现在需要知道它的原理

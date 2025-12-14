@@ -52,19 +52,8 @@ public class DiskManager {
             output.append((char) dpReader.read());
         }
 
-        // remove "DISKPART>"
+        // remove "\n DISKPART>"
         output.delete(output.length() - 11, output.length());
-//        String line;
-//        while ((line = dpReader.readLine()) != null) {
-//            if (line.isBlank()) {
-//                continue;
-//            }
-//            output.append(line).append("\n");
-//
-//            if (line.contains("DISKPART>")) {
-//                break;
-//            }
-//        }
 
         return output.toString().trim();
     }
@@ -74,7 +63,15 @@ public class DiskManager {
 
         String re = executeDPCommand("list disk");
         String[] responses = re.split("\n");
+        diskItems = parseDisks(responses);
 
+        ProcessBuilder processBuilder = new ProcessBuilder("manage-bde", "-status");
+        Process process = processBuilder.start();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        partitionItems = parsePartitions(reader);
+    }
+
+    private ArrayList<DiskItem> parseDisks(String[] responses) {
         /*
         sample:
           Disk ###  Status         Size     Free     Dyn  Gpt
@@ -82,6 +79,8 @@ public class DiskManager {
           Disk 0    Online         1863 GB    50 GB        *
           Disk 1    Online          953 GB  1024 KB        *
          */
+        ArrayList<DiskItem> diskItems = new ArrayList<>();
+
         for (int i = 2; i < responses.length; ++i) {
             String[] temp = responses[i].trim().split("\\s+");
             try {
@@ -91,10 +90,7 @@ public class DiskManager {
             }
         }
 
-        ProcessBuilder processBuilder = new ProcessBuilder("manage-bde", "-status");
-        Process process = processBuilder.start();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        partitionItems = parsePartitions(reader);
+        return diskItems;
     }
 
     private ArrayList<PartitionItem> parsePartitions(BufferedReader reader) throws IOException {
@@ -158,16 +154,13 @@ public class DiskManager {
 
         String line;
         ArrayList<PartitionItem> partitionItems = new ArrayList<>();
-        // to avoid missing detecting a missed info, we use state machine
+        // to be aware of missing info, we decide to use state machine
         int state = 0;  // 0: looking for volume, 1: looking for size, 2: looking for percentage
         while ((line = reader.readLine()) != null) {
             String[] lines = line.trim().split("\\s+");
-            if (lines.length < 2) {
-                continue;
-            }
-
             if (state == 0) {
                 if (lines[0].equals("Volume")) {
+                    assert lines.length >= 2;
                     currentPartition = lines[1].substring(0, 1);
                     state = 1;
                 }
@@ -296,7 +289,7 @@ public class DiskManager {
         hasLoadInterpreter = true;
     }
 
-    public void disconnect() throws IOException {
+    public void disconnect() {
         if (!hasLoadInterpreter) {
             return;
         }
