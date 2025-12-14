@@ -125,9 +125,9 @@ public class Windows {
     }
 
     public void activateWindows() throws IOException {
-//        if (isActivated) {
-//            return;
-//        }
+        if (isActivated) {
+            return;
+        }
 
         File projectRoot = new File(System.getProperty("user.dir"));
         File activateTool = new File(projectRoot, "../ExternalTools/win-activate/MAS_AIO.cmd");

@@ -86,3 +86,9 @@ HardwareInfoManager的constructor和update()里都需要处理硬件信息。同
 用class来模拟硬件是正确的设计，这样能充分利用面向对象的作用。今天实现了Disk，比较顺利
 
 现在还差一键windows和office激活要写。诊所的标准方法是用`irm https://get.activated.win | iex`，我现在需要知道它的原理
+
+我在这个工具的官网上找到了irm和iex的作用介绍：`The IRM command in PowerShell downloads a script from a specified URL, and the IEX command executes it.`，所以不执行iex，把前半段重定向到某个文件就可以把脚本下载下来了，是个powerhshell脚本，它折腾半天最后实际上又下载了一个叫MAS_AIO的cmd脚本，这个脚本在官网就能找到，这才是激活工具本体
+
+## 12.14 晚上
+
+脚本语言我看不太懂，所以把那个激活工具丢给了sonnect 4.5，它给出了脚本的启动参数，这就很方便了，很顺畅地实现了获取系统信息和操作这个脚本的相关方法
