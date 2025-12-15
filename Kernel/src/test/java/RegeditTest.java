@@ -1,4 +1,4 @@
-import com.potato.Software.Regedit;
+import com.potato.kernel.Software.Regedit;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

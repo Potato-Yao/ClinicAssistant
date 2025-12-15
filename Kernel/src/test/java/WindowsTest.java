@@ -1,4 +1,4 @@
-import com.potato.Software.Windows;
+import com.potato.kernel.Software.Windows;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

@@ -1,6 +1,6 @@
-import com.potato.Software.DiskItem;
-import com.potato.Software.DiskManager;
-import com.potato.Software.PartitionItem;
+import com.potato.kernel.Software.DiskItem;
+import com.potato.kernel.Software.DiskManager;
+import com.potato.kernel.Software.PartitionItem;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

@@ -1,6 +1,6 @@
-import com.potato.Software.StressTestUtil;
-import com.potato.Software.StressTestUtilBuilder;
-import com.potato.Software.TestState;
+import com.potato.kernel.Software.StressTestUtil;
+import com.potato.kernel.Software.StressTestUtilBuilder;
+import com.potato.kernel.Software.TestState;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

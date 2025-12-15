@@ -1,4 +1,4 @@
-import com.potato.External.LHMHelper;
+import com.potato.kernel.External.LHMHelper;
 import org.junit.jupiter.api.Test;
 
 import java.io.EOFException;
@@ -8,8 +8,6 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
-
-import static com.potato.Utils.Admin.*;
 
 enum Command {
     GetHardware(0),

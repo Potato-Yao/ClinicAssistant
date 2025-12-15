@@ -1,4 +1,4 @@
-import com.potato.Hardware.HardwareInfoManager;
+import com.potato.kernel.Hardware.HardwareInfoManager;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

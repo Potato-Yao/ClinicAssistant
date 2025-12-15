@@ -1,4 +1,4 @@
-import com.potato.External.FurmarkHelper;
+import com.potato.kernel.External.FurmarkHelper;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

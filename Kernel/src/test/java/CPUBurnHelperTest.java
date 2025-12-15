@@ -1,4 +1,4 @@
-import com.potato.External.CPUBurnHelper;
+import com.potato.kernel.External.CPUBurnHelper;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

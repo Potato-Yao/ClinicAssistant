@@ -18,6 +18,10 @@ dependencies {
     implementation("com.google.code.gson:gson:2.13.2")
 }
 
+java {
+    modularity.inferModulePath.set(true)
+}
+
 tasks.test {
     useJUnitPlatform()
 }
