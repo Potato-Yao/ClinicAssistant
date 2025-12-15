@@ -11,9 +11,8 @@ public class StressTestUtilTest {
         StressTestUtilBuilder builder = new StressTestUtilBuilder();
         StressTestUtil util = builder.cpuTest(true).gpuTest(true).totalPower(100).build();
 
-        util.runStressTest(7);
+        util.runStressTest(15);
 
-        System.out.println(util.isRunning());
         while (util.isRunning()) {
             TestState[] testStates = util.getTestStates();
             for (TestState testState : testStates) {

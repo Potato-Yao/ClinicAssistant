@@ -72,12 +72,6 @@ public class StressTestUtil {
                     break;
                 }
 
-                try {
-                    update();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-
                 if (remainTimeSeconds == Integer.MAX_VALUE) {
                     if (judgeToStop()) {
                         break;
@@ -99,7 +93,6 @@ public class StressTestUtil {
     }
 
     private void update() throws IOException {
-        hardwareInfoManager.update();
         nowTime = Instant.now();
         long nowSecond = nowTime.getEpochSecond();
 

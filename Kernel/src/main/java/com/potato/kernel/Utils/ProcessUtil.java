@@ -1,0 +1,16 @@
+package com.potato.kernel.Utils;
+
+import java.io.IOException;
+
+public class ProcessUtil {
+    public static void forceKillProcess(Process process) {
+        long pid = process.pid();
+        ProcessBuilder killerBuilder = new ProcessBuilder("kill", Long.toString(pid));
+        try {
+            killerBuilder.start();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        process.destroy();
+    }
+}

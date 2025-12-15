@@ -1,6 +1,7 @@
 package com.potato.kernel.Hardware;
 
 import com.google.gson.Gson;
+import com.potato.kernel.Config;
 import com.potato.kernel.External.LHMHelper;
 
 import static com.potato.kernel.Utils.Admin.*;
@@ -122,10 +123,23 @@ public class HardwareInfoManager {
                 index[40] = ind;
             }
         }
+
+        // update hardware info automatically
+        Thread updater = new Thread(() -> {
+            while (true) {
+                try {
+                    update();
+                    Thread.sleep(Config.HARDWARE_INFO_SEEK_RATE);
+                } catch (IOException | InterruptedException e) {
+                    break;
+                }
+            }
+        });
+        updater.setDaemon(true);
+        updater.start();
     }
 
     public static HardwareInfoManager getHardwareInfoManager() throws IOException {
-        // todo a thread to update info automatically
         if (manager == null) {
             manager = new HardwareInfoManager();
         }

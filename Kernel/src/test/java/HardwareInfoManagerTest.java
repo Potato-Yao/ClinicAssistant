@@ -11,7 +11,6 @@ public class HardwareInfoManagerTest {
         long time = 0;
         for (int i = 0; i < 10; i++) {
             Instant begin = Instant.now();
-            manager.update();
             System.out.println("Package temperature" + manager.getCpu().getPackageTemperature());
             System.out.println("Average temperature" + manager.getCpu().getAverageTemperature());
             System.out.println("GPU Temperature" + manager.getGpu().getTemperature());

@@ -20,14 +20,14 @@ public class MainApp extends Application {
         ResourceBundle languageBundle = ResourceBundle.getBundle("messages", locale);
 
         FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("main-frame.fxml"), languageBundle);
-        MainFrameController mainController = mainLoader.getController();
         Scene scene = new Scene(mainLoader.load());
+        MainFrameController mainController = mainLoader.getController();
         stage.setTitle(Config.APP_NAME);
         stage.setScene(scene);
 
-//        stage.setOnCloseRequest((event) -> {
-//            mainController.closeFrame();
-//        });
+        stage.setOnCloseRequest((event) -> {
+            mainController.closeFrame();
+        });
 
         stage.show();
     }

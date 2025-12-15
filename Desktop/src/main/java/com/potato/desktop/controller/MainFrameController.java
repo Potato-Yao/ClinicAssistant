@@ -74,11 +74,6 @@ public class MainFrameController {
     }
 
     public void updateDataInternal() {
-        try {
-            hardwareInfoManager.update();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
         CPU cpu = hardwareInfoManager.getCpu();
         GPU gpu = hardwareInfoManager.getGpu();
 

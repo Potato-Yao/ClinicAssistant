@@ -5,6 +5,8 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
+import static com.potato.kernel.Utils.ProcessUtil.*;
+
 public class LHMHelper {
     private static final String IP = "127.0.0.1";
     private static final int DEFAULT_PORT = 55555;
@@ -132,11 +134,8 @@ public class LHMHelper {
 
     public void disconnect() throws IOException, InterruptedException {
         send(Command.Shutdown);
-        int exitCode = processHandle.waitFor();
-        if (exitCode != 0) {
-            throw new IOException("LHM process exited with code: " + exitCode);
-        }
         socket.close();
+        forceKillProcess(processHandle);
     }
 }
 
