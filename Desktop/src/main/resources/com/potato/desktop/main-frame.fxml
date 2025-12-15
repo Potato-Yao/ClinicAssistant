@@ -23,8 +23,8 @@
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
 
-            <Button text="Monitor"/>
-            <Button text="Tools"/>
+            <Button text="Monitor" fx:id="monitorBtn"/>
+            <Button text="Tools" fx:id="toolsBtn"/>
         </VBox>
     </left>
 

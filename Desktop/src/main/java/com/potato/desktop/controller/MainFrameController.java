@@ -7,6 +7,7 @@ import com.potato.kernel.Software.SystemType;
 import com.potato.kernel.Software.Windows;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 
@@ -21,6 +22,10 @@ public class MainFrameController {
     private VBox monitorView;
     @FXML
     private VBox toolsView;
+    @FXML
+    private Button monitorBtn;
+    @FXML
+    private Button toolsBtn;
     @FXML
     private Label cpuTemp;
     @FXML
@@ -53,6 +58,13 @@ public class MainFrameController {
 
     @FXML
     public void initialize() {
+        monitorBtn.setOnAction((e) -> {
+            monitorBtnAction();
+        });
+        toolsBtn.setOnAction((e) -> {
+            toolsBtnAction();
+        });
+
         // todo error handling
         try {
             updateMonitorData();
@@ -97,6 +109,16 @@ public class MainFrameController {
     public void closeFrame() {
         hardwareInfoManager.close();
         executor.shutdownNow();
+    }
+
+    private void monitorBtnAction() {
+        monitorView.setVisible(true);
+        toolsView.setVisible(false);
+    }
+
+    private void toolsBtnAction() {
+        monitorView.setVisible(false);
+        toolsView.setVisible(true);
     }
 
     private <T> String updatedLabelText(String label, T value) {
