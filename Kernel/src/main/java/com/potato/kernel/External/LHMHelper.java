@@ -1,7 +1,8 @@
 package com.potato.kernel.External;
 
+import com.potato.kernel.Config;
+
 import java.io.*;
-import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
 
@@ -12,6 +13,7 @@ public class LHMHelper {
     private static final int DEFAULT_PORT = 55555;
     private static final String CHECK = "fan-control-check";
     private static final String CHECK_RESPONSE = "fan-control-ok";
+    private static final int PORT_FIND_RANGE = 50;
 
     private final Process processHandle;
     private final Socket socket;
@@ -33,26 +35,34 @@ public class LHMHelper {
         ProcessBuilder processBuilder = new ProcessBuilder(lhmExe.getAbsolutePath(), "--log=error").inheritIO();
         Process process = processBuilder.start();
 
-        Socket socket = new Socket();
-        int port = DEFAULT_PORT;
+        Socket socket = null;
 
-        // fixme connection
-        try {
-            Thread.sleep(10);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        boolean connected = false;
+        long timeoutSeconds = System.currentTimeMillis() + Config.CONNECTION_TIMEOUT * 1000L;
+        while (System.currentTimeMillis() < timeoutSeconds && !connected) {
+            int port = DEFAULT_PORT;
+            while (port < DEFAULT_PORT + PORT_FIND_RANGE) {  // to match the implementation of wrapper
+                System.out.println("reset " + port);
+                try {
+                    socket = new Socket(IP, port);
 
-        while (port < 65535) {  // to match the implementation of wrapper
+                    System.out.println("here " + port);
+                    connected = true;
+                    break;
+                } catch (IOException e) {
+                    port++;
+                }
+            }
+            System.out.println("there");
             try {
-                socket.connect(new InetSocketAddress(IP, DEFAULT_PORT));
-                break;
-            } catch (IOException e) {
-                port++;
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                throw new RuntimeException(ex);
             }
         }
-        if (port == 65535) {
-            throw new IOException("Could not connect to server");
+
+        if (!connected) {
+            throw new IOException("Connection to LHM timed out");
         }
 
         OutputStream outputStream = socket.getOutputStream();
