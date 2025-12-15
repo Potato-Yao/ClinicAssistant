@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.Circle?>
+<BorderPane xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.potato.desktop.controller.MainFrameController">
+
+    <top>
+        <MenuBar>
+            <menus>
+                <Menu text="Help"/>
+                <Menu text="About"/>
+            </menus>
+        </MenuBar>
+    </top>
+
+    <left>
+        <VBox spacing="10" prefWidth="140">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+
+            <Button text="Monitor"/>
+            <Button text="Tools"/>
+        </VBox>
+    </left>
+
+    <center>
+
+        <StackPane fx:id="centerStack">
+
+            <VBox fx:id="monitorView" spacing="10" visible="true">
+
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <GridPane hgap="10" vgap="10">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="33"/>
+                        <ColumnConstraints percentWidth="34"/>
+                        <ColumnConstraints percentWidth="33"/>
+                    </columnConstraints>
+
+                    <VBox spacing="8" alignment="CENTER" GridPane.columnIndex="0">
+                        <Label text="CPU Monitor" style="-fx-font-weight: bold"/>
+                        <StackPane>
+                            <Circle radius="60"
+                                    style="-fx-fill: transparent; -fx-stroke: #4CAF50; -fx-stroke-width: 6"/>
+                            <Label text="Fan %"/>
+                        </StackPane>
+                        <Label text="Temp" fx:id="cpuTemp"/>
+                        <Label text="Power" fx:id="cpuPower"/>
+                        <Label text="Clock" fx:id="cpuClock"/>
+                    </VBox>
+
+                    <VBox spacing="6" GridPane.columnIndex="1">
+                        <Label text="System Information" style="-fx-font-weight: bold"/>
+                        <Label text="System Name" fx:id="systemName"/>
+                        <Label text="OS Version" fx:id="osVersion"/>
+                        <Label text="Laptop Model" fx:id="laptopModel"/>
+                        <Label text="System Type" fx:id="systemType"/>
+                        <Label text="Activation Status" fx:id="activationStatus"/>
+                    </VBox>
+
+                    <VBox spacing="8" alignment="CENTER" GridPane.columnIndex="2">
+                        <Label text="GPU Monitor" style="-fx-font-weight: bold"/>
+                        <StackPane>
+                            <Circle radius="60"
+                                    style="-fx-fill: transparent; -fx-stroke: #2196F3; -fx-stroke-width: 6"/>
+                            <Label text="Fan %"/>
+                        </StackPane>
+                        <Label text="Temp" fx:id="gpuTemp"/>
+                        <Label text="Power" fx:id="gpuPower"/>
+                        <Label text="Clock" fx:id="gpuClock"/>
+                    </VBox>
+                </GridPane>
+
+                <GridPane hgap="20" vgap="10">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="25"/>
+                        <ColumnConstraints percentWidth="25"/>
+                        <ColumnConstraints percentWidth="25"/>
+                        <ColumnConstraints percentWidth="25"/>
+                    </columnConstraints>
+
+                    <VBox GridPane.columnIndex="0">
+                        <Label text="Memory"/>
+                        <Label text="Total"/>
+                        <Label text="Used %"/>
+                    </VBox>
+
+                    <VBox GridPane.columnIndex="1">
+                        <Label text="Disks"/>
+                        <Label text="Disk Info"/>
+                    </VBox>
+
+                    <VBox GridPane.columnIndex="2">
+                        <Label text="Network"/>
+                        <Label text="Connected / Disconnected"/>
+                    </VBox>
+
+                    <VBox GridPane.columnIndex="3">
+                        <Label text="Battery"/>
+                        <Label text="Charging / Not Charging"/>
+                    </VBox>
+                </GridPane>
+            </VBox>
+
+            <VBox fx:id="toolsView" spacing="10" visible="false">
+                <padding>
+                    <Insets top="10" right="10" bottom="10" left="10"/>
+                </padding>
+                <Label text="Tools" style="-fx-font-size: 16; -fx-font-weight: bold"/>
+            </VBox>
+
+        </StackPane>
+    </center>
+
+</BorderPane>

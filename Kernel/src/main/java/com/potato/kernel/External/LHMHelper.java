@@ -26,7 +26,9 @@ public class LHMHelper {
     }
 
     public static LHMHelper connect() throws IOException {
-        ProcessBuilder processBuilder = new ProcessBuilder("./src/main/resources/LibreHardwareMonitorWrapper.exe", "--log=debug").inheritIO();
+        File projectRoot = new File(System.getProperty("user.dir"));
+        File lhmExe = new File(projectRoot, "../LibreHardwareMonitorWrapper/LibreHardwareMonitorWrapper.exe");
+        ProcessBuilder processBuilder = new ProcessBuilder(lhmExe.getAbsolutePath(), "--log=error").inheritIO();
         Process process = processBuilder.start();
 
         Socket socket = new Socket();

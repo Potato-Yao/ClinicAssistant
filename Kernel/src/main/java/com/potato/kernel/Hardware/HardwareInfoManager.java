@@ -125,6 +125,7 @@ public class HardwareInfoManager {
     }
 
     public static HardwareInfoManager getHardwareInfoManager() throws IOException {
+        // todo a thread to update info automatically
         if (manager == null) {
             manager = new HardwareInfoManager();
         }
@@ -186,10 +187,6 @@ public class HardwareInfoManager {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    public static HardwareInfoManager getManager() {
-        return manager;
     }
 
     public static void setManager(HardwareInfoManager manager) {

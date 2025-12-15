@@ -9,6 +9,8 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 
+import static com.potato.kernel.Utils.Admin.isAdmin;
+
 enum Command {
     GetHardware(0),
     SetAuto(1),

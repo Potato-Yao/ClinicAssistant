@@ -94,11 +94,11 @@ public class Windows {
                 } else if (lines[1].equals("Type:")) {
                     String type = readValue(lines);
                     if (type.contains("x64")) {
-                        this.systemType = SystemType.x64;
+                        this.systemType = SystemType.X64;
                     } else if (type.contains("ARM64")) {
-                        this.systemType = SystemType.arm;
+                        this.systemType = SystemType.ARM64;
                     } else if (type.contains("x86")) {
-                        this.systemType = SystemType.x86;
+                        this.systemType = SystemType.X86;
                     }
                 }
             }
