@@ -29,4 +29,8 @@
         <PackageReference Include="Microsoft.Win32.SystemEvents" Version="9.0.7" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="build\" />
+    </ItemGroup>
+
 </Project>

@@ -31,7 +31,7 @@ public class LHMHelper {
 
     public static LHMHelper connect() throws IOException {
         File projectRoot = new File(System.getProperty("user.dir"));
-        File lhmExe = new File(projectRoot, "../LibreHardwareMonitorWrapper/LibreHardwareMonitorWrapper.exe");
+        File lhmExe = new File(projectRoot, Config.WRAPPER_LOCATION);
         ProcessBuilder processBuilder = new ProcessBuilder(lhmExe.getAbsolutePath(), "--log=error").inheritIO();
         Process process = processBuilder.start();
 

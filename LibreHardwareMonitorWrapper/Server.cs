@@ -22,6 +22,7 @@ public class Server
     private const string CheckResponse = "fan-control-ok";
     private readonly Socket _client;
     private readonly byte[] _buffer = new byte[4];
+    private const int PortSearchRange = 50;
 
     public Server()
     {
@@ -96,7 +97,7 @@ public class Server
     private static void StartServer(Socket listener)
     {
         var p = DefaultPort;
-        for (; p <= 65535; p++)
+        for (; p <= DefaultPort + PortSearchRange; p++)
         {
             try
             {
@@ -115,7 +116,6 @@ public class Server
             }
 
             Logger.Info("Server Started on " + Address + ":" + p);
-            Console.WriteLine("Server port: " + p);
             return;
         }
 
