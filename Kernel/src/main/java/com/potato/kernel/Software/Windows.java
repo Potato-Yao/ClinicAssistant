@@ -150,6 +150,10 @@ public class Windows {
         }
     }
 
+    public void enterBIOS() throws IOException {
+        Process process = new ProcessBuilder("shutdown", "/r", "/fw", "t", "0").start();
+    }
+
     private String readValue(String[] lines) {
         assert lines.length >= 3;
 

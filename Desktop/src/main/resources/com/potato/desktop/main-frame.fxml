@@ -23,8 +23,8 @@
                 <Insets top="10" right="10" bottom="10" left="10"/>
             </padding>
 
-            <Button text="Monitor" fx:id="monitorBtn"/>
-            <Button text="Tools" fx:id="toolsBtn"/>
+            <Button text="Monitor" fx:id="monitorBtn" onMouseClicked="#onMonitorBtnAction"/>
+            <Button text="Tools" fx:id="toolsBtn" onMouseClicked="#onToolsBtnAction"/>
         </VBox>
     </left>
 
@@ -117,6 +117,26 @@
                     <Insets top="10" right="10" bottom="10" left="10"/>
                 </padding>
                 <Label text="Tools" style="-fx-font-size: 16; -fx-font-weight: bold"/>
+
+                <TitledPane text="System">
+                    <VBox spacing="6">
+                        <Button text="Activate Windows" fx:id="activateWinBtn" onMouseClicked="#onActivateWinBtnAction"/>
+                        <Button text="Restart Enter BIOS" fx:id="enterBIOSBtn" onMouseClicked="#onEnterBIOSBtnAction"/>
+                    </VBox>
+                </TitledPane>
+
+                <TitledPane text="Disk">
+                    <VBox spacing="6">
+                        <Button text="Unlock BitLocker" fx:id=""/>
+                    </VBox>
+                </TitledPane>
+
+                <TitledPane text="Network">
+                    <VBox spacing="6">
+                        <Button text="Proxy reset" fx:id="proxyResetBtn"/>
+                        <Button text="Code 56 repair" fx:id="code65RepairBtn"/>
+                    </VBox>
+                </TitledPane>
             </VBox>
 
         </StackPane>

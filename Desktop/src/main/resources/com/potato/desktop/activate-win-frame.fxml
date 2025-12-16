@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="com.potato.desktop.controller.ActivateWinFrameController"
+      spacing="12">
+
+    <padding>
+        <Insets top="12" right="12" bottom="12" left="12"/>
+    </padding>
+
+    <Label text="Activation Status:" style="-fx-font-weight: bold"/>
+
+    <Label fx:id="statusLabel"
+           text="Not activated"
+           wrapText="true"
+           style="-fx-border-color: #cccccc; -fx-padding: 8"/>
+
+    <Button text="Activate"
+            fx:id="activateBtn"
+            onMouseClicked="#onActivateBtnClick"
+            maxWidth="Infinity"/>
+
+</VBox>

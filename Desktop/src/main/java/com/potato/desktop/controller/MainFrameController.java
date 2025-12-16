@@ -1,5 +1,6 @@
 package com.potato.desktop.controller;
 
+import com.potato.desktop.MainApp;
 import com.potato.kernel.Hardware.Battery;
 import com.potato.kernel.Hardware.CPU;
 import com.potato.kernel.Hardware.GPU;
@@ -8,11 +9,11 @@ import com.potato.kernel.Software.SystemType;
 import com.potato.kernel.Software.Windows;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -57,9 +58,19 @@ public class MainFrameController {
     private Label batteryHealth;
     @FXML
     private Label batteryRate;
+    @FXML
+    private Button proxyResetBtn;
+    @FXML
+    private Button code65RepairBtn;
+    @FXML
+    private Button activateWinBtn;
+    @FXML
+    private Button enterBIOSBtn;
 
     @FXML
     private ResourceBundle resources;
+
+    private MainApp mainApp;
 
     private HardwareInfoManager hardwareInfoManager;
     private Windows windows;
@@ -67,13 +78,6 @@ public class MainFrameController {
 
     @FXML
     public void initialize() {
-        monitorBtn.setOnAction((e) -> {
-            monitorBtnAction();
-        });
-        toolsBtn.setOnAction((e) -> {
-            toolsBtnAction();
-        });
-
         // todo error handling
         try {
             updateMonitorData();
@@ -129,14 +133,43 @@ public class MainFrameController {
         executor.shutdownNow();
     }
 
-    private void monitorBtnAction() {
+    @FXML
+    private void onMonitorBtnAction() {
         monitorView.setVisible(true);
         toolsView.setVisible(false);
     }
 
-    private void toolsBtnAction() {
+    @FXML
+    private void onToolsBtnAction() {
         monitorView.setVisible(false);
         toolsView.setVisible(true);
+    }
+
+    @FXML
+    private void onActivateWinBtnAction() {
+        mainApp.openActivateWinFrame();
+    }
+
+    @FXML
+    private void onEnterBIOSBtnAction() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation");
+        alert.setHeaderText(null);
+        alert.setContentText("Are you sure you want to continue?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            try {
+                windows.enterBIOS();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public void setMainApp(MainApp mainApp) {
+        this.mainApp = mainApp;
     }
 
     private <T> String updatedLabelText(String label, T value) {

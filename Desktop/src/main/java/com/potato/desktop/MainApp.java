@@ -22,6 +22,8 @@ public class MainApp extends Application {
         FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("main-frame.fxml"), languageBundle);
         Scene scene = new Scene(mainLoader.load());
         MainFrameController mainController = mainLoader.getController();
+        mainController.setMainApp(this);
+
         stage.setTitle(Config.APP_NAME);
         stage.setScene(scene);
 
@@ -34,5 +36,23 @@ public class MainApp extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public void openActivateWinFrame() {
+        // todo error handling
+        try {
+            Locale locale = new Locale("en", "US");
+            ResourceBundle languageBundle = ResourceBundle.getBundle("messages", locale);
+
+            FXMLLoader activateLoader = new FXMLLoader(getClass().getResource("activate-win-frame.fxml"), languageBundle);
+            Parent activateRoot = activateLoader.load();
+            Scene activateScene = new Scene(activateRoot);
+            Stage activateStage = new Stage();
+            activateStage.setTitle(Config.APP_NAME + " " + languageBundle.getString("app.title.activateWindows"));
+            activateStage.setScene(activateScene);
+            activateStage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
