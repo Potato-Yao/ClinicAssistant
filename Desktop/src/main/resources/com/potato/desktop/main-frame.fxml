@@ -104,7 +104,10 @@
 
                     <VBox GridPane.columnIndex="3">
                         <Label text="Battery"/>
-                        <Label text="Charging / Not Charging"/>
+                        <Label text="Charging Status" fx:id="batteryChargingStatus"/>
+                        <Label text="Battery Remain" fx:id="batteryRemain"/>
+                        <Label text="Health" fx:id="batteryHealth"/>
+                        <Label text="Rate" fx:id="batteryRate"/>
                     </VBox>
                 </GridPane>
             </VBox>

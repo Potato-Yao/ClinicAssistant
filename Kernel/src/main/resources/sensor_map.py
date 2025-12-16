@@ -1,3 +1,5 @@
+import sys
+
 sensors = [
     (0, "CPU Total", "equals", "Load", "cpu", "setLoad"),
     (1, "CPU Package", "equals", "Temperature", "cpu", "setPackageTemperature"),
@@ -33,7 +35,16 @@ sensors = [
     (118, "Designed Capacity", "equals", "Energy", "battery", "setDesignedCapacity"),
 ]
 
+def warning_message(pos):
+    return f"// THE CODE {pos} IS SCRIPT GENERATED, DON'T CHANGE THEM DIRECTLY! CHANGE THE SCRIPT {sys.argv[0]} INSTEAD"
+
+
+
 if __name__ == "__main__":
+    below_warning = warning_message("BELOW")
+    above_warning = warning_message("ABOVE")
+    
+    print(below_warning)
     for i in range(0, len(sensors)):
         if i == 0:
             print(
@@ -51,12 +62,21 @@ if __name__ == "__main__":
             print(f"    index[{sensors[i][0]}] = ind;")
 
     print("}")
+    print(above_warning)
 
     print("\t")
 
+    print(below_warning)
     for i in range(0, len(sensors)):
+        #print(f"if (index[{sensors[i][0]}] != -1 && index[{sensors[i][0]}] < 254) {{")
         print(f"if (index[{sensors[i][0]}] != -1) {{")
         print(
             f"    {sensors[i][4]}.{sensors[i][5]}(lhmHelper.getValue(index[{sensors[i][0]}]));"
         )
         print("}")
+        #print(f"}} else if (index[{sensors[i][0]}] >= 254) {{")
+        #print(
+        #    f"    {sensors[i][4]}.{sensors[i][5]}(index[{sensors[i][0]}] == 254 ? 1 : 0);\n}}"
+        #)
+    
+    print(above_warning)

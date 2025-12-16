@@ -1,5 +1,6 @@
 package com.potato.desktop.controller;
 
+import com.potato.kernel.Hardware.Battery;
 import com.potato.kernel.Hardware.CPU;
 import com.potato.kernel.Hardware.GPU;
 import com.potato.kernel.Hardware.HardwareInfoManager;
@@ -48,6 +49,14 @@ public class MainFrameController {
     private Label gpuPower;
     @FXML
     private Label gpuClock;
+    @FXML
+    private Label batteryChargingStatus;
+    @FXML
+    private Label batteryRemain;
+    @FXML
+    private Label batteryHealth;
+    @FXML
+    private Label batteryRate;
 
     @FXML
     private ResourceBundle resources;
@@ -88,6 +97,7 @@ public class MainFrameController {
     public void updateDataInternal() {
         CPU cpu = hardwareInfoManager.getCpu();
         GPU gpu = hardwareInfoManager.getGpu();
+        Battery battery = hardwareInfoManager.getBattery();
 
         cpuTemp.setText(updatedLabelText("lab.cpuTemp", cpu.getPackageTemperature(), "°C"));
         cpuPower.setText(updatedLabelText("lab.cpuPower", cpu.getPower(), "W"));
@@ -96,6 +106,14 @@ public class MainFrameController {
         gpuTemp.setText(updatedLabelText("lab.gpuTemp", gpu.getTemperature(), "°C"));
         gpuPower.setText(updatedLabelText("lab.gpuPower", gpu.getPower(), "W"));
         gpuClock.setText(updatedLabelText("lab.gpuClock", gpu.getSpeed(), "MHz"));
+
+        batteryChargingStatus.setText(updatedLabelText("lab.batCharging",
+                battery.isCharging() ? resources.getString("lang.true") : resources.getString("lang.false")));
+        batteryHealth.setText(updatedLabelText("lab.batHealth",
+                String.format("%.2f", battery.getHealthPercentage()), "%"));
+        batteryRemain.setText(updatedLabelText("lab.batRemain",
+                String.format("%.2f", battery.getRemainPercentage()), "%"));
+        batteryRate.setText(updatedLabelText("lab.batRate", battery.getRate(), "W"));
 
         systemName.setText(updatedLabelText("lab.systemName", windows.getSystemName()));
         osVersion.setText(updatedLabelText("lab.osVersion", windows.getSystemVersion()));

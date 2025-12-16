@@ -60,19 +60,15 @@ public class HardwareInfoManager {
     private Motherboard motherboard = new Motherboard(null);
 
     private CPU cpu = new CPU(null, -1, -1, -1, -1, -1, -1, -1, -1);
-
     private GPU gpu = new GPU(null, -1, -1, -1, -1, -1, -1, -1, -1);
-
     private RAM ram = new RAM(-1, -1);
-
     private Disk disk = new Disk();
-
-    private Battery battery = new Battery(-1, -1, -1, -1, -1, -1);
-
+    private Battery battery = new Battery(-1, -1, -1, -1, -1, -1, 0);
     private Network network = new Network();
-
     // 0 for cpu fan, 1 for gpu fan, 2 for mid-fan
     private Fan[] fans = new Fan[3];
+
+    private int prevBatteryCapacity = -1;
 
     private HardwareInfoManager() throws IOException {
         if (!isAdmin()) {
@@ -101,6 +97,8 @@ public class HardwareInfoManager {
             String name = sensor.getName();
             String info = sensor.getInfo();
             int ind = sensor.getIndex();
+
+            // THE CODE BELOW IS SCRIPT GENERATED, DON'T CHANGE THEM DIRECTLY! CHANGE THE SCRIPT sensor_map.py INSTEAD
             if (name.equals("CPU Total") && info.equals("Load")) {
                 index[0] = ind;
             } else if (name.equals("CPU Package") && info.equals("Temperature")) {
@@ -151,6 +149,7 @@ public class HardwareInfoManager {
                 index[118] = ind;
             }
         }
+        // THE CODE ABOVE IS SCRIPT GENERATED, DON'T CHANGE THEM DIRECTLY! CHANGE THE SCRIPT sensor_map.py INSTEAD
 
         // update hardware info automatically
         Thread updater = new Thread(() -> {
@@ -177,6 +176,7 @@ public class HardwareInfoManager {
     public void update() throws IOException {
         lhmHelper.update();
 
+        // THE CODE BELOW IS SCRIPT GENERATED, DON'T CHANGE THEM DIRECTLY! CHANGE THE SCRIPT sensor_map.py INSTEAD
         if (index[0] != -1) {
             cpu.setLoad(lhmHelper.getValue(index[0]));
         }
@@ -231,12 +231,32 @@ public class HardwareInfoManager {
         if (index[116] != -1) {
             battery.setCurrent(lhmHelper.getValue(index[116]));
         }
+        if (index[116] != -1) {
+            battery.setCurrent(lhmHelper.getValue(index[116]));
+        }
+        if (index[116] != -1) {
+            battery.setCurrent(lhmHelper.getValue(index[116]));
+        }
+        if (index[117] != -1) {
+            battery.setRate(lhmHelper.getValue(index[117]));
+        }
+        if (index[117] != -1) {
+            battery.setRate(lhmHelper.getValue(index[117]));
+        }
         if (index[117] != -1) {
             battery.setRate(lhmHelper.getValue(index[117]));
         }
         if (index[118] != -1) {
             battery.setDesignedCapacity(lhmHelper.getValue(index[118]));
         }
+        // THE CODE ABOVE IS SCRIPT GENERATED, DON'T CHANGE THEM DIRECTLY! CHANGE THE SCRIPT sensor_map.py INSTEAD
+
+        if (prevBatteryCapacity < battery.getRemainCapacity() || battery.getRate() == 0) {
+            battery.setCharging(true);
+        } else if (prevBatteryCapacity > battery.getRemainCapacity()) {
+            battery.setCharging(false);
+        }
+        prevBatteryCapacity = battery.getRemainCapacity();
     }
 
     public void close() {
