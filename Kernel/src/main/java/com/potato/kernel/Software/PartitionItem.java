@@ -22,4 +22,8 @@ public class PartitionItem {
     public double getBitlockerPercentage() {
         return bitlockerPercentage;
     }
+
+    public void setBitlockerPercentage(double bitlockerPercentage) {
+        this.bitlockerPercentage = bitlockerPercentage;
+    }
 }

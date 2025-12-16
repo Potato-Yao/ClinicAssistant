@@ -1,6 +1,7 @@
 package com.potato.desktop.controller;
 
 import com.potato.desktop.MainApp;
+import com.potato.kernel.Config;
 import com.potato.kernel.Hardware.Battery;
 import com.potato.kernel.Hardware.CPU;
 import com.potato.kernel.Hardware.GPU;
@@ -19,7 +20,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class MainFrameController {
+public class MainFrameController extends Controller {
     @FXML
     private VBox monitorView;
     @FXML
@@ -66,6 +67,8 @@ public class MainFrameController {
     private Button activateWinBtn;
     @FXML
     private Button enterBIOSBtn;
+    @FXML
+    private Button bitLockerBtn;
 
     @FXML
     private ResourceBundle resources;
@@ -95,7 +98,7 @@ public class MainFrameController {
             Platform.runLater(() -> {
                 updateDataInternal();
             });
-        }, 0, 1, TimeUnit.SECONDS);
+        }, 0, Config.HARDWARE_INFO_SEEK_RATE, TimeUnit.MILLISECONDS);
     }
 
     public void updateDataInternal() {
@@ -166,6 +169,11 @@ public class MainFrameController {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    @FXML
+    private void onBitLockerBtnAction() {
+        mainApp.openBitLockerFrame();
     }
 
     public void setMainApp(MainApp mainApp) {

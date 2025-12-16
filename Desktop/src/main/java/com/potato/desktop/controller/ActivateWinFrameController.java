@@ -8,7 +8,7 @@ import javafx.scene.control.Label;
 import java.io.IOException;
 import java.util.ResourceBundle;
 
-public class ActivateWinFrameController {
+public class ActivateWinFrameController extends Controller {
     @FXML
     private Label statusLabel;
     @FXML

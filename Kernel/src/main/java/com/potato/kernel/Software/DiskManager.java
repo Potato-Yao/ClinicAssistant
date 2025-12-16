@@ -1,5 +1,7 @@
 package com.potato.kernel.Software;
 
+import com.potato.kernel.Config;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -30,6 +32,25 @@ public class DiskManager {
         connect();
 
         updateDisks();
+
+        Thread updater = new Thread(() -> {
+            while (true) {
+                try {
+                    // only BitLocker info changes frequently
+                    updatePartitionItems();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+
+                try {
+                    Thread.sleep(Config.HARDWARE_INFO_SEEK_RATE);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        });
+        updater.setDaemon(true);
+        updater.start();
     }
 
     private String executeDPCommand(String command) throws IOException {
@@ -59,16 +80,33 @@ public class DiskManager {
     }
 
     private void updateDisks() throws IOException {
-        diskItems.clear();
+        updateDiskItems();
+        updatePartitionItems();
+    }
 
+    private void updateDiskItems() throws IOException {
         String re = executeDPCommand("list disk");
         String[] responses = re.split("\n");
         diskItems = parseDisks(responses);
+    }
 
+    private void updatePartitionItems() throws IOException {
         ProcessBuilder processBuilder = new ProcessBuilder("manage-bde", "-status");
         Process process = processBuilder.start();
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        partitionItems = parsePartitions(reader);
+
+        if (partitionItems.isEmpty()) {
+            partitionItems = parsePartitions(reader);
+        } else {
+            parsePartitions(reader).stream().forEach((partitionItem -> {
+                for (PartitionItem existedItem : partitionItems) {
+                    if (existedItem.getLabel().equals(partitionItem.getLabel())) {
+                        existedItem.setBitlockerPercentage(partitionItem.getBitlockerPercentage());
+                        return;
+                    }
+                }
+            }));
+        }
     }
 
     private ArrayList<DiskItem> parseDisks(String[] responses) {

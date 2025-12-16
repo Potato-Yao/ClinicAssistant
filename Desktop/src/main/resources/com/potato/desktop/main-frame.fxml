@@ -127,7 +127,7 @@
 
                 <TitledPane text="Disk">
                     <VBox spacing="6">
-                        <Button text="Unlock BitLocker" fx:id=""/>
+                        <Button text="Unlock BitLocker" fx:id="bitLockerBtn" onMouseClicked="#onBitLockerBtnAction"/>
                     </VBox>
                 </TitledPane>
 
