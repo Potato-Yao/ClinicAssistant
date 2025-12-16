@@ -42,18 +42,15 @@ public class LHMHelper {
         while (System.currentTimeMillis() < timeoutSeconds && !connected) {
             int port = DEFAULT_PORT;
             while (port < DEFAULT_PORT + PORT_FIND_RANGE) {  // to match the implementation of wrapper
-                System.out.println("reset " + port);
                 try {
                     socket = new Socket(IP, port);
 
-                    System.out.println("here " + port);
                     connected = true;
                     break;
                 } catch (IOException e) {
                     port++;
                 }
             }
-            System.out.println("there");
             try {
                 Thread.sleep(500);
             } catch (InterruptedException ex) {

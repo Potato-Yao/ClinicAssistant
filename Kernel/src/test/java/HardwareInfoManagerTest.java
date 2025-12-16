@@ -14,6 +14,14 @@ public class HardwareInfoManagerTest {
             System.out.println("Package temperature" + manager.getCpu().getPackageTemperature());
             System.out.println("Average temperature" + manager.getCpu().getAverageTemperature());
             System.out.println("GPU Temperature" + manager.getGpu().getTemperature());
+            System.out.println("CPU Power " + manager.getCpu().getPower());
+            System.out.println("GPU Power " + manager.getGpu().getPower());
+            System.out.println("Battery Capacity " + manager.getBattery().getCapacity());
+            System.out.println("Battery Remain Capacity " + manager.getBattery().getRemainCapacity());
+            System.out.println("Battery Voltage " + manager.getBattery().getVoltage());
+            System.out.println("Battery Current " + manager.getBattery().getCurrent());
+            System.out.println("Battery Charge/discharge Rate " + manager.getBattery().getRate());
+            System.out.println("Battery Designed Capacity " + manager.getBattery().getDesignedCapacity());
             Instant end = Instant.now();
             System.out.println("Time taken: " + (end.toEpochMilli() - begin.toEpochMilli()) + " ms");
             time += (end.toEpochMilli() - begin.toEpochMilli());

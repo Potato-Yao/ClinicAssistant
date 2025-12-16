@@ -1,4 +1,5 @@
 package com.potato.kernel.Hardware;
 
-public record Disk() {
+public class Disk {
+
 }

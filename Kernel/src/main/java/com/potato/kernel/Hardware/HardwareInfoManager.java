@@ -44,6 +44,14 @@ public class HardwareInfoManager {
     39 -> gpu memory free
     40 -> gpu memory used
     41 -> gpu memory usage
+
+    // [113, 128] for battery
+    113 -> battery capacity
+    114 -> battery remain capacity
+    115 -> battery voltage
+    116 -> battery current
+    117 -> battery charge/discharge rate
+    118 -> battery designed capacity
      */
     private int[] index = new int[INDEX_ARRAY_SIZE];
     private String[] names = new String[INDEX_ARRAY_SIZE];
@@ -55,11 +63,11 @@ public class HardwareInfoManager {
 
     private GPU gpu = new GPU(null, -1, -1, -1, -1, -1, -1, -1, -1);
 
-    private RAM ram = new RAM(-1, -1, -1);
+    private RAM ram = new RAM(-1, -1);
 
     private Disk disk = new Disk();
 
-    private Battery battery = new Battery();
+    private Battery battery = new Battery(-1, -1, -1, -1, -1, -1);
 
     private Network network = new Network();
 
@@ -121,6 +129,26 @@ public class HardwareInfoManager {
                 index[39] = ind;
             } else if (name.equals("GPU Memory Used") && info.equals("SmallData")) {
                 index[40] = ind;
+            } else if (name.equals("Fully-Charged Capacity") && info.equals("Energy")) {
+                index[113] = ind;
+            } else if (name.equals("Remaining Capacity") && info.equals("Energy")) {
+                index[114] = ind;
+            } else if (name.equals("Voltage") && info.equals("Voltage")) {
+                index[115] = ind;
+            } else if (name.equals("Charge Current") && info.equals("Current")) {
+                index[116] = ind;
+            } else if (name.equals("Discharge Current") && info.equals("Current")) {
+                index[116] = ind;
+            } else if (name.equals("Charge/Discharge Current") && info.equals("Current")) {
+                index[116] = ind;
+            } else if (name.equals("Charge Rate") && info.equals("Power")) {
+                index[117] = ind;
+            } else if (name.equals("Discharge Rate") && info.equals("Power")) {
+                index[117] = ind;
+            } else if (name.equals("Charge/Discharge Rate") && info.equals("Power")) {
+                index[117] = ind;
+            } else if (name.equals("Designed Capacity") && info.equals("Energy")) {
+                index[118] = ind;
             }
         }
 
@@ -190,6 +218,24 @@ public class HardwareInfoManager {
         }
         if (index[40] != -1) {
             gpu.setMemUsed(lhmHelper.getValue(index[40]));
+        }
+        if (index[113] != -1) {
+            battery.setCapacity(lhmHelper.getValue(index[113]));
+        }
+        if (index[114] != -1) {
+            battery.setRemainCapacity(lhmHelper.getValue(index[114]));
+        }
+        if (index[115] != -1) {
+            battery.setVoltage(lhmHelper.getValue(index[115]));
+        }
+        if (index[116] != -1) {
+            battery.setCurrent(lhmHelper.getValue(index[116]));
+        }
+        if (index[117] != -1) {
+            battery.setRate(lhmHelper.getValue(index[117]));
+        }
+        if (index[118] != -1) {
+            battery.setDesignedCapacity(lhmHelper.getValue(index[118]));
         }
     }
 

@@ -21,6 +21,16 @@ sensors = [
     (38, "GPU Memory Total", "equals", "SmallData", "gpu", "setMemTotal"),
     (39, "GPU Memory Free", "equals", "SmallData", "gpu", "setMemFree"),
     (40, "GPU Memory Used", "equals", "SmallData", "gpu", "setMemUsed"),
+    (113, "Fully-Charged Capacity", "equals", "Energy", "battery", "setCapacity"),
+    (114, "Remaining Capacity", "equals", "Energy", "battery", "setRemainCapacity"),
+    (115, "Voltage", "equals", "Voltage", "battery", "setVoltage"),
+    (116, "Charge Current", "equals", "Current", "battery", "setCurrent"),
+    (116, "Discharge Current", "equals", "Current", "battery", "setCurrent"),
+    (116, "Charge/Discharge Current", "equals", "Current", "battery", "setCurrent"),
+    (117, "Charge Rate", "equals", "Power", "battery", "setRate"),
+    (117, "Discharge Rate", "equals", "Power", "battery", "setRate"),
+    (117, "Charge/Discharge Rate", "equals", "Power", "battery", "setRate"),
+    (118, "Designed Capacity", "equals", "Energy", "battery", "setDesignedCapacity"),
 ]
 
 if __name__ == "__main__":
