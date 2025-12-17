@@ -6,6 +6,8 @@ import com.potato.kernel.Software.PartitionItem;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.HBox;
@@ -15,6 +17,7 @@ import javafx.util.Pair;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -22,6 +25,9 @@ import java.util.concurrent.TimeUnit;
 public class BitLockerFrameController extends Controller {
     @FXML
     private VBox partitionList;
+
+    @FXML
+    private ResourceBundle resources;
 
     private DiskManager diskManager;
 
@@ -78,8 +84,31 @@ public class BitLockerFrameController extends Controller {
                     -fx-cursor: hand;
                     """);
 
+            partitionRow.setOnMouseClicked((e) -> {
+                onPartitionItemClick(item);
+            });
+
             partitionList.getChildren().add(partitionRow);
             partitionComponentMap.put(item, new Pair<>(progressBar, percentageLabel));
+        });
+    }
+
+    private void onPartitionItemClick(PartitionItem item) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText(resources.getString("app.title.bitlocker.unlockConfirmTitle"));
+        alert.setContentText(String.format(resources.getString("app.title.bitlocker.unlockConfirmHint"), item.getLabel()));
+
+        alert.showAndWait().ifPresent((result) -> {
+            if (result == ButtonType.OK) {
+                try {
+                    if (item.getBitlockerPercentage() == 0) {
+                        return;
+                    }
+                    diskManager.unlockBitlocker(item.getLabel());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         });
     }
 
