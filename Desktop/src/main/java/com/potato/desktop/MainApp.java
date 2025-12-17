@@ -1,9 +1,6 @@
 package com.potato.desktop;
 
-import com.potato.desktop.controller.ActivateWinFrameController;
-import com.potato.desktop.controller.BitLockerFrameController;
-import com.potato.desktop.controller.Controller;
-import com.potato.desktop.controller.MainFrameController;
+import com.potato.desktop.controller.*;
 import com.potato.kernel.Config;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -21,10 +18,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        var windowInfo = openWindow("main-frame.fxml", "app.title.main", MainFrameController.class);
-        windowInfo.getValue().setOnCloseRequest((e) -> {
-            windowInfo.getKey().closeFrame();
-        });
+        openWindow("main-frame.fxml", "app.title.main", MainFrameController.class);
     }
 
     public static void main(String[] args) {
@@ -36,10 +30,11 @@ public class MainApp extends Application {
     }
 
     public void openBitLockerFrame() {
-        var windowInfo = openWindow("bitlocker-frame.fxml", "app.title.bitlocker", BitLockerFrameController.class);
-        windowInfo.getValue().setOnCloseRequest((e) -> {
-            windowInfo.getKey().onClose();
-        });
+        openWindow("bitlocker-frame.fxml", "app.title.bitlocker", BitLockerFrameController.class);
+    }
+
+    public void openStressTestFrame() {
+        openWindow("stress-test-frame.fxml", "app.title.stressTest", StressTestFrameController.class);
     }
 
     public <Con extends Controller> Pair<Con, Stage> openWindow(String fxml, String title, Class<Con> controllerClass) {
@@ -55,10 +50,15 @@ public class MainApp extends Application {
 
             stage.setTitle(Config.APP_NAME + " " + languageBundle.getString(title));
             stage.setScene(scene);
-            stage.show();
 
             Con controller = controllerClass.cast(loader.getController());
             controller.setMainApp(this);
+
+            stage.setOnCloseRequest((e) -> {
+                controller.onClose();
+            });
+            stage.show();
+
             openedWindows.put(controller, stage);
 
             return new Pair<>(controller, stage);

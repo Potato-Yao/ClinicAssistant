@@ -8,4 +8,6 @@ public class Controller {
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
     }
+
+    public void onClose() {}
 }

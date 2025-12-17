@@ -1,5 +1,6 @@
 package com.potato.kernel.Software;
 
+import com.potato.kernel.Config;
 import com.potato.kernel.External.CPUBurnHelper;
 import com.potato.kernel.External.FurmarkHelper;
 import com.potato.kernel.Hardware.CPU;
@@ -10,6 +11,9 @@ import java.io.IOException;
 import java.time.Instant;
 
 public class StressTestUtil {
+    public static final int AUTO_JUDGE_MODE = Integer.MIN_VALUE;
+    public static final int INFINITY_MODE = Integer.MAX_VALUE;
+
     private FurmarkHelper furmarkHelper;
     private CPUBurnHelper cpuBurnHelper;
     private HardwareInfoManager hardwareInfoManager;
@@ -17,6 +21,7 @@ public class StressTestUtil {
     /*
     0 -> cpu temperature info
     1 -> gpu temperature info
+    2 -> power info
      */
     private TestState[] testStates = new TestState[16];
     private int totalPower = -1;
@@ -46,7 +51,7 @@ public class StressTestUtil {
      * run stress test, give feedback by hardware info automatically
      *
      * @param remainTimeSeconds the remain time of stress test.
-     *                          if remainTimeSeconds is set to int.MAX_VALUE,
+     *                          if remainTimeSeconds is set to AUTO_JUDGE_MODE,
      *                          the stress test will keep running until it judges the test shows a clear ok or warning signal
      * @throws IOException
      */
@@ -67,21 +72,30 @@ public class StressTestUtil {
 
         Thread thread = new Thread(() -> {
             long endTime = System.currentTimeMillis() + remainTimeSeconds * 1000L;
+
             while (true) {
-                if (System.currentTimeMillis() > endTime) {
-                    break;
+                try {
+                    Thread.sleep(Config.HARDWARE_INFO_SEEK_RATE);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                try {
+                    update();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
 
-                if (remainTimeSeconds == Integer.MAX_VALUE) {
+                if (remainTimeSeconds == AUTO_JUDGE_MODE) {
                     if (judgeToStop()) {
                         break;
                     }
-                }
-
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                } else if (remainTimeSeconds == INFINITY_MODE) {
+                    if (testStates[0].getTestStatus() == TestStatus.CRITICAL
+                            || testStates[1].getTestStatus() == TestStatus.CRITICAL) {
+                        break;
+                    }
+                } else if (System.currentTimeMillis() > endTime) {
+                    break;
                 }
             }
 
@@ -117,6 +131,7 @@ public class StressTestUtil {
 
         testStates[0] = new TestState(cpu, null, null);
         testStates[1] = new TestState(gpu, null, null);
+        testStates[2] = new TestState(null, null, null);
 
         if (cpu.getPackageTemperature() > 95) {
             testStates[0].setTestStatus(TestStatus.CRITICAL);

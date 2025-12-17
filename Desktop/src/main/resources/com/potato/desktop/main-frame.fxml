@@ -133,8 +133,14 @@
 
                 <TitledPane text="Network">
                     <VBox spacing="6">
-                        <Button text="Proxy reset" fx:id="proxyResetBtn"/>
-                        <Button text="Code 56 repair" fx:id="code65RepairBtn"/>
+                        <Button text="Proxy reset" fx:id="proxyResetBtn" onMouseClicked="#onRestProxyBtnAction"/>
+                        <Button text="Code 56 repair" fx:id="code65RepairBtn" onMouseClicked="#onCode56BtnAction"/>
+                    </VBox>
+                </TitledPane>
+
+                <TitledPane text="Stress Test">
+                    <VBox spacing="6">
+                        <Button text="Stress Test" fx:id="stressTestBtn" onMouseClicked="#onStressTestBtnAction"/>
                     </VBox>
                 </TitledPane>
             </VBox>

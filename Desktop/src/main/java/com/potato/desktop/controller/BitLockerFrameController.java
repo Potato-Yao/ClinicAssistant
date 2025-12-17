@@ -22,6 +22,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import static com.potato.desktop.controller.DialogUtil.*;
+
 public class BitLockerFrameController extends Controller {
     @FXML
     private VBox partitionList;
@@ -94,28 +96,29 @@ public class BitLockerFrameController extends Controller {
     }
 
     private void onPartitionItemClick(PartitionItem item) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText(resources.getString("app.title.bitlocker.unlockConfirmTitle"));
-        alert.setContentText(String.format(resources.getString("app.title.bitlocker.unlockConfirmHint"), item.getLabel()));
-
-        alert.showAndWait().ifPresent((result) -> {
-            if (result == ButtonType.OK) {
-                try {
-                    if (item.getBitlockerPercentage() == 0) {
-                        return;
+        makeConfirmAlert(
+                resources.getString("app.title.bitlocker.unlockConfirmTitle"),
+                String.format(resources.getString("app.title.bitlocker.unlockConfirmHint"),
+                        item.getLabel()),
+                () -> {
+                    try {
+                        if (item.getBitlockerPercentage() == 0) {
+                            return;
+                        }
+                        diskManager.unlockBitlocker(item.getLabel());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
-                    diskManager.unlockBitlocker(item.getLabel());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                }, () -> {
                 }
-            }
-        });
+        );
     }
 
     private String updateLabel(double percentage) {
         return String.format("%.2f", percentage) + "%";
     }
 
+    @Override
     public void onClose() {
         executor.close();
         diskManager.disconnect();

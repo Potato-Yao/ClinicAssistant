@@ -4,9 +4,17 @@ import java.io.IOException;
 
 public class NetworkUtil {
     private Regedit regedit;
+    private static NetworkUtil networkUtil;
 
-    public NetworkUtil() {
+    private NetworkUtil() {
         regedit = new Regedit();
+    }
+
+    public static NetworkUtil getNetworkUtil() {
+        if (networkUtil == null) {
+            networkUtil = new NetworkUtil();
+        }
+        return networkUtil;
     }
 
     public void resetNetworkProxy() throws IOException {

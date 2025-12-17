@@ -6,6 +6,7 @@ import com.potato.kernel.Hardware.Battery;
 import com.potato.kernel.Hardware.CPU;
 import com.potato.kernel.Hardware.GPU;
 import com.potato.kernel.Hardware.HardwareInfoManager;
+import com.potato.kernel.Software.NetworkUtil;
 import com.potato.kernel.Software.SystemType;
 import com.potato.kernel.Software.Windows;
 import javafx.application.Platform;
@@ -14,11 +15,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import static com.potato.desktop.controller.DialogUtil.*;
 
 public class MainFrameController extends Controller {
     @FXML
@@ -73,9 +75,8 @@ public class MainFrameController extends Controller {
     @FXML
     private ResourceBundle resources;
 
-    private MainApp mainApp;
-
     private HardwareInfoManager hardwareInfoManager;
+    private NetworkUtil networkUtil;
     private Windows windows;
     private ScheduledExecutorService executor;
 
@@ -92,6 +93,7 @@ public class MainFrameController extends Controller {
     private void updateMonitorData() throws IOException {
         executor = Executors.newSingleThreadScheduledExecutor();
         hardwareInfoManager = HardwareInfoManager.getHardwareInfoManager();
+        networkUtil = NetworkUtil.getNetworkUtil();
         windows = Windows.getWindows();
 
         executor.scheduleAtFixedRate(() -> {
@@ -131,7 +133,8 @@ public class MainFrameController extends Controller {
                 windows.isActivated() ? resources.getString("lang.true") : resources.getString("lang.false")));
     }
 
-    public void closeFrame() {
+    @Override
+    public void onClose() {
         hardwareInfoManager.close();
         executor.shutdownNow();
     }
@@ -154,21 +157,59 @@ public class MainFrameController extends Controller {
     }
 
     @FXML
+    private void onStressTestBtnAction() {
+        mainApp.openStressTestFrame();
+    }
+
+    @FXML
     private void onEnterBIOSBtnAction() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Confirmation");
-        alert.setHeaderText(null);
-        alert.setContentText("Are you sure you want to continue?");
+        makeConfirmAlert(
+                resources.getString("app.title.biosTitle"),
+                resources.getString("app.title.biosHint"),
+                () -> {
+                    try {
+                        windows.enterBIOS();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                },
+                () -> {
+                }
+        );
+    }
 
-        Optional<ButtonType> result = alert.showAndWait();
+    @FXML
+    private void onRestProxyBtnAction() {
+        makeConfirmAlert(
+                resources.getString("app.title.resetProxyTitle"),
+                resources.getString("app.title.resetProxyHint"),
+                () -> {
+                    try {
+                        networkUtil.resetNetworkProxy();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                },
+                () -> {
+                }
+        );
+    }
 
-        if (result.isPresent() && result.get() == ButtonType.OK) {
-            try {
-                windows.enterBIOS();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
+    @FXML
+    private void onCode56BtnAction() {
+        makeConfirmAlert(
+                resources.getString("app.title.code56Title"),
+                resources.getString("app.title.code56Hint"),
+                () -> {
+                    try {
+                        networkUtil.deleteVMwareNetBridge();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                },
+                () -> {
+                }
+        );
     }
 
     @FXML
