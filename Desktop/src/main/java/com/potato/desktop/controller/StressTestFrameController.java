@@ -1,11 +1,15 @@
 package com.potato.desktop.controller;
 
+import com.potato.desktop.component.ChartType;
+import com.potato.desktop.component.NumberLineChart;
 import com.potato.kernel.Config;
 import com.potato.kernel.Hardware.CPU;
 import com.potato.kernel.Hardware.GPU;
 import com.potato.kernel.Hardware.HardwareInfoManager;
 import com.potato.kernel.Software.StressTestUtil;
 import com.potato.kernel.Software.StressTestUtilBuilder;
+import com.potato.kernel.Software.TestState;
+import com.potato.kernel.Software.TestStatus;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
@@ -39,13 +43,15 @@ public class StressTestFrameController extends Controller {
     @FXML
     private LineChart<Number, Number> gpuPowerChart;
     @FXML
-    private Label statusLabel;
-    @FXML
     private Label cpuInfoLabel;
     @FXML
     private Label gpuInfoLabel;
     @FXML
+    private Label powerInfoLabel;
+    @FXML
     private Label warningLabel;
+    @FXML
+    private Label lastingTimeLabel;
     @FXML
     private TextField powerInputField;
 
@@ -58,7 +64,12 @@ public class StressTestFrameController extends Controller {
 
     private static final int MAX_TIME = 60;  // in seconds
     private boolean isRunning = false;
+    private double currTime = 0;
     private Instant startTime;
+    private NumberLineChart cpuTempLineChart;
+    private NumberLineChart gpuTempLineChart;
+    private NumberLineChart cpuPowerLineChart;
+    private NumberLineChart gpuPowerLineChart;
     private XYChart.Series<Number, Number> cpuTempSeries = new XYChart.Series<>();
     private XYChart.Series<Number, Number> gpuTempSeries = new XYChart.Series<>();
     private XYChart.Series<Number, Number> cpuPowerSeries = new XYChart.Series<>();
@@ -70,10 +81,10 @@ public class StressTestFrameController extends Controller {
             hardwareInfoManager = HardwareInfoManager.getHardwareInfoManager();
             executor = Executors.newSingleThreadScheduledExecutor();
 
-            configureChartItem(cpuTempChart);
-            configureChartItem(gpuTempChart);
-            configureChartItem(cpuPowerChart);
-            configureChartItem(gpuPowerChart);
+            cpuTempLineChart = new NumberLineChart(ChartType.TEMPERATURE, cpuTempChart, Double.valueOf(MAX_TIME), null, Double.valueOf(100), Double.valueOf(30));
+            gpuTempLineChart = new NumberLineChart(ChartType.TEMPERATURE, gpuTempChart, Double.valueOf(MAX_TIME), null, Double.valueOf(100), Double.valueOf(30));
+            cpuPowerLineChart = new NumberLineChart(ChartType.POWER, cpuPowerChart, Double.valueOf(MAX_TIME), null, null, Double.valueOf(0));
+            gpuPowerLineChart = new NumberLineChart(ChartType.POWER, gpuPowerChart, Double.valueOf(MAX_TIME), null, null, Double.valueOf(0));
 
             frameUpdate();
         } catch (IOException e) {
@@ -81,50 +92,51 @@ public class StressTestFrameController extends Controller {
         }
     }
 
-    private void configureChartItem(LineChart<Number, Number> chart) {
-        NumberAxis x = (NumberAxis) chart.getXAxis();
-        x.setAutoRanging(false);
-        x.setUpperBound(MAX_TIME);
-        x.setTickUnit(5);
-        x.setTickLabelsVisible(false);
-        x.setTickMarkVisible(false);
-        x.setVisible(false);
-
-        NumberAxis y = (NumberAxis) chart.getYAxis();
-        y.setAutoRanging(true);
-        y.setForceZeroInRange(false);
-
-        chart.setCreateSymbols(false);
-        chart.setLegendVisible(true);
-        chart.setAnimated(false);
-    }
-
     private void frameUpdate() {
         executor.scheduleAtFixedRate(() -> {
             Platform.runLater(() -> {
                 if (isRunning) {
                     chartUpdate();
+                    lastingTimeLabel.setText(
+                            String.format("%s %.2fs", resources.getString("lab.stressTestLastingTime"), currTime));
                 }
             });
         }, 0, Config.HARDWARE_INFO_SEEK_RATE, TimeUnit.MILLISECONDS);
     }
 
     private void chartUpdate() {
-        double currTime = ((double) Instant.now().getEpochSecond() - startTime.getEpochSecond());  // in seconds
+        currTime = ((double) Instant.now().getEpochSecond() - startTime.getEpochSecond());  // in seconds
         CPU cpu = hardwareInfoManager.getCpu();
         GPU gpu = hardwareInfoManager.getGpu();
 
-        chartItemUpdate(cpuTempChart, cpuTempSeries, currTime, cpu.getAverageTemperature());
-        chartItemUpdate(gpuTempChart, gpuTempSeries, currTime, gpu.getTemperature());
-        chartItemUpdate(cpuPowerChart, cpuPowerSeries, currTime, cpu.getPower());
-        chartItemUpdate(gpuPowerChart, gpuPowerSeries, currTime, gpu.getPower());
+        chartItemUpdate(cpuTempLineChart, cpuTempSeries, currTime, cpu.getAverageTemperature());
+        chartItemUpdate(gpuTempLineChart, gpuTempSeries, currTime, gpu.getTemperature());
+        chartItemUpdate(cpuPowerLineChart, cpuPowerSeries, currTime, cpu.getPower());
+        chartItemUpdate(gpuPowerLineChart, gpuPowerSeries, currTime, gpu.getPower());
+
+        TestState[] testStates = stressTestUtil.getTestStates();
+        cpuInfoLabel.setText(testStates[0].getInfo());
+        gpuInfoLabel.setText(testStates[1].getInfo());
+        powerInfoLabel.setText(testStates[2].getInfo());
+
+        StringBuilder warningInfo = new StringBuilder();
+        for (TestState testState : testStates) {
+            if (testState == null) {
+                continue;
+            }
+            if (testState.getTestStatus() == TestStatus.CRITICAL) {
+                warningInfo.append(testState.getInfo()).append("\n");
+            }
+        }
+        warningLabel.setText(warningInfo.toString().isEmpty() ?
+                resources.getString("lab.stressTestNoWarning") : warningInfo.toString().trim());
     }
 
-    private void chartItemUpdate(LineChart<Number, Number> chart, XYChart.Series series, double time, double value) {
-        NumberAxis x = (NumberAxis) chart.getXAxis();
-        if (time > x.getUpperBound()) {
-            x.setLowerBound(Math.max(0, 0 + time - MAX_TIME));
-            x.setUpperBound(time);
+    private void chartItemUpdate(NumberLineChart chart, XYChart.Series series, double time, double value) {
+        chart.setxAxisInRange(time);
+
+        if (chart.getChartType() == ChartType.POWER) {
+            chart.setyUpperBoundByRadio(value, 1.3);
         }
 
         series.getData().add(new XYChart.Data<>(time, value));
@@ -152,6 +164,11 @@ public class StressTestFrameController extends Controller {
                     .totalPower(powerInputField.getText().isEmpty() ? -1 : Integer.parseInt(powerInputField.getText()))
                     .build();
 
+            lastingTimeLabel.setText(resources.getString("lab.stressTestLastingTime"));
+            cpuCheckBox.setDisable(true);
+            gpuCheckBox.setDisable(true);
+            powerInfoLabel.setDisable(true);
+
             cpuTempChart.getData().clear();
             gpuTempChart.getData().clear();
             cpuPowerChart.getData().clear();
@@ -178,6 +195,9 @@ public class StressTestFrameController extends Controller {
     private void closeTest() {
         stressTestUtil.stopStressTest();
         isRunning = false;
+        cpuCheckBox.setDisable(false);
+        gpuCheckBox.setDisable(false);
+        powerInfoLabel.setDisable(false);
     }
 
     private void inverseRunButtonText() {

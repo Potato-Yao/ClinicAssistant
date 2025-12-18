@@ -170,6 +170,9 @@ public class StressTestUtil {
                 testStates[2].setTestStatus(TestStatus.NORMAL);
                 testStates[2].setInfo("The total power is OK.");
             }
+        } else {
+            testStates[2].setTestStatus(TestStatus.NORMAL);
+            testStates[2].setInfo("Waiting for power data be stable");
         }
     }
 

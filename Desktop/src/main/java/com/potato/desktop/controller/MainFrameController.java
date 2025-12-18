@@ -20,7 +20,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import static com.potato.desktop.controller.DialogUtil.*;
+import static com.potato.desktop.Util.DialogUtil.*;
 
 public class MainFrameController extends Controller {
     @FXML

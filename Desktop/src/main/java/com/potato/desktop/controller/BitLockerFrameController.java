@@ -6,8 +6,6 @@ import com.potato.kernel.Software.PartitionItem;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.layout.HBox;
@@ -22,7 +20,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import static com.potato.desktop.controller.DialogUtil.*;
+import static com.potato.desktop.Util.DialogUtil.*;
 
 public class BitLockerFrameController extends Controller {
     @FXML

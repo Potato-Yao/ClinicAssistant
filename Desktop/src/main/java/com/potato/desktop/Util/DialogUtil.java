@@ -1,9 +1,7 @@
-package com.potato.desktop.controller;
+package com.potato.desktop.Util;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
-
-import java.io.IOException;
 
 public class DialogUtil {
     public static void makeConfirmAlert(String header, String content, Runnable okAction, Runnable denyAction) {

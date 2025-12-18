@@ -33,9 +33,3 @@ public class TestState {
         this.info = info;
     }
 }
-
-enum TestStatus {
-    NORMAL,
-    WARNING,
-    CRITICAL
-}

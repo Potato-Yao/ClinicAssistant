@@ -37,7 +37,7 @@
             </HBox>
 
             <Region VBox.vgrow="ALWAYS"/>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Test last time"/>
+            <Label text="Test lasting time" fx:id="lastingTimeLabel"/>
 
             <Button fx:id="runBtn" maxWidth="Infinity" text="Run Stress Test" onMouseClicked="#onRunBtnClick"/>
         </VBox>
@@ -67,7 +67,7 @@
                 </yAxis>
             </LineChart>
 
-            <LineChart fx:id="cpuPowerChart" GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <LineChart fx:id="cpuPowerChart" GridPane.columnIndex="0" GridPane.rowIndex="1">
                 <xAxis>
                     <NumberAxis label="Time (s)"/>
                 </xAxis>
@@ -76,7 +76,7 @@
                 </yAxis>
             </LineChart>
 
-            <LineChart fx:id="gpuTempChart" GridPane.columnIndex="0" GridPane.rowIndex="1">
+            <LineChart fx:id="gpuTempChart" GridPane.columnIndex="1" GridPane.rowIndex="0">
                 <xAxis>
                     <NumberAxis label="Time (s)"/>
                 </xAxis>
@@ -104,8 +104,6 @@
 
             <Label style="-fx-font-weight: bold" text="Live Status"/>
 
-            <Label fx:id="statusLabel" text="Idle"/>
-
             <Separator/>
 
             <Label text="CPU Info"/>
@@ -115,6 +113,11 @@
 
             <Label text="GPU Info"/>
             <Label fx:id="gpuInfoLabel" wrapText="true"/>
+
+            <Separator/>
+
+            <Label text="Power Info"/>
+            <Label fx:id="powerInfoLabel" wrapText="true"/>
 
             <Separator/>
 
