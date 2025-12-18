@@ -116,7 +116,7 @@ public class MainFrameController extends Controller {
 
         cpuTemp.setText(updatedLabelText("lab.cpuTemp", cpu.getPackageTemperature(), "°C"));
         cpuPower.setText(updatedLabelText("lab.cpuPower", cpu.getPower(), "W"));
-        cpuClock.setText(updatedLabelText("lab.cpuClock", cpu.getClockBegin(), "MHz"));
+        cpuClock.setText(updatedLabelText("lab.cpuClock", String.format("%.2f", cpu.getClock()), "GHz"));
 
         gpuTemp.setText(updatedLabelText("lab.gpuTemp", gpu.getTemperature(), "°C"));
         gpuPower.setText(updatedLabelText("lab.gpuPower", gpu.getPower(), "W"));

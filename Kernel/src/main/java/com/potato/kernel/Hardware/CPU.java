@@ -6,20 +6,28 @@ public class CPU extends HardwareItem {
     private double packageTemperature;
     private double averageTemperature;
     private double power;
-    private double clockBegin;
-    private double clockEnd;
+    private int clockBeginIndex;
+    private int clockEndIndex;
+    private double clock;
     private double load;
     private double voltage;
 
-    public CPU(String name, double usage, double packageTemperature, double averageTemperature, double power, double clockBegin, double clockEnd, double load, double voltage) {
+    public CPU(String name, double usage, double packageTemperature, double averageTemperature, double power, double load, double voltage) {
         this.name = name;
         this.usage = usage;
         this.packageTemperature = packageTemperature;
         this.averageTemperature = averageTemperature;
         this.power = power;
-        this.clockBegin = clockBegin;
-        this.clockEnd = clockEnd;
         this.load = load;
+        this.voltage = voltage;
+    }
+
+    public double getClock() {
+        return clock;
+    }
+
+    public void setClock(double clock) {
+        this.clock = clock;
     }
 
     public String getName() {
@@ -46,20 +54,20 @@ public class CPU extends HardwareItem {
         this.power = power;
     }
 
-    public double getClockBegin() {
-        return clockBegin;
+    public int getClockBeginIndex() {
+        return clockBeginIndex;
     }
 
-    public void setClockBegin(double clockBegin) {
-        this.clockBegin = clockBegin;
+    public void setClockBeginIndex(int clockBeginIndex) {
+        this.clockBeginIndex = clockBeginIndex;
     }
 
-    public double getClockEnd() {
-        return clockEnd;
+    public int getClockEndIndex() {
+        return clockEndIndex;
     }
 
-    public void setClockEnd(double clockEnd) {
-        this.clockEnd = clockEnd;
+    public void setClockEndIndex(int clockEndIndex) {
+        this.clockEndIndex = clockEndIndex;
     }
 
     public double getLoad() {

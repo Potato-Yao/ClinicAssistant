@@ -59,7 +59,7 @@ public class HardwareInfoManager {
     private String updatedTime;
     private Motherboard motherboard = new Motherboard(null);
 
-    private CPU cpu = new CPU(null, -1, -1, -1, -1, -1, -1, -1, -1);
+    private CPU cpu = new CPU(null, -1, -1, -1, -1, -1, -1);
     private GPU gpu = new GPU(null, -1, -1, -1, -1, -1, -1, -1, -1);
     private RAM ram = new RAM(-1, -1);
     private Disk disk = new Disk();
@@ -109,9 +109,9 @@ public class HardwareInfoManager {
                 index[3] = ind;
             } else if (name.equals("CPU Core") && info.equals("Voltage")) {
                 index[4] = ind;
-            } else if (name.equals("CPU Clock #1") && info.equals("Clock")) {
+            } else if (name.equals("CPU Core #1") && info.equals("Clock")) {
                 index[5] = ind;
-            } else if (name.contains("CPU Clock #") && info.equals("Clock")) {
+            } else if (name.contains("CPU Core #") && info.equals("Clock")) {
                 index[6] = Math.max(ind, index[6]);
             } else if (name.equals("GPU Core") && info.equals("Temperature")) {
                 index[34] = ind;
@@ -193,10 +193,10 @@ public class HardwareInfoManager {
             cpu.setVoltage(lhmHelper.getValue(index[4]));
         }
         if (index[5] != -1) {
-            cpu.setClockBegin(lhmHelper.getValue(index[5]));
+            cpu.setClockBeginIndex(index[5]); //(lhmHelper.getValue(index[5]));
         }
         if (index[6] != -1) {
-            cpu.setClockEnd(lhmHelper.getValue(index[6]));
+            cpu.setClockEndIndex(index[6]); //(lhmHelper.getValue(index[6]));
         }
         if (index[34] != -1) {
             gpu.setTemperature(lhmHelper.getValue(index[34]));
@@ -250,6 +250,23 @@ public class HardwareInfoManager {
             battery.setDesignedCapacity(lhmHelper.getValue(index[118]));
         }
         // THE CODE ABOVE IS SCRIPT GENERATED, DON'T CHANGE THEM DIRECTLY! CHANGE THE SCRIPT sensor_map.py INSTEAD
+
+        double clock = 0;
+        double firstClock = 0;
+        double secondClock = 0;
+        double thirdClock = 0;
+        for (int i = cpu.getClockBeginIndex(); i <= cpu.getClockEndIndex(); i++) {
+            if (lhmHelper.getValue(i) > firstClock) {
+                thirdClock = secondClock;
+                secondClock = firstClock;
+                firstClock = lhmHelper.getValue(i);
+            }
+
+            clock = firstClock * 0.5 + secondClock * 0.25 + thirdClock * 0.25;
+            clock /= 1000;
+//            clock = 3.952 * Math.pow(clock, 3) - 46.6351 * Math.pow(clock, 2) + 182.335 * clock - 232.454;  // by using Newton interpolation formula, compare to task manager
+        }
+        cpu.setClock(clock);
 
         if (prevBatteryCapacity < battery.getRemainCapacity() || battery.getRate() == 0) {
             battery.setCharging(true);
