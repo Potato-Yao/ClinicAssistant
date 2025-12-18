@@ -45,6 +45,10 @@ public class HardwareInfoManager {
     40 -> gpu memory used
     41 -> gpu memory usage
 
+    // [65, 80] for RAM
+    65 -> mem used
+    66 -> mem available
+
     // [113, 128] for battery
     113 -> battery capacity
     114 -> battery remain capacity
@@ -127,6 +131,10 @@ public class HardwareInfoManager {
                 index[39] = ind;
             } else if (name.equals("GPU Memory Used") && info.equals("SmallData")) {
                 index[40] = ind;
+            } else if (name.equals("Memory Used") && info.equals("Data")) {
+                index[65] = ind;
+            } else if (name.equals("Memory Available") && info.equals("Data")) {
+                index[66] = ind;
             } else if (name.equals("Fully-Charged Capacity") && info.equals("Energy")) {
                 index[113] = ind;
             } else if (name.equals("Remaining Capacity") && info.equals("Energy")) {
@@ -218,6 +226,13 @@ public class HardwareInfoManager {
         }
         if (index[40] != -1) {
             gpu.setMemUsed(lhmHelper.getValue(index[40]));
+        }
+        if (index[65] != -1) {
+            ram.setUsedSize(lhmHelper.getValue(index[65]));
+        }
+        if (index[66] != -1) {
+            ram.setFreeSize(lhmHelper.getValue(index[66]));
+            System.out.println(ram.getFreeSize());
         }
         if (index[113] != -1) {
             battery.setCapacity(lhmHelper.getValue(index[113]));

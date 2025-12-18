@@ -2,10 +2,7 @@ package com.potato.desktop.controller;
 
 import com.potato.desktop.MainApp;
 import com.potato.kernel.Config;
-import com.potato.kernel.Hardware.Battery;
-import com.potato.kernel.Hardware.CPU;
-import com.potato.kernel.Hardware.GPU;
-import com.potato.kernel.Hardware.HardwareInfoManager;
+import com.potato.kernel.Hardware.*;
 import com.potato.kernel.Software.NetworkUtil;
 import com.potato.kernel.Software.SystemType;
 import com.potato.kernel.Software.Windows;
@@ -68,6 +65,10 @@ public class MainFrameController extends Controller {
     @FXML
     private Label batteryRate;
     @FXML
+    private Label ramTotal;
+    @FXML
+    private Label ramUsage;
+    @FXML
     private Button proxyResetBtn;
     @FXML
     private Button code65RepairBtn;
@@ -113,6 +114,7 @@ public class MainFrameController extends Controller {
         CPU cpu = hardwareInfoManager.getCpu();
         GPU gpu = hardwareInfoManager.getGpu();
         Battery battery = hardwareInfoManager.getBattery();
+        RAM ram = hardwareInfoManager.getRam();
 
         cpuTemp.setText(updatedLabelText("lab.cpuTemp", cpu.getPackageTemperature(), "°C"));
         cpuPower.setText(updatedLabelText("lab.cpuPower", cpu.getPower(), "W"));
@@ -129,6 +131,9 @@ public class MainFrameController extends Controller {
         batteryRemain.setText(updatedLabelText("lab.batRemain",
                 String.format("%.2f", battery.getRemainPercentage()), "%"));
         batteryRate.setText(updatedLabelText("lab.batRate", battery.getRate(), "W"));
+
+        ramTotal.setText(updatedLabelText("lab.ramTotal", ram.getTotalSize(), "GB"));
+        ramUsage.setText(updatedLabelText("lab.ramUsage", String.format("%.2f", ram.getUsedPercentage()), "%"));
 
         systemName.setText(updatedLabelText("lab.systemName", windows.getSystemName()));
         osVersion.setText(updatedLabelText("lab.osVersion", windows.getSystemVersion()));

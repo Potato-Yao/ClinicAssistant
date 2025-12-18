@@ -102,8 +102,8 @@
 
                     <VBox GridPane.columnIndex="0">
                         <Label text="Memory" />
-                        <Label text="Total" />
-                        <Label text="Used %" />
+                        <Label text="Total" fx:id="ramTotal"/>
+                        <Label text="Used %" fx:id="ramUsage"/>
                     </VBox>
 
                     <VBox GridPane.columnIndex="1">

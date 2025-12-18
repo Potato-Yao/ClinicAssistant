@@ -1,22 +1,23 @@
 package com.potato.kernel.Hardware;
 
 public class RAM {
-    private int totalSize;
     private int usedSize;
     private int freeSize;
 
     public RAM(int usedSize, int freeSize) {
         this.usedSize = usedSize;
         this.freeSize = freeSize;
-        this.totalSize = usedSize + freeSize;
+    }
+
+    public double getUsedPercentage() {
+        if (getTotalSize() == 0) {
+            return 0;
+        }
+        return (double) usedSize / getTotalSize() * 100;
     }
 
     public int getTotalSize() {
-        return totalSize;
-    }
-
-    public void setTotalSize(int totalSize) {
-        this.totalSize = totalSize;
+        return usedSize + freeSize;
     }
 
     public int getUsedSize() {

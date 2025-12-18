@@ -23,6 +23,8 @@ sensors = [
     (38, "GPU Memory Total", "equals", "SmallData", "gpu", "setMemTotal"),
     (39, "GPU Memory Free", "equals", "SmallData", "gpu", "setMemFree"),
     (40, "GPU Memory Used", "equals", "SmallData", "gpu", "setMemUsed"),
+    (65, "Memory Used", "equals", "Data", "ram", "setUsedSize"),
+    (66, "Memory Available", "equals", "Data", "ram", "setFreeSize"),
     (113, "Fully-Charged Capacity", "equals", "Energy", "battery", "setCapacity"),
     (114, "Remaining Capacity", "equals", "Energy", "battery", "setRemainCapacity"),
     (115, "Voltage", "equals", "Voltage", "battery", "setVoltage"),
