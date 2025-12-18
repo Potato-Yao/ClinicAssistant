@@ -28,6 +28,12 @@ public class MainFrameController extends Controller {
     @FXML
     private VBox toolsView;
     @FXML
+    private MenuItem helpMenuItem;
+    @FXML
+    private MenuItem aboutMenuItem;
+    @FXML
+    private MenuItem versionMenuItem;
+    @FXML
     private Button monitorBtn;
     @FXML
     private Button toolsBtn;
@@ -215,6 +221,28 @@ public class MainFrameController extends Controller {
     @FXML
     private void onBitLockerBtnAction() {
         mainApp.openBitLockerFrame();
+    }
+
+    @FXML
+    private void onHelpMenuItemAction() {
+        mainApp.openHelpFrame();
+    }
+
+    @FXML
+    private void onAboutMenuItemAction() {
+        mainApp.openAboutFrame();
+    }
+
+    @FXML
+    private void onVersionMenuItemAction() {
+        makeConfirmAlert(
+                resources.getString("app.title.version"),
+                String.format("%s: %s\n%s: %s", resources.getString("lang.kernel"), Config.KERNEL_VERSION, resources.getString("lang.desktop"), MainApp.DESKTOP_VERSION),
+                () -> {
+                },
+                () -> {
+                }
+        );
     }
 
     public void setMainApp(MainApp mainApp) {

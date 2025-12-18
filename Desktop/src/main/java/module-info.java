@@ -4,6 +4,8 @@ module com.potato.desktop {
     requires javafx.controls;
     requires javafx.fxml;
     requires jdk.compiler;
+    requires javafx.web;
+    requires org.apache.commons.io;
 
     exports com.potato.desktop;
 

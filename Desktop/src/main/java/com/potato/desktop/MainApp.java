@@ -9,12 +9,18 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import static com.potato.desktop.Util.DialogUtil.*;
+
 public class MainApp extends Application {
+    public final static String DESKTOP_VERSION = "0.0.1";
+
     private HashMap<Controller, Stage> openedWindows = new HashMap<>();
+    private int trickClickedCounter = 0;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -35,6 +41,32 @@ public class MainApp extends Application {
 
     public void openStressTestFrame() {
         openWindow("stress-test-frame.fxml", "app.title.stressTest", StressTestFrameController.class);
+    }
+
+    public void openHelpFrame() {
+        openSoftwareInfoFrame("html-content-frame.fxml", "app.title.help", "help.html");
+    }
+
+    public void openAboutFrame() {
+        openSoftwareInfoFrame("html-content-frame.fxml", "app.title.about", "about.html");
+    }
+
+    private void openSoftwareInfoFrame(String fxml, String title, String contentFileName) {
+        Pair<HTMLContentFrameController, Stage> window = openWindow(fxml, title, HTMLContentFrameController.class);
+
+        URL url = Thread.currentThread().getContextClassLoader().getResource(contentFileName);
+        window.getKey().loadUrl(url.toExternalForm());
+        trickClickedCounter++;
+
+        if (judgeDivisible(trickClickedCounter)) {
+            makeConfirmAlert(
+                    "Stack overflow!",
+                    "You have opened too much help/about windows! (I'm just kidding :D)",
+                    () -> {
+                    },
+                    () -> {
+                    });
+        }
     }
 
     public <Con extends Controller> Pair<Con, Stage> openWindow(String fxml, String title, Class<Con> controllerClass) {
@@ -67,5 +99,15 @@ public class MainApp extends Application {
         }
 
         return null;
+    }
+
+    private boolean judgeDivisible(int number) {
+        for (int i = 2; i < 10; i++) {
+            if ((number & ((1 << i) - 1)) == 0) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }
