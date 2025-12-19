@@ -1,5 +1,8 @@
 package com.potato.kernel.Hardware;
 
+/**
+ * stores cpu info
+ */
 public class CPU extends HardwareItem {
     private String name;
     private double usage;

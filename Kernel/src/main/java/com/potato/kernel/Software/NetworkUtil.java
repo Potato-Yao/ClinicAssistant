@@ -2,6 +2,9 @@ package com.potato.kernel.Software;
 
 import java.io.IOException;
 
+/**
+ * contains useful methods about network settings
+ */
 public class NetworkUtil {
     private Regedit regedit;
     private static NetworkUtil networkUtil;

@@ -2,8 +2,11 @@ package com.potato.kernel.Software;
 
 import java.io.IOException;
 
+/**
+ * builder for {@code StressTestUtil}
+ */
 public class StressTestUtilBuilder {
-    private StressTestUtil util;
+    private final StressTestUtil util;
 
     public StressTestUtilBuilder() throws IOException {
         this.util = new StressTestUtil();

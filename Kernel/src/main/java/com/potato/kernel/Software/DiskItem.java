@@ -1,11 +1,11 @@
 package com.potato.kernel.Software;
 
-import java.util.ArrayList;
-
+/**
+ * records disk's id and size, fitting diskpart's output of list disks:
+ */
 public class DiskItem {
     private int id;
     private int size;
-//    private ArrayList<> partitions;
 
     public DiskItem(int id, int size) {
         this.id = id;
@@ -16,7 +16,15 @@ public class DiskItem {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public int getSize() {
         return size;
+    }
+
+    public void setSize(int size) {
+        this.size = size;
     }
 }

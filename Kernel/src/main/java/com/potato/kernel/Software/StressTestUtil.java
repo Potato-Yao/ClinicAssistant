@@ -10,20 +10,24 @@ import com.potato.kernel.Hardware.HardwareInfoManager;
 import java.io.IOException;
 import java.time.Instant;
 
+/**
+ * Utils for stress test
+ */
 public class StressTestUtil {
+    // see {@code runStressTest} for details about these two constant
     public static final int AUTO_JUDGE_MODE = Integer.MIN_VALUE;
     public static final int INFINITY_MODE = Integer.MAX_VALUE;
 
-    private FurmarkHelper furmarkHelper;
-    private CPUBurnHelper cpuBurnHelper;
-    private HardwareInfoManager hardwareInfoManager;
+    private final FurmarkHelper furmarkHelper;
+    private final CPUBurnHelper cpuBurnHelper;
+    private final HardwareInfoManager hardwareInfoManager;
 
     /*
     0 -> cpu temperature info
     1 -> gpu temperature info
     2 -> power info
      */
-    private TestState[] testStates = new TestState[16];
+    private final TestState[] testStates = new TestState[16];
     private int totalPower = -1;
     private volatile boolean isRunning = false;
     private boolean testCPU = true;
@@ -39,20 +43,26 @@ public class StressTestUtil {
     3 -> cpu temperature 30s before
     4 -> gpu temperature 30s before
      */
-    private double[] referenceValues = new double[16];
+    private final double[] referenceValues = new double[16];
 
     public StressTestUtil() throws IOException {
         this.furmarkHelper = new FurmarkHelper();
         this.cpuBurnHelper = new CPUBurnHelper();
         this.hardwareInfoManager = HardwareInfoManager.getHardwareInfoManager();
+
+        this.testStates[0] = new TestState(hardwareInfoManager.getCpu(), null, null);
+        this.testStates[1] = new TestState(hardwareInfoManager.getGpu(), null, null);
+        this.testStates[3] = new TestState(null, null, null);
     }
 
     /**
-     * run stress test, give feedback by hardware info automatically
+     * run stress test, give feedback based on hardware info automatically
      *
      * @param remainTimeSeconds the remain time of stress test.
      *                          if remainTimeSeconds is set to AUTO_JUDGE_MODE,
-     *                          the stress test will keep running until it judges the test shows a clear ok or warning signal
+     *                          the stress test will keep running until it judges the test shows a clear ok or warning signal.
+     *                          if remainTimeSeconds is set to INFINITY_MODE,
+     *                          the stress test will keep running until the temperature reaches critical state or stopped manually
      * @throws IOException
      */
     public void runStressTest(int remainTimeSeconds) throws IOException {
@@ -106,6 +116,11 @@ public class StressTestUtil {
         thread.start();
     }
 
+    /**
+     * update reference values, then call {@code judgeTestStates} to update test states
+     *
+     * @throws IOException
+     */
     private void update() throws IOException {
         nowTime = Instant.now();
         long nowSecond = nowTime.getEpochSecond();
@@ -118,20 +133,31 @@ public class StressTestUtil {
             referenceValues[0] = nowSecond;
         }
 
-        judgeTestStates(this.testStates);
+        judgeTestStates();
     }
 
-    private void judgeTestStates(TestState[] testStates) {
-        for (int i = 0; i < testStates.length; i++) {
-            testStates[i] = null;
-        }
-
+    /**
+     * based on hardware info, judge test states and update them
+     * standards:
+     * cpu temperature > 95C -> critical
+     * cpu temperature > 90C -> warning
+     * gpu temperature > 100C -> critical
+     * gpu temperature > 95C -> warning
+     * total power < 0.6 expected power -> critical
+     * total power < 0.8 expected power -> warning
+     */
+    private void judgeTestStates() {
         CPU cpu = hardwareInfoManager.getCpu();
         GPU gpu = hardwareInfoManager.getGpu();
 
-        testStates[0] = new TestState(cpu, null, null);
-        testStates[1] = new TestState(gpu, null, null);
-        testStates[2] = new TestState(null, null, null);
+        // don't just replace with new TestState instance
+        for (TestState testState : testStates) {
+            if (testState == null) {
+                continue;
+            }
+            testState.setTestStatus(null);
+            testState.setInfo(null);
+        }
 
         if (cpu.getPackageTemperature() > 95) {
             testStates[0].setTestStatus(TestStatus.CRITICAL);
@@ -158,13 +184,13 @@ public class StressTestUtil {
         long durationTime = nowTime.getEpochSecond() - testStartTime.getEpochSecond();
         double expectedPower = totalPower * 0.8;
 
-        // by experience, power of cpu and gpu will be stable after 10 seconds of stress test
+        // based on experience, power of cpu and gpu will be stable after 10 seconds of stress test
         if (durationTime > 10) {
             if (cpu.getPower() + gpu.getPower() < expectedPower * 0.6) {
                 testStates[2].setTestStatus(TestStatus.CRITICAL);
                 testStates[2].setInfo("The total power is too low! Check the cooling system.");
             } else if (cpu.getPower() + gpu.getPower() < expectedPower * 0.8) {
-                testStates[2].setTestStatus(TestStatus.CRITICAL);
+                testStates[2].setTestStatus(TestStatus.WARNING);
                 testStates[2].setInfo("The total power is low! Check system power mode and charger.");
             } else {
                 testStates[2].setTestStatus(TestStatus.NORMAL);
@@ -177,13 +203,14 @@ public class StressTestUtil {
     }
 
     /**
-     * rule to judge whether to stop the stress test:
+     * judge whether to stop the stress test or not
+     * standards:
      * 1. already run for at least 3 min
      * 2. temperature and power states are ok
      * 3. temperature and power states have been stable, which means the values last in [-0.05, 0.05] percentage period for at least 1 min
      * otherwise, the test will keep running until the temperature is in critical state or has run for 10mins but still in an unstable state
      *
-     * @return
+     * @return true for can stop, false for can't
      */
     private boolean judgeToStop() {
         if (nowTime.getEpochSecond() - testStartTime.getEpochSecond() < 3 * 60) {

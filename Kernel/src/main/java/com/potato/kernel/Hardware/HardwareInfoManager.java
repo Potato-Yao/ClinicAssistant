@@ -9,9 +9,11 @@ import static com.potato.kernel.Utils.Admin.*;
 import java.io.IOException;
 import java.util.Arrays;
 
+/**
+ * seek, update, store, provide hardware info
+ */
 public class HardwareInfoManager {
     private static HardwareInfoManager manager;
-    private LHMHelper lhmHelper;
 
     /*
     [0, 32] is for CPU
@@ -57,8 +59,8 @@ public class HardwareInfoManager {
     117 -> battery charge/discharge rate
     118 -> battery designed capacity
      */
+    // stores the sensor index in LHM hardware list
     private int[] index = new int[INDEX_ARRAY_SIZE];
-    private String[] names = new String[INDEX_ARRAY_SIZE];
 
     private String updatedTime;
     private Motherboard motherboard = new Motherboard(null);
@@ -73,13 +75,19 @@ public class HardwareInfoManager {
     private Fan[] fans = new Fan[3];
 
     private int prevBatteryCapacity = -1;
+    private LHMHelper lhmHelper;
 
+    /**
+     * the constructor will parse hardware list by LHM, map hardware sensors with index in the list.
+     * then it will update sensors value by calling {@code update()} periodically.
+     *
+     * @throws IOException
+     */
     private HardwareInfoManager() throws IOException {
+        // without admin, some hardware info can't be seeked
         if (!isAdmin()) {
             throw new RuntimeException("The program is not run as administrator!");
         }
-
-        names[0] = "";
 
         lhmHelper = LHMHelper.connect();
 
@@ -181,6 +189,13 @@ public class HardwareInfoManager {
         return manager;
     }
 
+    /**
+     * update hardware info
+     * <p>
+     * note: if there's new hardware added before the constructor has been called, the update method can't get it
+     *
+     * @throws IOException
+     */
     public void update() throws IOException {
         lhmHelper.update();
 
@@ -235,7 +250,7 @@ public class HardwareInfoManager {
             System.out.println(ram.getFreeSize());
         }
         if (index[113] != -1) {
-            battery.setCapacity(lhmHelper.getValue(index[113]));
+            battery.setActuallyCapacity(lhmHelper.getValue(index[113]));
         }
         if (index[114] != -1) {
             battery.setRemainCapacity(lhmHelper.getValue(index[114]));
@@ -266,11 +281,27 @@ public class HardwareInfoManager {
         }
         // THE CODE ABOVE IS SCRIPT GENERATED, DON'T CHANGE THEM DIRECTLY! CHANGE THE SCRIPT sensor_map.py INSTEAD
 
+        cpu.setClock(getClockValue(cpu.getClockBeginIndex(), cpu.getClockEndIndex()));
+
+        setChargingState();
+    }
+
+    /**
+     * calculate a total cpu clock value by clock value of all cores
+     * <p>
+     * the parameter is not a list, for better performance
+     *
+     * @param begin the first index that cpu core clock occurs in the LHM hardware list
+     * @param end   the last index that cpu core clock occurs in the LHM hardware list
+     * @return
+     * @throws IOException
+     */
+    private double getClockValue(int begin, int end) throws IOException {
         double clock = 0;
         double firstClock = 0;
         double secondClock = 0;
         double thirdClock = 0;
-        for (int i = cpu.getClockBeginIndex(); i <= cpu.getClockEndIndex(); i++) {
+        for (int i = begin; i <= end; i++) {
             if (lhmHelper.getValue(i) > firstClock) {
                 thirdClock = secondClock;
                 secondClock = firstClock;
@@ -281,8 +312,14 @@ public class HardwareInfoManager {
             clock /= 1000;
 //            clock = 3.952 * Math.pow(clock, 3) - 46.6351 * Math.pow(clock, 2) + 182.335 * clock - 232.454;  // by using Newton interpolation formula, compare to task manager
         }
-        cpu.setClock(clock);
 
+        return clock;
+    }
+
+    /**
+     * set the charging state of the battery
+     */
+    private void setChargingState() {
         if (prevBatteryCapacity < battery.getRemainCapacity() || battery.getRate() == 0) {
             battery.setCharging(true);
         } else if (prevBatteryCapacity > battery.getRemainCapacity()) {
@@ -291,6 +328,9 @@ public class HardwareInfoManager {
         prevBatteryCapacity = battery.getRemainCapacity();
     }
 
+    /**
+     * close connections to tools
+     */
     public void close() {
         try {
             this.lhmHelper.disconnect();
@@ -319,14 +359,6 @@ public class HardwareInfoManager {
 
     public void setIndex(int[] index) {
         this.index = index;
-    }
-
-    public String[] getNames() {
-        return names;
-    }
-
-    public void setNames(String[] names) {
-        this.names = names;
     }
 
     public String getUpdatedTime() {

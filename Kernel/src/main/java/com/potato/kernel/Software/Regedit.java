@@ -1,14 +1,26 @@
 package com.potato.kernel.Software;
 
-import com.sun.source.tree.WhileLoopTree;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * utils about regedit
+ */
 public class Regedit {
-    public Regedit() {}
+    public Regedit() {
+    }
 
+    /**
+     * query the registry if it contains the specified key
+     * <p>
+     * it should not be called externally, since registry has root keys, use {@code queryHKCR}, {@code queryHKLM}, {@code queryHKCU} instead
+     *
+     * @param keyPath
+     * @param keyName if keyName is null, it will query if the keyPath exists
+     * @return
+     * @throws IOException
+     */
     // todo reg query runs too fucking slow
     private boolean queryReg(String keyPath, String keyName) throws IOException {
         ProcessBuilder processBuilder;
@@ -42,6 +54,14 @@ public class Regedit {
         return false;
     }
 
+    /**
+     * delete the specified registry key
+     * <p>
+     * it should not be called externally, since registry has root keys, use {@code deleteHKCR}, {@code deleteHKLM}, {@code deleteHKCU} instead
+     *
+     * @param key full path of the key
+     * @throws IOException
+     */
     private void deleteReg(String key) throws IOException {
         ProcessBuilder processBuilder = new ProcessBuilder("reg", "delete", key, "/f");
         Process process = processBuilder.start();
@@ -49,10 +69,6 @@ public class Regedit {
 
         String line;
         while ((line = bufferedReader.readLine()) != null) {
-//            if (line.contains("The operation completed successfully.")) {
-//                break;
-//            }
-
             if (line.contains("ERROR: The system was unable to find the specified registry key or value.")) {
                 throw new RuntimeException("Key not found: " + key);
             }

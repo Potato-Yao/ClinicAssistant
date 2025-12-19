@@ -1,5 +1,8 @@
 package com.potato.kernel.Software;
 
+/**
+ * records partition's size, label and bitlocker status, fitting diskpart's output of list partitions:
+ */
 public class PartitionItem {
     private int size;  // in MB
     private String label;

@@ -2,6 +2,10 @@ package com.potato.kernel.Software;
 
 import java.io.*;
 
+/**
+ * utils for Windows OS, fits info from systeminfo and slmgr
+ * see {@code parseSystemInfo()} for details
+ */
 public class Windows {
     private String systemName;
     private String systemVersion;
@@ -22,6 +26,11 @@ public class Windows {
         return windows;
     }
 
+    /**
+     * parses system info from "systeminfo" and "slmgr /xpr" commands
+     *
+     * @throws IOException
+     */
     private void parseSystemInfo() throws IOException {
         ProcessBuilder systemInfoPB = new ProcessBuilder("systeminfo");
         Process systemInfoProcess = systemInfoPB.start();
@@ -124,6 +133,11 @@ public class Windows {
         }
     }
 
+    /**
+     * use MAS_AIO script to activate windows
+     *
+     * @throws IOException
+     */
     public void activateWindows() throws IOException {
         if (isActivated) {
             return;
@@ -132,7 +146,7 @@ public class Windows {
         File projectRoot = new File(System.getProperty("user.dir"));
         File activateTool = new File(projectRoot, "../ExternalTools/win-activate/MAS_AIO.cmd");
         if (!activateTool.exists()) {
-            throw new RuntimeException("Activation tool not found, which should located at " + activateTool.getAbsolutePath());
+            throw new RuntimeException("Activation tool not found, which should locate at " + activateTool.getAbsolutePath());
         }
 
         Process activateToolProcess = new ProcessBuilder(activateTool.getAbsolutePath(), "/HWID").start();
@@ -143,6 +157,7 @@ public class Windows {
         toolWriter.newLine();
         toolWriter.flush();
 
+        // the activation takes time
         try {
             activateToolProcess.waitFor();
         } catch (InterruptedException e) {
@@ -150,10 +165,27 @@ public class Windows {
         }
     }
 
+    /**
+     * restarts the computer and enters BIOS settings
+     *
+     * @throws IOException
+     */
     public void enterBIOS() throws IOException {
-        Process process = new ProcessBuilder("shutdown", "/r", "/fw", "t", "0").start();
+        new ProcessBuilder("shutdown", "/r", "/fw", "t", "0").start();
     }
 
+    /**
+     * reads value from systeminfo output lines, which is actually from the 3rd element to the end
+     * (from the sample output of systeminfo, all keys take 2 words)
+     * <p>
+     * note: only for systeminfo output lines
+     * <p>
+     * sample:
+     * System Model:              ROG Zephyrus G16 GU605MV_GU605MV
+     *
+     * @param lines
+     * @return
+     */
     private String readValue(String[] lines) {
         assert lines.length >= 3;
 

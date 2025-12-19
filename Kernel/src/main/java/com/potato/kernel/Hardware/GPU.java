@@ -1,6 +1,19 @@
 package com.potato.kernel.Hardware;
 
+/**
+ * stores GPU info
+ */
 public class GPU extends HardwareItem {
+    private String name;
+    private double temperature;
+    private double maxTemperature;
+    private double power;
+    private double speed;
+    private double memTotal;
+    private double memFree;
+    private double memUsed;
+    private double memUsage;
+
     public GPU(String name, double temperature, double maxTemperature, double power, double speed, double memTotal, double memFree, double memUsed, double memUsage) {
         this.name = name;
         this.temperature = temperature;
@@ -12,25 +25,6 @@ public class GPU extends HardwareItem {
         this.memUsed = memUsed;
         this.memUsage = memUsage;
     }
-
-
-    private String name;
-
-    private double temperature;
-
-    private double maxTemperature;
-
-    private double power;
-
-    private double speed;
-
-    private double memTotal;
-
-    private double memFree;
-
-    private double memUsed;
-
-    private double memUsage;
 
     public void setName(String name) {
         this.name = name;

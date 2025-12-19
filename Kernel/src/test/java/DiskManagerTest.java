@@ -12,7 +12,7 @@ public class DiskManagerTest {
         DiskManager manager = DiskManager.getDiskManager();
         ArrayList<DiskItem> diskItems = manager.getDiskItems();
         for (DiskItem diskItem : diskItems) {
-            System.out.println("Disk ID: " + diskItem.getId() + " size: " + diskItem.getSize());
+            System.out.println("Disk ID: " + diskItem.id() + " size: " + diskItem.size());
         }
 
         ArrayList<PartitionItem> partitionItems = manager.getPartitionItems();

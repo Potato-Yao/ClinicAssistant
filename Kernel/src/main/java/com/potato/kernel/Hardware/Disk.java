@@ -1,5 +1,8 @@
 package com.potato.kernel.Hardware;
 
-public class Disk {
+/**
+ * stores disk info
+ */
+public class Disk extends HardwareItem {
 
 }

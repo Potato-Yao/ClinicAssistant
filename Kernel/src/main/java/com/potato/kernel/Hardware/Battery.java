@@ -1,17 +1,20 @@
 package com.potato.kernel.Hardware;
 
-public class Battery {
-    private int designedCapacity;
-    private int capacity;
-    private int remainCapacity;
-    private int voltage;
-    private int current;
-    private int rate;  // charge or discharge power
+/**
+ * stores battery info
+ */
+public class Battery extends HardwareItem {
+    private int designedCapacity;  // the maximum capacity the battery should have
+    private int actuallyCapacity;  // the maximum capacity the battery actually has
+    private int remainCapacity;  // the current remaining capacity
+    private int voltage;  // the voltage battery supplies. be zero when charging
+    private int current;  // the current battery supplies. be zero when charging
+    private int rate;  // charge or discharge power. be zero when fully charged
     private boolean isCharging;
 
-    public Battery(int designedCapacity, int capacity, int remainCapacity, int voltage, int current, int rate, int isCharging) {
+    public Battery(int designedCapacity, int actuallyCapacity, int remainCapacity, int voltage, int current, int rate, int isCharging) {
         this.designedCapacity = designedCapacity;
-        this.capacity = capacity;
+        this.actuallyCapacity = actuallyCapacity;
         this.remainCapacity = remainCapacity;
         this.voltage = voltage;
         this.current = current;
@@ -23,14 +26,14 @@ public class Battery {
         if (designedCapacity == 0) {
             return 0.0;
         }
-        return ((double) capacity / designedCapacity) * 100.0;
+        return ((double) actuallyCapacity / designedCapacity) * 100.0;
     }
 
     public double getRemainPercentage() {
-        if (capacity == 0) {
+        if (actuallyCapacity == 0) {
             return 0.0;
         }
-        return ((double) remainCapacity / capacity) * 100.0;
+        return ((double) remainCapacity / actuallyCapacity) * 100.0;
     }
 
     public int getDesignedCapacity() {
@@ -41,12 +44,12 @@ public class Battery {
         this.designedCapacity = designedCapacity;
     }
 
-    public int getCapacity() {
-        return capacity;
+    public int getActuallyCapacity() {
+        return actuallyCapacity;
     }
 
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
+    public void setActuallyCapacity(int actuallyCapacity) {
+        this.actuallyCapacity = actuallyCapacity;
     }
 
     public int getRemainCapacity() {

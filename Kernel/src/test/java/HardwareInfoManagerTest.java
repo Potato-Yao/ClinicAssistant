@@ -16,7 +16,7 @@ public class HardwareInfoManagerTest {
 //            System.out.println("GPU Temperature" + manager.getGpu().getTemperature());
 //            System.out.println("CPU Power " + manager.getCpu().getPower());
 //            System.out.println("GPU Power " + manager.getGpu().getPower());
-            System.out.println("Battery Capacity " + manager.getBattery().getCapacity());
+            System.out.println("Battery Capacity " + manager.getBattery().getActuallyCapacity());
             System.out.println("Battery Remain Capacity " + manager.getBattery().getRemainCapacity());
             System.out.println("Battery Voltage " + manager.getBattery().getVoltage());
             System.out.println("Battery Current " + manager.getBattery().getCurrent());
