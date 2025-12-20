@@ -8,6 +8,13 @@ import java.nio.charset.StandardCharsets;
 
 import static com.potato.kernel.Utils.ProcessUtil.*;
 
+/**
+ * the helper to connect with the LibreHardwareMonitor wrapper
+ * <p>
+ * the implementation is based on the rust implementation in project {@link <a href="https://github.com/wiiznokes/fan-control">...</a>}
+ * <p>
+ * note: if you need to get hardware info, DO NOT use it, use {@code HardwareManager} instead
+ */
 public class LHMHelper {
     private static final String IP = "127.0.0.1";
     private static final int DEFAULT_PORT = 55555;
@@ -29,6 +36,16 @@ public class LHMHelper {
         this.out = socket.getOutputStream();
     }
 
+    /**
+     * connect to wrapper by using socket
+     * <p>
+     * the wrapper will be opened on 55555 port, but if it is occupied, it will try the next port until it finds a free one or reaches 55555 + 50
+     * <p>
+     * so, the connection will do the same thing, check port 55555 firstly
+     *
+     * @return
+     * @throws IOException
+     */
     public static LHMHelper connect() throws IOException {
         File projectRoot = new File(System.getProperty("user.dir"));
         File lhmExe = new File(projectRoot, Config.WRAPPER_LOCATION);
@@ -39,6 +56,8 @@ public class LHMHelper {
 
         boolean connected = false;
         long timeoutSeconds = System.currentTimeMillis() + Config.CONNECTION_TIMEOUT * 1000L;
+
+        // the wrapper needs some time to start, so we just need to make sure the connection is successful within the timeout limitation
         while (System.currentTimeMillis() < timeoutSeconds && !connected) {
             int port = DEFAULT_PORT;
             while (port < DEFAULT_PORT + PORT_FIND_RANGE) {  // to match the implementation of wrapper

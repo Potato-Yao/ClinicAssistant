@@ -247,7 +247,6 @@ public class HardwareInfoManager {
         }
         if (index[66] != -1) {
             ram.setFreeSize(lhmHelper.getValue(index[66]));
-            System.out.println(ram.getFreeSize());
         }
         if (index[113] != -1) {
             battery.setActuallyCapacity(lhmHelper.getValue(index[113]));

@@ -52,7 +52,7 @@ public class StressTestUtil {
 
         this.testStates[0] = new TestState(hardwareInfoManager.getCpu(), null, null);
         this.testStates[1] = new TestState(hardwareInfoManager.getGpu(), null, null);
-        this.testStates[3] = new TestState(null, null, null);
+        this.testStates[2] = new TestState(null, null, null);
     }
 
     /**

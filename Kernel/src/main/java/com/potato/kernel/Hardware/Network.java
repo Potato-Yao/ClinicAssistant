@@ -1,4 +1,7 @@
 package com.potato.kernel.Hardware;
 
-public record Network() {
+/**
+ * stores network card and network info
+ */
+public class Network extends HardwareItem {
 }

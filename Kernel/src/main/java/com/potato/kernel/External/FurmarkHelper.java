@@ -2,8 +2,14 @@ package com.potato.kernel.External;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
+import static com.potato.kernel.Utils.ProcessUtil.forceKillProcess;
+
+/**
+ * helper for running GPU burn test
+ * <p>
+ * the principle is call external tool furmark.exe
+ */
 public class FurmarkHelper {
     private File exe;
     private Process runningProcess;
@@ -25,17 +31,7 @@ public class FurmarkHelper {
 
     public void stopTest() {
         if (runningProcess != null) {
-            long pid = runningProcess.pid();
-            runningProcess.destroyForcibly();
-
-            try {
-                new ProcessBuilder("taskkill", "/f", "/t", "/pid", String.valueOf(pid)).start().waitFor(2, TimeUnit.SECONDS);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-
+            forceKillProcess(runningProcess);
             runningProcess = null;
         }
     }

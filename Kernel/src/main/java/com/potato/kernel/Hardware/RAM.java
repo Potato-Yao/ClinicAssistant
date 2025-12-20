@@ -1,6 +1,9 @@
 package com.potato.kernel.Hardware;
 
-public class RAM {
+/**
+ * stores RAM info
+ */
+public class RAM extends HardwareItem {
     private int usedSize;
     private int freeSize;
 

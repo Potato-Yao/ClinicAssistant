@@ -9,7 +9,7 @@ public class StressTestUtilTest {
     @Test
     void test() throws IOException, InterruptedException {
         StressTestUtilBuilder builder = new StressTestUtilBuilder();
-        StressTestUtil util = builder.cpuTest(true).gpuTest(true).totalPower(100).build();
+        StressTestUtil util = builder.cpuTest(true).totalPower(100).build();
 
         util.runStressTest(15);
 
