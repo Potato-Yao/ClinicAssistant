@@ -7,6 +7,7 @@ module com.potato.desktop {
     requires javafx.web;
     requires org.apache.commons.io;
     requires org.apache.commons.csv;
+    requires java.desktop;
 
     exports com.potato.desktop;
 

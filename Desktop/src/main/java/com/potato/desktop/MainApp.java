@@ -6,9 +6,11 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.Pair;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Locale;
@@ -89,6 +91,18 @@ public class MainApp extends Application {
             stage.setOnCloseRequest((e) -> {
                 controller.onClose();
             });
+
+//            Image appIcon = new Image("icon.png");
+            Image appIcon = new Image(getClass().getResource("/icon.png").toExternalForm());
+            stage.getIcons().add(appIcon);
+            if (Taskbar.isTaskbarSupported()) {
+                Taskbar taskbar = Taskbar.getTaskbar();
+                try {
+                    taskbar.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/icon.png")));
+                } catch (Exception e) {
+                }
+            }
+
             stage.show();
 
             openedWindows.put(controller, stage);
