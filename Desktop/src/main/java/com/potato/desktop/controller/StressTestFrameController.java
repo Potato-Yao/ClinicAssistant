@@ -1,5 +1,6 @@
 package com.potato.desktop.controller;
 
+import com.potato.desktop.Util.CSVUtil;
 import com.potato.desktop.component.ChartType;
 import com.potato.desktop.component.NumberLineChart;
 import com.potato.kernel.Config;
@@ -22,6 +23,9 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -61,6 +65,7 @@ public class StressTestFrameController extends Controller {
     private HardwareInfoManager hardwareInfoManager;
     private ScheduledExecutorService executor;
     private StressTestUtil stressTestUtil;
+    private CSVUtil csvUtil;
 
     private static final int MAX_TIME = 60;  // in seconds
     private boolean isRunning = false;
@@ -96,20 +101,34 @@ public class StressTestFrameController extends Controller {
         executor.scheduleAtFixedRate(() -> {
             Platform.runLater(() -> {
                 if (isRunning) {
+                    currTime = ((double) Instant.now().getEpochSecond() - startTime.getEpochSecond());  // in seconds
+                    CPU cpu = hardwareInfoManager.getCpu();
+                    GPU gpu = hardwareInfoManager.getGpu();
+
                     chartUpdate();
                     lastingTimeLabel.setText(
                             String.format("%s %.2fs", resources.getString("lab.stressTestLastingTime"), currTime));
+
+                    try {
+                        csvUtil.write(
+                                String.valueOf(currTime),
+                                String.valueOf(cpu.getPackageTemperature()),
+                                String.valueOf(cpu.getPower()),
+                                String.valueOf(gpu.getTemperature()),
+                                String.valueOf(gpu.getPower()));
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             });
         }, 0, Config.HARDWARE_INFO_SEEK_RATE, TimeUnit.MILLISECONDS);
     }
 
     private void chartUpdate() {
-        currTime = ((double) Instant.now().getEpochSecond() - startTime.getEpochSecond());  // in seconds
         CPU cpu = hardwareInfoManager.getCpu();
         GPU gpu = hardwareInfoManager.getGpu();
 
-        chartItemUpdate(cpuTempLineChart, cpuTempSeries, currTime, cpu.getAverageTemperature());
+        chartItemUpdate(cpuTempLineChart, cpuTempSeries, currTime, cpu.getPackageTemperature());
         chartItemUpdate(gpuTempLineChart, gpuTempSeries, currTime, gpu.getTemperature());
         chartItemUpdate(cpuPowerLineChart, cpuPowerSeries, currTime, cpu.getPower());
         chartItemUpdate(gpuPowerLineChart, gpuPowerSeries, currTime, gpu.getPower());
@@ -132,7 +151,7 @@ public class StressTestFrameController extends Controller {
                 resources.getString("lab.stressTestNoWarning") : warningInfo.toString().trim());
     }
 
-    private void chartItemUpdate(NumberLineChart chart, XYChart.Series series, double time, double value) {
+    private void chartItemUpdate(NumberLineChart chart, XYChart.Series<Number, Number> series, double time, double value) {
         chart.setxAxisInRange(time);
 
         if (chart.getChartType() == ChartType.POWER) {
@@ -183,6 +202,14 @@ public class StressTestFrameController extends Controller {
             cpuPowerChart.getData().add(cpuPowerSeries);
             gpuPowerChart.getData().add(gpuPowerSeries);
 
+            LocalDateTime time = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+            csvUtil = new CSVUtil(
+                    "stress_test_" + time.format(formatter) + ".csv",
+                    true,
+                    true,
+                    "Time(s)", "CPU_Temp(°C)", "CPU_Power(W)", "GPU_Temp(°C)", "GPU_Power(W)");
+
             stressTestUtil.runStressTest(StressTestUtil.AUTO_JUDGE_MODE);
 
             isRunning = true;
@@ -198,6 +225,11 @@ public class StressTestFrameController extends Controller {
         cpuCheckBox.setDisable(false);
         gpuCheckBox.setDisable(false);
         powerInfoLabel.setDisable(false);
+        try {
+            csvUtil.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void inverseRunButtonText() {
