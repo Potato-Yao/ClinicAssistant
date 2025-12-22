@@ -78,6 +78,8 @@ public class MainFrameController extends Controller {
     private Button enterBIOSBtn;
     @FXML
     private Button bitLockerBtn;
+    @FXML
+    private Button stressTestBtn;
 
     @FXML
     private ResourceBundle resources;

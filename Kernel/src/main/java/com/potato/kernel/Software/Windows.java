@@ -171,7 +171,7 @@ public class Windows {
      * @throws IOException
      */
     public void enterBIOS() throws IOException {
-        new ProcessBuilder("shutdown", "/r", "/fw", "t", "0").start();
+        new ProcessBuilder("cmd.exe", "/c", "shutdown", "/r", "/fw", "t", "0").start();
     }
 
     /**

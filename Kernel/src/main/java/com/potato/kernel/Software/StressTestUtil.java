@@ -32,9 +32,9 @@ public class StressTestUtil {
     private volatile boolean isRunning = false;
     private boolean testCPU = true;
     private boolean testGPU = true;
-
     private Instant testStartTime;
     private Instant nowTime;
+    private Thread updater;
 
     /*
     0 -> data collect time(in epoch seconds)
@@ -80,14 +80,14 @@ public class StressTestUtil {
             cpuBurnHelper.runTest();
         }
 
-        Thread thread = new Thread(() -> {
+        updater = new Thread(() -> {
             long endTime = System.currentTimeMillis() + remainTimeSeconds * 1000L;
 
-            while (true) {
+            while (isRunning) {
                 try {
                     Thread.sleep(Config.HARDWARE_INFO_SEEK_RATE);
                 } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
+                    break;
                 }
                 try {
                     update();
@@ -112,8 +112,8 @@ public class StressTestUtil {
             stopStressTest();
         });
 
-        thread.setDaemon(true);
-        thread.start();
+        updater.setDaemon(true);
+        updater.start();
     }
 
     /**
@@ -246,10 +246,11 @@ public class StressTestUtil {
         if (testCPU) {
             cpuBurnHelper.stopTest();
         }
-
         if (testGPU) {
             furmarkHelper.stopTest();
         }
+
+        updater.interrupt();
 
         isRunning = false;
         testStartTime = null;

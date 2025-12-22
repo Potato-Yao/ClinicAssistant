@@ -61,9 +61,11 @@ public class MainApp extends Application {
         trickClickedCounter++;
 
         if (judgeDivisible(trickClickedCounter)) {
+            Locale locale = new Locale("en", "US");
+            ResourceBundle languageBundle = ResourceBundle.getBundle("messages", locale);
             makeConfirmAlert(
-                    "Stack overflow!",
-                    "You have opened too much help/about windows! (I'm just kidding :D)",
+                    languageBundle.getString("dlg.tooManyInfoWindows.header"),
+                    languageBundle.getString("dlg.tooManyInfoWindows.content"),
                     () -> {
                     },
                     () -> {

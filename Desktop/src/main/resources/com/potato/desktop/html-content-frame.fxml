@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane prefHeight="450" prefWidth="600" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane prefHeight="450" prefWidth="600" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.potato.desktop.controller.HTMLContentFrameController">
 
     <center>
@@ -15,12 +15,10 @@
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
-                <Menu mnemonicParsing="false" text="About">
+                <Menu mnemonicParsing="false" text="%app.title.about">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Help" fx:id="helpMenuItem" onAction="#onHelpMenuItemClick"/>
-                    </items>
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="About" fx:id="aboutMenuItem" onAction="#onAboutMenuItemClick"/>
+                        <MenuItem mnemonicParsing="false" text="%app.title.help" fx:id="helpMenuItem" onAction="#onHelpMenuItemClick"/>
+                        <MenuItem mnemonicParsing="false" text="%app.title.about" fx:id="aboutMenuItem" onAction="#onAboutMenuItemClick"/>
                     </items>
                 </Menu>
             </menus>

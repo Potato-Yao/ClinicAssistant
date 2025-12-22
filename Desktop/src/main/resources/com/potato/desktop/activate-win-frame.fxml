@@ -13,14 +13,14 @@
         <Insets top="12" right="12" bottom="12" left="12"/>
     </padding>
 
-    <Label text="Activation Status:" style="-fx-font-weight: bold"/>
+    <Label text="%lab.activationStatusText" style="-fx-font-weight: bold"/>
 
     <Label fx:id="statusLabel"
-           text="Not activated"
+           text="%lang.false"
            wrapText="true"
            style="-fx-border-color: #cccccc; -fx-padding: 8"/>
 
-    <Button text="Activate"
+    <Button text="%btn.tools.activateWindows"
             fx:id="activateBtn"
             onMouseClicked="#onActivateBtnClick"
             maxWidth="Infinity"/>

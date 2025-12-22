@@ -14,7 +14,6 @@ import com.potato.kernel.Software.TestStatus;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -25,7 +24,6 @@ import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -101,13 +99,18 @@ public class StressTestFrameController extends Controller {
         executor.scheduleAtFixedRate(() -> {
             Platform.runLater(() -> {
                 if (isRunning) {
+                    if (!stressTestUtil.isRunning()) {
+                        closeTest();
+                    }
+
                     currTime = ((double) Instant.now().getEpochSecond() - startTime.getEpochSecond());  // in seconds
                     CPU cpu = hardwareInfoManager.getCpu();
                     GPU gpu = hardwareInfoManager.getGpu();
 
                     chartUpdate();
-                    lastingTimeLabel.setText(
-                            String.format("%s %.2fs", resources.getString("lab.stressTestLastingTime"), currTime));
+                    lastingTimeLabel.setText(String.format(
+                            resources.getString("lab.stressTestLastingTime.format"),
+                            currTime));
 
                     try {
                         csvUtil.write(
@@ -208,7 +211,11 @@ public class StressTestFrameController extends Controller {
                     "stress_test_" + time.format(formatter) + ".csv",
                     true,
                     true,
-                    "Time(s)", "CPU_Temp(°C)", "CPU_Power(W)", "GPU_Temp(°C)", "GPU_Power(W)");
+                    resources.getString("csv.stressTest.timeSeconds"),
+                    resources.getString("csv.stressTest.cpuTemp"),
+                    resources.getString("csv.stressTest.cpuPower"),
+                    resources.getString("csv.stressTest.gpuTemp"),
+                    resources.getString("csv.stressTest.gpuPower"));
 
             stressTestUtil.runStressTest(StressTestUtil.AUTO_JUDGE_MODE);
 

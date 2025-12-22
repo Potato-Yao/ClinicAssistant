@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.potato.desktop.controller.StressTestFrameController">
 
     <left>
@@ -26,20 +26,20 @@
                 <Insets bottom="12" left="12" right="12" top="12"/>
             </padding>
 
-            <Label style="-fx-font-weight: bold" text="Stress Options"/>
-            <CheckBox fx:id="cpuCheckBox" text="CPU Stress Test"/>
-            <CheckBox fx:id="gpuCheckBox" text="GPU Stress Test"/>
+            <Label style="-fx-font-weight: bold" text="%lab.stressTest.optionsTitle"/>
+            <CheckBox fx:id="cpuCheckBox" text="%lab.stressTest.cpuOption"/>
+            <CheckBox fx:id="gpuCheckBox" text="%lab.stressTest.gpuOption"/>
             <HBox prefHeight="100.0" prefWidth="200.0">
                 <children>
-                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Charger Power"/>
+                    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="%lab.stressTest.chargerPower"/>
                     <TextField fx:id="powerInputField"/>
                 </children>
             </HBox>
 
             <Region VBox.vgrow="ALWAYS"/>
-            <Label text="Test lasting time" fx:id="lastingTimeLabel"/>
+            <Label text="%lab.stressTestLastingTime" fx:id="lastingTimeLabel"/>
 
-            <Button fx:id="runBtn" maxWidth="Infinity" text="Run Stress Test" onMouseClicked="#onRunBtnClick"/>
+            <Button fx:id="runBtn" maxWidth="Infinity" text="%btn.stressTest.runTest" onMouseClicked="#onRunBtnClick"/>
         </VBox>
     </left>
 
@@ -60,37 +60,37 @@
 
             <LineChart fx:id="cpuTempChart" GridPane.columnIndex="0" GridPane.rowIndex="0">
                 <xAxis>
-                    <NumberAxis label="Time (s)"/>
+                    <NumberAxis label="%chart.axis.timeSeconds"/>
                 </xAxis>
                 <yAxis>
-                    <NumberAxis label="CPU Temp (°C)"/>
+                    <NumberAxis label="%chart.stressTest.cpuTemp"/>
                 </yAxis>
             </LineChart>
 
             <LineChart fx:id="cpuPowerChart" GridPane.columnIndex="0" GridPane.rowIndex="1">
                 <xAxis>
-                    <NumberAxis label="Time (s)"/>
+                    <NumberAxis label="%chart.axis.timeSeconds"/>
                 </xAxis>
                 <yAxis>
-                    <NumberAxis label="CPU Power (W)"/>
+                    <NumberAxis label="%chart.stressTest.cpuPower"/>
                 </yAxis>
             </LineChart>
 
             <LineChart fx:id="gpuTempChart" GridPane.columnIndex="1" GridPane.rowIndex="0">
                 <xAxis>
-                    <NumberAxis label="Time (s)"/>
+                    <NumberAxis label="%chart.axis.timeSeconds"/>
                 </xAxis>
                 <yAxis>
-                    <NumberAxis label="GPU Temp (°C)"/>
+                    <NumberAxis label="%chart.stressTest.gpuTemp"/>
                 </yAxis>
             </LineChart>
 
             <LineChart fx:id="gpuPowerChart" GridPane.columnIndex="1" GridPane.rowIndex="1">
                 <xAxis>
-                    <NumberAxis label="Time (s)"/>
+                    <NumberAxis label="%chart.axis.timeSeconds"/>
                 </xAxis>
                 <yAxis>
-                    <NumberAxis label="GPU Power (W)"/>
+                    <NumberAxis label="%chart.stressTest.gpuPower"/>
                 </yAxis>
             </LineChart>
         </GridPane>
@@ -102,26 +102,26 @@
                 <Insets bottom="10" left="10" right="10" top="10"/>
             </padding>
 
-            <Label style="-fx-font-weight: bold" text="Live Status"/>
+            <Label style="-fx-font-weight: bold" text="%lab.stressTest.liveStatusTitle"/>
 
             <Separator/>
 
-            <Label text="CPU Info"/>
+            <Label text="%lab.stressTest.cpuInfoTitle"/>
             <Label fx:id="cpuInfoLabel" wrapText="true"/>
 
             <Separator/>
 
-            <Label text="GPU Info"/>
+            <Label text="%lab.stressTest.gpuInfoTitle"/>
             <Label fx:id="gpuInfoLabel" wrapText="true"/>
 
             <Separator/>
 
-            <Label text="Power Info"/>
+            <Label text="%lab.stressTest.powerInfoTitle"/>
             <Label fx:id="powerInfoLabel" wrapText="true"/>
 
             <Separator/>
 
-            <Label text="Warnings"/>
+            <Label text="%lab.stressTest.warningsTitle"/>
             <Label fx:id="warningLabel" style="-fx-text-fill: darkred" wrapText="true"/>
 
             <Region VBox.vgrow="ALWAYS"/>
