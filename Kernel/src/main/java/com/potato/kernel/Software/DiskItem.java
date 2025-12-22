@@ -5,9 +5,9 @@ package com.potato.kernel.Software;
  */
 public class DiskItem {
     private int id;
-    private int size;
+    private double size;  // in GB
 
-    public DiskItem(int id, int size) {
+    public DiskItem(int id, double size) {
         this.id = id;
         this.size = size;
     }
@@ -20,11 +20,15 @@ public class DiskItem {
         this.id = id;
     }
 
-    public int getSize() {
+    /**
+     * in GB
+     * @return
+     */
+    public double getSize() {
         return size;
     }
 
-    public void setSize(int size) {
+    public void setSize(double size) {
         this.size = size;
     }
 }

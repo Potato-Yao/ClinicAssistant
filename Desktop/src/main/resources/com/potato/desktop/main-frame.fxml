@@ -116,12 +116,12 @@
 
                     <VBox GridPane.columnIndex="1">
                         <Label text="%lab.name.disks"/>
-                        <Label text="%lab.name.diskInfo"/>
+                        <Label text="%lab.name.diskInfo" fx:id="disksInfo"/>
                     </VBox>
 
                     <VBox GridPane.columnIndex="2">
                         <Label text="%lab.name.admin"/>
-                        <Label text="%lab.admin.status"/>
+                        <Label text="%lab.admin.status" fx:id="adminStatus"/>
                     </VBox>
 
                     <VBox GridPane.columnIndex="3">

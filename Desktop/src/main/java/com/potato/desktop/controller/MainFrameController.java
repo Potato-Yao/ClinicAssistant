@@ -3,6 +3,7 @@ package com.potato.desktop.controller;
 import com.potato.desktop.MainApp;
 import com.potato.kernel.Config;
 import com.potato.kernel.Hardware.*;
+import com.potato.kernel.Software.DiskManager;
 import com.potato.kernel.Software.NetworkUtil;
 import com.potato.kernel.Software.SystemType;
 import com.potato.kernel.Software.Windows;
@@ -18,6 +19,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import static com.potato.desktop.Util.DialogUtil.*;
+import static com.potato.kernel.Utils.Admin.*;
 
 public class MainFrameController extends Controller {
     @FXML
@@ -69,6 +71,10 @@ public class MainFrameController extends Controller {
     @FXML
     private Label ramUsage;
     @FXML
+    private Label adminStatus;
+    @FXML
+    private Label disksInfo;
+    @FXML
     private Button proxyResetBtn;
     @FXML
     private Button code65RepairBtn;
@@ -85,6 +91,7 @@ public class MainFrameController extends Controller {
     private ResourceBundle resources;
 
     private HardwareInfoManager hardwareInfoManager;
+    private DiskManager diskManager;
     private NetworkUtil networkUtil;
     private Windows windows;
     private ScheduledExecutorService executor;
@@ -102,6 +109,7 @@ public class MainFrameController extends Controller {
     private void updateMonitorData() throws IOException {
         executor = Executors.newSingleThreadScheduledExecutor();
         hardwareInfoManager = HardwareInfoManager.getHardwareInfoManager();
+        diskManager = DiskManager.getDiskManager();
         networkUtil = NetworkUtil.getNetworkUtil();
         windows = Windows.getWindows();
 
@@ -144,6 +152,18 @@ public class MainFrameController extends Controller {
                 windows.getSystemType() == SystemType.X86 ? resources.getString("lang.bit32") : resources.getString("lang.bit64")));
         activationStatus.setText(updatedLabelText("lab.activationStatus",
                 windows.isActivated() ? resources.getString("lang.true") : resources.getString("lang.false")));
+
+        adminStatus.setText(isAdmin() ? resources.getString("lang.true") : resources.getString("lang.false"));
+
+        StringBuilder disksTextBuilder = new StringBuilder();
+        diskManager.getDiskItems().forEach((item) -> {
+            disksTextBuilder.append(item.getId())
+                    .append("\t")
+                    .append(String.format("%.2f", item.getSize()))
+                    .append(resources.getString("lang.GB"))
+                    .append("\n");
+        });
+        disksInfo.setText(disksTextBuilder.toString());
     }
 
     @Override

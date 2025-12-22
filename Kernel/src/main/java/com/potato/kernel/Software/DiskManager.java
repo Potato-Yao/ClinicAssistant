@@ -197,7 +197,9 @@ public class DiskManager {
         for (int i = 2; i < responses.length; ++i) {
             String[] temp = responses[i].trim().split("\\s+");
             try {
-                diskItems.add(new DiskItem(Integer.parseInt(temp[1]), Integer.parseInt(temp[3])));
+                diskItems.add(
+                        new DiskItem(Integer.parseInt(temp[1]),
+                                temp[4].equals("GB") ? Double.valueOf(temp[3]) : Double.valueOf(temp[3]) / 1024));
             } catch (NumberFormatException e) {
                 break;
             }
