@@ -2,6 +2,8 @@ package com.potato.kernel.External;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.concurrent.TimeUnit;
 
 import static com.potato.kernel.Utils.ProcessUtil.forceKillProcess;
@@ -16,8 +18,8 @@ public class CPUBurnHelper {
     private Process runningProcess;
 
     public CPUBurnHelper() {
-        File projectRoot = new File(System.getProperty("user.dir"));
-        File exe = new File(projectRoot, "../ExternalTools/cpuburn/cpuburn.exe");
+        Path toolsDir = Paths.get(System.getProperty("clinic.externalToolsDir"));
+        File exe = new File(toolsDir.toFile(), "./cpuburn/cpuburn.exe");
         this.exe = exe;
     }
 

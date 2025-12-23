@@ -313,7 +313,7 @@
   {\__bithesis_define_label:nnn #1}
 \clist_const:Nn \c__bithesis_bachelor_thesis_header_clist
   {
-    北京理工大学本科生毕业设计（论文）,
+    结课作业报告,
     北京理工大学本科生毕业设计（论文）外文翻译,
     Beijing~Institute~of~Technology~Bachelor's~Thesis,
     北京理工大学硕士学位论文,
@@ -321,7 +321,7 @@
   }
 \clist_const:Nn \c__bithesis_bachelor_thesis_headline_clist
   {
-    本科生毕业设计（论文）,
+    结课作业报告,
     本科生毕业设计（论文）外文翻译,
     Beijing\nobreak{~}Institute\nobreak{~}of\nobreak{~}Technology~Bachelor's~Thesis,
   }

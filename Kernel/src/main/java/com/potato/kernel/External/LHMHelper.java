@@ -5,6 +5,8 @@ import com.potato.kernel.Config;
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import static com.potato.kernel.Utils.ProcessUtil.*;
 
@@ -47,8 +49,8 @@ public class LHMHelper {
      * @throws IOException
      */
     public static LHMHelper connect() throws IOException {
-        File projectRoot = new File(System.getProperty("user.dir"));
-        File lhmExe = new File(projectRoot, Config.WRAPPER_LOCATION);
+        Path toolsDir = Paths.get(System.getProperty("clinic.externalToolsDir"));
+        File lhmExe = new File(toolsDir.toFile(), Config.WRAPPER_LOCATION);
         ProcessBuilder processBuilder = new ProcessBuilder(lhmExe.getAbsolutePath(), "--log=error").inheritIO();
         Process process = processBuilder.start();
 

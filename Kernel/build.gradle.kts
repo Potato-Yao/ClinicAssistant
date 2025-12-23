@@ -22,6 +22,17 @@ java {
     modularity.inferModulePath.set(true)
 }
 
+val externalToolsDir = (rootProject.findProperty("externalToolsDir") as String?) ?: "ExternalTools"
+val externalToolsAbs = rootProject.projectDir.resolve(externalToolsDir).absolutePath
+
+tasks.withType<JavaExec>().configureEach {
+    jvmArgs("-Dclinic.externalToolsDir=$externalToolsAbs")
+}
+
+tasks.withType<Test>().configureEach {
+    systemProperty("clinic.externalToolsDir", externalToolsAbs)
+}
+
 tasks.test {
     useJUnitPlatform()
 }

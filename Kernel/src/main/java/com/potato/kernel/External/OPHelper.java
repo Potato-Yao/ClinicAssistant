@@ -4,6 +4,7 @@ import com.potato.kernel.Utils.FolderItem;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,8 +14,8 @@ public class OPHelper {
     private HashMap<String, FolderItem> toolMap = new HashMap<>();
 
     private OPHelper() {
-        File projectRoot = new File(System.getProperty("user.dir"));
-        File folder = new File(projectRoot, "../ExternalTools/CLINIC_OP/");
+        Path toolsDir = Paths.get(System.getProperty("clinic.externalToolsDir"));
+        File folder = new File(toolsDir.toFile(), "./CLINIC_OP/");
         File[] dirs = folder.listFiles();
 
         for (File dir : dirs) {

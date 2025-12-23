@@ -12,7 +12,7 @@ public class Config {
 
     public final static int CONNECTION_TIMEOUT = 10; // in seconds
 
-    public final static String WRAPPER_LOCATION = "../LibreHardwareMonitorWrapper/build/LibreHardwareMonitorWrapper.exe";
+    public final static String WRAPPER_LOCATION = "./LibreHardwareMonitorWrapper/build/LibreHardwareMonitorWrapper.exe";
 
     public final static int INT_DEFAULT = -1;
 
