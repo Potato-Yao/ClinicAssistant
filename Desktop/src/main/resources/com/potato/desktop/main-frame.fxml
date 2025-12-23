@@ -15,6 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Circle?>
 
+<?import javafx.scene.control.ScrollPane?>
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="com.potato.desktop.controller.MainFrameController"
             minHeight="400" minWidth="900">
@@ -44,6 +45,7 @@
 
             <Button fx:id="monitorBtn" onMouseClicked="#onMonitorBtnAction" text="%btn.name.monitor"/>
             <Button fx:id="toolsBtn" onMouseClicked="#onToolsBtnAction" text="%btn.name.tools"/>
+            <Button fx:id="externalsBtn" onMouseClicked="#onExternalsBtnAction" text="%btn.name.externals"/>
         </VBox>
     </left>
 
@@ -176,6 +178,25 @@
                 </TitledPane>
             </VBox>
 
+            <ScrollPane fx:id="externalsView" fitToWidth="true" pannable="true" managed="false" hbarPolicy="NEVER"
+                        visible="false">
+                <content>
+                    <VBox fx:id="externalsPane" spacing="10">
+                        <Label style="-fx-font-size: 16; -fx-font-weight: bold" text="%lab.name.externals"/>
+
+                        <!--                            <TitledPane text="%tp.name.externals">-->
+                        <!--                                <VBox spacing="6">-->
+                        <!--                                    <Button fx:id="externalTool1Btn" onMouseClicked="#onExternalTool1BtnAction"-->
+                        <!--                                            text="%btn.externals.tool1"/>-->
+                        <!--                                    <Button fx:id="externalTool2Btn" onMouseClicked="#onExternalTool2BtnAction"-->
+                        <!--                                            text="%btn.externals.tool2"/>-->
+                        <!--                                </VBox>-->
+                        <!--                            </TitledPane>-->
+
+                        <!-- add more TitledPanes here, same pattern as toolsView -->
+                    </VBox>
+                </content>
+            </ScrollPane>
         </StackPane>
     </center>
 

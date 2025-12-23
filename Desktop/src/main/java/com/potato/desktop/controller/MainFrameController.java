@@ -2,17 +2,23 @@ package com.potato.desktop.controller;
 
 import com.potato.desktop.MainApp;
 import com.potato.kernel.Config;
+import com.potato.kernel.External.OPHelper;
 import com.potato.kernel.Hardware.*;
 import com.potato.kernel.Software.DiskManager;
 import com.potato.kernel.Software.NetworkUtil;
 import com.potato.kernel.Software.SystemType;
 import com.potato.kernel.Software.Windows;
+import com.potato.kernel.Utils.FolderItem;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.nio.file.Path;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -26,6 +32,10 @@ public class MainFrameController extends Controller {
     private VBox monitorView;
     @FXML
     private VBox toolsView;
+    @FXML
+    private ScrollPane externalsView;
+    @FXML
+    private VBox externalsPane;
     @FXML
     private MenuItem helpMenuItem;
     @FXML
@@ -92,26 +102,63 @@ public class MainFrameController extends Controller {
 
     private HardwareInfoManager hardwareInfoManager;
     private DiskManager diskManager;
+    private OPHelper opHelper;
     private NetworkUtil networkUtil;
     private Windows windows;
     private ScheduledExecutorService executor;
+    private Node[] panes;
 
     @FXML
     public void initialize() {
+        panes = new Node[]{monitorView, toolsView, externalsView};
+
         // todo error handling
         try {
+            executor = Executors.newSingleThreadScheduledExecutor();
+            hardwareInfoManager = HardwareInfoManager.getHardwareInfoManager();
+            diskManager = DiskManager.getDiskManager();
+            opHelper = OPHelper.getOpHelper();
+            networkUtil = NetworkUtil.getNetworkUtil();
+            windows = Windows.getWindows();
+
+            makeExternalsPane();
             updateMonitorData();
+
+            switchPane(monitorView);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+    private void makeExternalsPane() {
+        HashMap<String, FolderItem> toolMap = opHelper.getToolMap();
+
+        for (String name : toolMap.keySet()) {
+            TitledPane titledPane = new TitledPane();
+            titledPane.setText(name);
+            VBox contentBox = new VBox();
+            contentBox.setSpacing(6);
+
+            for (Path path : toolMap.get(name).getFiles()) {
+                Button toolBtn = new Button(path.getFileName().toString());
+                toolBtn.setMaxWidth(Double.MAX_VALUE);
+                toolBtn.setOnAction(event -> {
+                    try {
+                        Runtime.getRuntime().exec(path.toAbsolutePath().toString());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
+                contentBox.getChildren().add(toolBtn);
+            }
+
+            titledPane.setContent(contentBox);
+            externalsPane.getChildren().add(titledPane);
+        }
+    }
+
     private void updateMonitorData() throws IOException {
-        executor = Executors.newSingleThreadScheduledExecutor();
-        hardwareInfoManager = HardwareInfoManager.getHardwareInfoManager();
-        diskManager = DiskManager.getDiskManager();
-        networkUtil = NetworkUtil.getNetworkUtil();
-        windows = Windows.getWindows();
 
         executor.scheduleAtFixedRate(() -> {
             Platform.runLater(() -> {
@@ -174,14 +221,17 @@ public class MainFrameController extends Controller {
 
     @FXML
     private void onMonitorBtnAction() {
-        monitorView.setVisible(true);
-        toolsView.setVisible(false);
+        switchPane(monitorView);
     }
 
     @FXML
     private void onToolsBtnAction() {
-        monitorView.setVisible(false);
-        toolsView.setVisible(true);
+        switchPane(toolsView);
+    }
+
+    @FXML
+    private void onExternalsBtnAction() {
+        switchPane(externalsView);
     }
 
     @FXML
@@ -274,6 +324,13 @@ public class MainFrameController extends Controller {
 
     public void setMainApp(MainApp mainApp) {
         this.mainApp = mainApp;
+    }
+
+    private void switchPane(Node paneToShow) {
+        for (Node pane : panes) {
+            pane.setVisible(pane == paneToShow);
+            pane.setManaged(pane == paneToShow);
+        }
     }
 
     private <T> String updatedLabelText(String label, T value) {
