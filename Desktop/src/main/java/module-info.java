@@ -8,6 +8,7 @@ module com.potato.desktop {
     requires org.apache.commons.io;
     requires org.apache.commons.csv;
     requires java.desktop;
+    requires java.logging;
 
     exports com.potato.desktop;
 

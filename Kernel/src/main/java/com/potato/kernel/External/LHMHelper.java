@@ -49,8 +49,19 @@ public class LHMHelper {
      * @throws IOException
      */
     public static LHMHelper connect() throws IOException {
-        Path toolsDir = Paths.get(System.getProperty("clinic.externalToolsDir"));
+        String toolsDirProp = System.getProperty("clinic.externalToolsDir");
+        Path toolsDir = (toolsDirProp == null || toolsDirProp.isBlank())
+                ? Paths.get(System.getProperty("user.dir"), "ExternalTools")
+                : Paths.get(toolsDirProp);
+
         File lhmExe = new File(toolsDir.toFile(), Config.WRAPPER_LOCATION);
+        if (!lhmExe.exists()) {
+            throw new FileNotFoundException(
+                    "LibreHardwareMonitor wrapper not found: " + lhmExe.getAbsolutePath()
+                            + " (clinic.externalToolsDir=" + toolsDir.toAbsolutePath() + ")"
+            );
+        }
+
         ProcessBuilder processBuilder = new ProcessBuilder(lhmExe.getAbsolutePath(), "--log=error").inheritIO();
         Process process = processBuilder.start();
 

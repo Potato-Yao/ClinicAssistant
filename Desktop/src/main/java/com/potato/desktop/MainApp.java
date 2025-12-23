@@ -6,6 +6,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.util.Pair;
@@ -15,18 +16,41 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static com.potato.desktop.Util.DialogUtil.*;
 
 public class MainApp extends Application {
     public final static String DESKTOP_VERSION = "0.0.1";
 
+    private static final Logger LOG = Logger.getLogger(MainApp.class.getName());
+
     private HashMap<Controller, Stage> openedWindows = new HashMap<>();
     private int trickClickedCounter = 0;
 
     @Override
-    public void start(Stage stage) throws Exception {
-        openWindow("main-frame.fxml", "app.title.main", MainFrameController.class);
+    public void start(Stage stage) {
+        Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
+            LOG.log(Level.SEVERE, "Uncaught exception on thread " + t.getName(), e);
+            e.printStackTrace();
+        });
+
+        LOG.info(() -> "user.dir=" + System.getProperty("user.dir"));
+        LOG.info(() -> "clinic.externalToolsDir=" + System.getProperty("clinic.externalToolsDir"));
+        LOG.info(() -> "javafx.runtime.version=" + System.getProperty("javafx.runtime.version"));
+
+        stage.setTitle(Config.APP_NAME);
+        stage.setScene(new Scene(new Label("Starting " + Config.APP_NAME + "!"), 360, 120));
+        stage.show();
+
+        try {
+            openWindow("main-frame.fxml", "app.title.main", MainFrameController.class);
+            stage.close();
+        } catch (Exception e) {
+            LOG.log(Level.SEVERE, "Failed during startup window load", e);
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
@@ -78,7 +102,11 @@ public class MainApp extends Application {
         try {
             Locale locale = new Locale("en", "US");
             ResourceBundle languageBundle = ResourceBundle.getBundle("messages", locale);
-            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxml), languageBundle);
+
+            // FXML files are located under Desktop/src/main/resources/com/potato/desktop/
+            // so we must load them with an absolute classpath path.
+            String fxmlPath = fxml.startsWith("/") ? fxml : "/com/potato/desktop/" + fxml;
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath), languageBundle);
 
             Parent root = loader.load();
             Scene scene = new Scene(root);
