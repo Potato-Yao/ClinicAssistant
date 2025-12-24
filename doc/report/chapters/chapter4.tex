@@ -18,210 +18,110 @@ LibreHardwareMonitor分为UI和LibreHardwareMonitorLib两部分，但是没有�
 
 本项目处理的数据为各硬件指标（指CPU、GPU、内存和电池的各项参数）和系统信息（指硬盘分区、BitLocker状态、系统版本等）。硬件指标是从LibreHardwareMonitorLib获取的，系统信息则来自diskpart、manage-bde和systeminfo等程序。
 
-要想从LibreHardwareMonitorLib获取硬件指标，首先需要与其通信获取hardware list，其具体形式为一个JSON字符串，储存LibreHardwareMonitorLib能获取到的各个参数，如代码\ref{hardware_list_code}所示。
+要想获取硬件指标，首先需要向LibreHardwareMonitor发出请求获取hardware list。hardware list是一个JSON字符串，储存了LibreHardwareMonitor能够获取的所有硬件信息以及对应的索引。向LibreHardwareMonitor发送索引就能得到对应的值。因此，本程序会遍历hardware list并解析并存储需要的项。当需要更新硬件指标时，程序遍历存储的项，依次向LibreHardwareMonitor获取对应的值。见章节\ref{lhm_section}。
 
-\begin{lstlisting}[language=json, firstnumber=1, label={hardware_list_code}, caption={LibreHardwareMonitorLib返回的hardware list}]
-[
-  {
-    "Id": "Load0",
-    "Name": "CPU Core #1",
-    "Index": 0,
-    "Type": "Sensor",
-    "Info": "CPU Core #1"
-  },
-  {
-    "Id": "Load1",
-    "Name": "CPU Core #2",
-    "Index": 1,
-    "Type": "Sensor",
-    "Info": "CPU Core #2"
-  },
-// 省略若干行
-  {
-    "Id": "Temperature0",
-    "Name": "Core Max",
-    "Index": 24,
-    "Type": "Sensor",
-    "Info": "Core Max"
-  },
-  {
-    "Id": "Temperature1",
-    "Name": "Core Average",
-    "Index": 25,
-    "Type": "Sensor",
-    "Info": "Core Average"
-  },
-  {
-    "Id": "Temperature2",
-    "Name": "CPU Core #1",
-    "Index": 26,
-    "Type": "Sensor",
-    "Info": "CPU Core #1"
-  },
-// 省略若干行
-\end{lstlisting}
+关于系统信息的处理则更为复杂，因为diskpart、manage-bde和systeminfo等程序并不会按照任一数据储存格式返回结果，而是返回便于人类阅读的文本，需要按照具体形式进行特殊处理。大部分程序返回的结果都有固定的形式，因此只需要直接针对某一行的某位置的子字符串进行读取即可。但是如manage-bde返回的结果结构上更多样，为了避免信息提取错漏，我为其设计了状态机。见章节\ref{managebde_section}。
 
-每一项都有index，向LibreHardwareMonitorLib发送索引即可获取对应项的值。
+关于信息的存储。除储存烤机测试信息外，本程序并没有其它向本地储存文件的需求。在烤机时，程序会实时将烤机的用时、CPU温度、CPU功率、GPU温度和GPU功率储存在程序同级目录的CAFiles文件夹下，使用CSV格式存储。
 
-为了储存本程序需要获取的信息在hardware list中对应的索引，我定义了JavaBean \textit{Sensor}用来表示hardware list中的每一项，如代码\ref{sensor_code}所示。
+使用CSV主要出自存储数据的使用场景考虑：导出烤机数据是为了在需要时复盘烤机结果。这需要一种直观简单的格式，以便于人工进行数据阅读和比对，并最好能够导入到如Excel等软件进行可视化分析。这就排除了JSON、XML和TOML等常用格式。因此，紧凑、表格形式组织的CSV就成为了合适的选择。另外，需要导出数据的种类是可被提前确定的，因此使用固定列的格式更能够使得数据紧凑直观，这同样是拒绝TOML、JSON和XML等的因素。
 
-\begin{lstlisting}[language=java, firstnumber=1, label={sensor_code}, caption={JavaBean Sensor}]
-package com.potato.kernel.Hardware;
+\section{架构设计、数据结构和算法的面向对象实现技术方案}\label{design_section}
 
-import com.google.gson.annotations.SerializedName;
+本项目分为Kernel和Desktop两个模块。
 
+Kernel提供了程序需要的一切获取硬件信息、与外部工具交互的方法，分为External、Hardware、Software和Utils四个包。
+
+\begin{center}
+    \begin{tabular}{cc}
+        包名 & 功能 \\
+        \hline
+        External & 包含与LibreHardwareMonitorLib wrapper等外部工具交互的helper类\\
+		Hardware & 包含用于表示各个硬件的JavaBean、获取硬件信息的manager类\\
+		Software & 包含用于表示系统信息的JavaBean、获取系统信息的manager类\\
+		Utils & 包含管理员权限检测等杂项工具\\
+    \end{tabular}
+	\captionof{table}{Kernel模块}
+\end{center}
+
+Desktop是程序交互界面的实现，使用JavaFX实现，分为Component、Controller和Utils三个包。
+
+\begin{center}
+    \begin{tabular}{cc}
+        包名 & 功能 \\
+        \hline
+        Component & 包含对一些JavaFX组件的封装\\
+		Controller & 包含各个stage的controller\\
+		Utils & 包含CSV和对话框等杂项工具\\
+    \end{tabular}
+	\captionof{table}{Desktop模块}
+\end{center}
+
+本项目在设计上充分采取面向对象设计中的封装思想。为了便于对权限进行控制、避免因修改权限导致下游代码需要修改，本项目中所有成员变量均为private标记，使用public的Getter和Setter对外开放。
+
+本项目还使用了若干设计模式，使得代码组织良好、后期改动成本下降。最常用的是builder模式和singleton模式。builder模式用于可能加入更多需要赋值、可有默认值的类。如代码\ref{stress_test_builder_code}所示。
+
+\begin{lstlisting}[language=java, firstnumber=1, label={stress_test_builder_code}, caption={StressTestUtilBuilder}]
 /**
- * fits the result from lhm, represent a sensor info it gives
+ * builder for {@code StressTestUtil}
  */
-public class Sensor {
-    @SerializedName("Id")
-    private String id;
-    @SerializedName("Name")
-    private String name;
-    @SerializedName("Index")
-    private  int index;
-    @SerializedName("Info")
-    private String info;
-	
-    // Getters
+public class StressTestUtilBuilder {
+    private final StressTestUtil util;
+    public StressTestUtilBuilder() throws IOException {
+        this.util = new StressTestUtil();
+    }
+    public StressTestUtilBuilder cpuTest(boolean needTest) {
+        util.setTestCPU(needTest);
+        return this;
+    }
+    // 省略若干代码
+    public StressTestUtil build() {
+        return util;
+    }
 }
 \end{lstlisting}
 
-随后需要遍历所有项，分析其是否需要被存储、应当归为哪类。我定义了数组\textit{int[] index}，规定了其中每项用于储存的参数，如代码\ref{index_code}所示。
+singleton模式用于因为成员变量一定相同、实例没有功能上区别从而本就不应出现多个实例的类，如各个manager类和helper类。如代码\ref{singleton_code}所示。
 
-\begin{lstlisting}[language=java, firstnumber=1, label={index_code}, caption={数组index}]
-	/*
-    // [0, 32] for cpu
-    0 -> cpu load total
-    1 -> cpu package temperature
-    2 -> cpu core average temperature
-    3 -> cpu package power
-    4 -> cpu core voltage
-    5 -> cpu clock begin
-    6 -> cpu clock end
-
-    // 省略若干行
+\begin{lstlisting}[language=java, firstnumber=1, label={singleton_code}, caption={HardwareInfoManager}]
+    private static HardwareInfoManager manager;
+    /**
+     * the constructor will parse hardware list by LHM, map hardware sensors with index in the list.
+     * then it will update sensors value by calling {@code update()} periodically.
+     *
+     * @throws IOException
      */
-    // stores the sensor index in LHM hardware list
-    private int[] index = new int[INDEX_ARRAY_SIZE];
+    private HardwareInfoManager() throws IOException {
+	// 省略若干代码
+	}
+
+	public static HardwareInfoManager getHardwareInfoManager() throws IOException {
+        if (manager == null) {
+            manager = new HardwareInfoManager();
+        }
+        return manager;
+    }
 \end{lstlisting}
    
+对于储存硬件信息的各个Java Bean和图形化界面的各个Controller，都定义了父类，以便减少大量重复代码，并便于进行泛型操作。
 
-在得到所有需要获取的项后，每次更新数据时需要对其遍历、依次询问LibreHardwareMonitorLib获取对应值。
+借助继承关系，在Desktop模块中，我使用泛型编写了生成新的窗口（即其对应的Controller和Stage）的方法，极大减少了创建新窗口业务逻辑的重复代码量，使得创建窗口只需要调用函数即可一行解决。如代码\ref{making_window_code}所示。
 
-为了使设计简单、运行高效，对每一个Sensor的分析和更新数据时获取值的方法是如代码\ref{ifs0_code}和\ref{ifs1_code}的若干简单条件判断。
-
-\begin{lstlisting}[language=java, firstnumber=1, label={ifs0_code}, caption={分析Sensor数组}]
-    if (name.equals("CPU Total") && info.equals("Load")) {
-        index[0] = ind;
-    } else if (name.equals("CPU Package") && info.equals("Temperature")) {
-        index[1] = ind;
-    } else if (name.equals("Core Average") && info.equals("Temperature")) {
-        index[2] = ind;
-	// 省略若干行
-\end{lstlisting}
-
-\begin{lstlisting}[language=java, firstnumber=1, label={ifs1_code}, caption={获取新值}]
-    if (index[0] != -1) {
-        cpu.setLoad(lhmHelper.getValue(index[0]));
-    }
-    if (index[1] != -1) {
-        cpu.setPackageTemperature(lhmHelper.getValue(index[1]));
-    }
-    if (index[2] != -1) {
-        cpu.setAverageTemperature(lhmHelper.getValue(index[2]));
-    }
-	// 省略若干行
-\end{lstlisting}
-
-代码\ref{ifs0_code}和\ref{ifs1_code}的代码简单、重复，手动编写效率低下且容易出错。因此我编写了Python脚本用于生成样板代码，如代码\ref{sensor_map_code}所示。
-
-\begin{lstlisting}[language=python, firstnumber=1, label={sensor_map_code}, caption={生成样板代码的脚本}]
-import sys
-
-sensors = [
-    (0, "CPU Total", "equals", "Load", "cpu", "setLoad"),
-    (1, "CPU Package", "equals", "Temperature", "cpu", "setPackageTemperature"),
-# 省略若干行
-]
-
-def warning_message(pos):
-    return f"// THE CODE {pos} IS SCRIPT GENERATED, DON'T CHANGE THEM DIRECTLY! CHANGE THE SCRIPT {sys.argv[0]} INSTEAD"
-
-if __name__ == "__main__":
-    below_warning = warning_message("BELOW")
-    above_warning = warning_message("ABOVE")
-    
-    print(below_warning)
-    for i in range(0, len(sensors)):
-        if i == 0:
-            print(
-                f'if (name.{sensors[i][2]}("{sensors[i][1]}") && info.equals("{sensors[i][3]}")) {{'
-            )
-        else:
-            print(
-                f'}} else if (name.{sensors[i][2]}("{sensors[i][1]}") && info.equals("{sensors[i][3]}")) {{'
-            )
-
-        if len(sensors[i]) > 6:
-            assert len(sensors[i]) > 6
-            print(f"    index[{sensors[i][0]}] = {sensors[i][6]};")
-        else:
-            print(f"    index[{sensors[i][0]}] = ind;")
-
-    print("}")
-    print(above_warning)
-
-    print("\t")
-
-    print(below_warning)
-    for i in range(0, len(sensors)):
-        print(f"if (index[{sensors[i][0]}] != -1) {{")
-        print(
-            f"    {sensors[i][4]}.{sensors[i][5]}(lhmHelper.getValue(index[{sensors[i][0]}]));"
-        )
-        print("}")
-    
-    print(above_warning)
-\end{lstlisting}
-
-关于系统信息的处理则更为复杂，因为diskpart、manage-bde和systeminfo等程序并不会按照任一数据储存格式返回结果，而是返回便于人类阅读的文本，需要按照具体形式进行特殊处理。
-
-值得一提的是，我设计使用状态机来处理manage-bde返回的数据。这是因为manage-bde返回的消息根据硬盘盘符、BitLocker状态、分区大小、文件系统等会出现不固定的格式，如果使用常规的逐行分析赋值的方法可能会导致错失信息或更严重的信息赋值错位。状态机实现如代码\ref{state_machine_code}所示。
-
-\begin{lstlisting}[language=java, firstnumber=1, label={state_machine_code}, caption={处理manage-bde返回信息的状态机（省略若干行业务代码）}]
-        // to be aware of missing info, we decide to use state machine
-        int state = 0;  // 0: looking for volume, 1: looking for size, 2: looking for percentage
-        while ((line = reader.readLine()) != null) {
-            String[] lines = line.trim().split("\\s+");
-            if (state == 0) {
-                if (lines[0].equals("Volume")) {
-                    currentPartition = lines[1].substring(0, 1);
-                    state = 1;
-                }
-            } else if (state == 1) {
-                if (lines[0].equals("Size:")) {
-                    currentSize = Integer.parseInt(lines[1]);
-                    state = 2;
-                }
-            } else if (state == 2) {
-                if (lines[0].equals("Percentage")) {
-                    currentPercentage = Double.parseDouble(lines[2].substring(0, lines[2].length() - 1));
-                    state = 0;
-                }
-            }
-
-            if (currentPartition != null && currentSize != Config.INT_DEFAULT && currentPercentage != Config.INT_DEFAULT) {
-                partitionItems.add(new PartitionItem(currentSize, currentPartition, currentPercentage));
-
-                currentPartition = null;
-                currentSize = Config.INT_DEFAULT;
-                currentPercentage = Config.INT_DEFAULT;
-            }
+\begin{lstlisting}[language=java, firstnumber=1, label={making_window_code}, caption={openWindow方法}]
+    public <Con extends Controller> Pair<Con, Stage> openWindow(String fxml, String title, Class<Con> controllerClass) {
+        try {
+            // 国际化相关代码
+            // FXML和Stage相关代码
+            // Controller相关代码
+            // 图标相关代码
+            stage.show();
+            openedWindows.put(controller, stage);
+            return new Pair<>(controller, stage);
+        } catch (Exception e) {
+            // 省略若干代码
         }
-        if (currentPartition != null || currentSize != Config.INT_DEFAULT || currentPercentage != Config.INT_DEFAULT) {
-            throw new IOException("Parsing partition info failed, some info is missing.");
-        }
+        return null;
+    }
 \end{lstlisting}
 
-关于信息的存储。除储存烤机测试信息外，本程序并没有其它向本地储存文件的需求。
+关于异常。除部分可预料到、可以简单处理的异常外，Kernel遇到异常不会做任何处理，而是直接向上抛出。这是为了将异常处理置于调用端，增强程序的可定制性，同时降低程序业务逻辑的复杂性。由于时间紧迫，目前版本的Desktop遇到异常将会直接退出。

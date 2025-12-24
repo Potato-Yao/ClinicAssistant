@@ -1,6 +1,6 @@
 package com.potato.desktop;
 
-import com.potato.desktop.controller.*;
+import com.potato.desktop.Controller.*;
 import com.potato.kernel.Config;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static com.potato.desktop.Util.DialogUtil.*;
+import static com.potato.desktop.Utils.DialogUtil.*;
 
 public class MainApp extends Application {
     public final static String DESKTOP_VERSION = "0.0.1";

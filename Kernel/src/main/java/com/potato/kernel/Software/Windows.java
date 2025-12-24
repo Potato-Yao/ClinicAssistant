@@ -1,6 +1,8 @@
 package com.potato.kernel.Software;
 
 import java.io.*;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 /**
  * utils for Windows OS, fits info from systeminfo and slmgr
@@ -143,8 +145,8 @@ public class Windows {
             return;
         }
 
-        File projectRoot = new File(System.getProperty("user.dir"));
-        File activateTool = new File(projectRoot, "../ExternalTools/win-activate/MAS_AIO.cmd");
+        Path toolsDir = Paths.get(System.getProperty("clinic.externalToolsDir"));
+        File activateTool = new File(toolsDir.toFile(), "./win-activate/MAS_AIO.cmd");
         if (!activateTool.exists()) {
             throw new RuntimeException("Activation tool not found, which should locate at " + activateTool.getAbsolutePath());
         }

@@ -22,7 +22,7 @@ public class HardwareInfoManager {
     [81, 96] for Disk
     [97, 112] for Motherboard
     [113, 128] for Battery
-    [129, 144] is for Network
+    [129, 144] for Network
      */
     private final static int INDEX_ARRAY_SIZE = 256;
 

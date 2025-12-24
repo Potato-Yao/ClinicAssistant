@@ -1,4 +1,4 @@
-package com.potato.desktop.component;
+package com.potato.desktop.Component;
 
 public enum ChartType {
     TEMPERATURE,

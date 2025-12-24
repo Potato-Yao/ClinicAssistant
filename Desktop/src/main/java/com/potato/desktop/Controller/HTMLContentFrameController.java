@@ -1,7 +1,6 @@
-package com.potato.desktop.controller;
+package com.potato.desktop.Controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;

@@ -1,4 +1,4 @@
-package com.potato.desktop.Util;
+package com.potato.desktop.Utils;
 
 import com.potato.kernel.Config;
 import org.apache.commons.csv.CSVFormat;

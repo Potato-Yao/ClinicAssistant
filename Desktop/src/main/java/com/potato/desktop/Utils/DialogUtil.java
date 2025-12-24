@@ -1,4 +1,4 @@
-package com.potato.desktop.Util;
+package com.potato.desktop.Utils;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;

@@ -13,6 +13,6 @@ module com.potato.desktop {
     exports com.potato.desktop;
 
     opens com.potato.desktop to javafx.fxml;
-    opens com.potato.desktop.controller to javafx.fxml;
-    opens com.potato.desktop.Util to javafx.fxml;
+    opens com.potato.desktop.Controller to javafx.fxml;
+    opens com.potato.desktop.Utils to javafx.fxml;
 }

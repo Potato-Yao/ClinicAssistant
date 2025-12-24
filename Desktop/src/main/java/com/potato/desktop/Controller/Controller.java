@@ -1,4 +1,4 @@
-package com.potato.desktop.controller;
+package com.potato.desktop.Controller;
 
 import com.potato.desktop.MainApp;
 

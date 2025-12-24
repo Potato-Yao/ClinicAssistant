@@ -1,4 +1,4 @@
-package com.potato.desktop.component;
+package com.potato.desktop.Component;
 
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;

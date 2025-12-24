@@ -17,7 +17,7 @@
 
 <?import javafx.scene.control.ScrollPane?>
 <BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.potato.desktop.controller.MainFrameController"
+            fx:controller="com.potato.desktop.Controller.MainFrameController"
             minHeight="400" minWidth="900">
 
     <top>

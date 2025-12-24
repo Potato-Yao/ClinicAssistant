@@ -1,8 +1,8 @@
-package com.potato.desktop.controller;
+package com.potato.desktop.Controller;
 
-import com.potato.desktop.Util.CSVUtil;
-import com.potato.desktop.component.ChartType;
-import com.potato.desktop.component.NumberLineChart;
+import com.potato.desktop.Utils.CSVUtil;
+import com.potato.desktop.Component.ChartType;
+import com.potato.desktop.Component.NumberLineChart;
 import com.potato.kernel.Config;
 import com.potato.kernel.Hardware.CPU;
 import com.potato.kernel.Hardware.GPU;

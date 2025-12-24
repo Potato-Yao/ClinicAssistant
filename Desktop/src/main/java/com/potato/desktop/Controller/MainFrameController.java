@@ -1,4 +1,4 @@
-package com.potato.desktop.controller;
+package com.potato.desktop.Controller;
 
 import com.potato.desktop.MainApp;
 import com.potato.kernel.Config;
@@ -13,7 +13,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -24,7 +23,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import static com.potato.desktop.Util.DialogUtil.*;
+import static com.potato.desktop.Utils.DialogUtil.*;
 import static com.potato.kernel.Utils.Admin.*;
 
 public class MainFrameController extends Controller {
