@@ -3,7 +3,7 @@ package com.potato.kernel.Hardware;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * fits the result from lhm, represent a sensor info it giving
+ * fits the result from lhm, represent a sensor info it gives
  */
 public class Sensor {
     @SerializedName("Id")

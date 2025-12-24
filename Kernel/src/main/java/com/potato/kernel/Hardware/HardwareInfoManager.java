@@ -16,12 +16,12 @@ public class HardwareInfoManager {
     private static HardwareInfoManager manager;
 
     /*
-    [0, 32] is for CPU
-    [33, 64] is for GPU
-    [65, 80] is for RAM
-    [81, 96] is for Disk
-    [97, 112] is for Motherboard
-    [113, 128] is for Battery
+    [0, 32] for CPU
+    [33, 64] for GPU
+    [65, 80] for RAM
+    [81, 96] for Disk
+    [97, 112] for Motherboard
+    [113, 128] for Battery
     [129, 144] is for Network
      */
     private final static int INDEX_ARRAY_SIZE = 256;

@@ -314,6 +314,9 @@ public class DiskManager {
                 currentPercentage = Config.INT_DEFAULT;
             }
         }
+        if (currentPartition != null || currentSize != Config.INT_DEFAULT || currentPercentage != Config.INT_DEFAULT) {
+            throw new IOException("Parsing partition info failed, some info is missing.");
+        }
 
         return partitionItems;
     }

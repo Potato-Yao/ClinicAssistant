@@ -1,3 +1,227 @@
 \chapter{程序架构设计与技术实现方案}
 
+\section{总体技术方案的确定}
 
+截至项目立项时，我已经在诊所工作三个学期了。这段期间（特别是第二学年诊所规范要在换硅脂操作后烤机），我发现很多需要使用工具软件的操作都固定且繁琐，所以如果能有一个软件取代人去自动进行这些操作，诊所的工作效率和质量都会得到提升。恰好这学期Java课以项目作为作业，Java也是我熟悉的语言，我有做出项目的信心。
+
+于是，我归纳了诊所常用的各种操作，提取出程序实现的核心需求：硬件指标的读取、外部工具的调用。我必须先明确这两个需求怎么实现，才能继续开发项目。
+
+关于获取硬件指标，我首先去寻找AIDA64和HWiNFO的文档，发现它们均为闭源软件，没有可供外部调用的API。因此，我转而寻找开源的替代项目。我在网上搜索得到项目OpenHardwareMonitor，不过已经停止维护了。取而代之的是LibreHardwareMonitor，它是使用C\#语言编写的，我并不熟悉。但是我在仔细搜索、询问ChatGPT后都没有得到其它替代选择，便尝试使用LibreHardwareMonitor。
+
+LibreHardwareMonitor分为UI和LibreHardwareMonitorLib两部分，但是没有提供任何文档。我在GitHub找到了对其进行封装的项目，但是同样没有提供文档或者代码示例。最终我找到了一个叫做fan-control的Rust项目，它包含了一个LibreHardwareMonitorLib的wrapper，可以方便地进行通信、获取硬件数据。于是我将Rust代码翻译为Java代码，并小规模重构了wrapper，解决了第一个问题。
+
+关于需要调用的外部工具主要分为三类：第一是使用图形化界面的；第二是使用命令行的；第三是文本化界面或者需要在程序的解释器环境执行命令的。第一种很难实现自动操作，我的解决方案是寻找不需要操作图形化界面的替代品。我使用Furmark2（支持命令行操作）替代常用的Furmark，使用命令行操作的cpu burn替代cpuburner。第二类只需使用Process类进行调用即可。第三类需要在Process进行相对复杂的IO操作，但仍是可以实现的。
+
+关于总体架构，我选择使用模块化设计，将内核与交互界面分开，从而便于项目的维护和模块间功能的分别、隔离。
+
+\section{数据存储和处理}
+
+本项目处理的数据为各硬件指标（指CPU、GPU、内存和电池的各项参数）和系统信息（指硬盘分区、BitLocker状态、系统版本等）。硬件指标是从LibreHardwareMonitorLib获取的，系统信息则来自diskpart、manage-bde和systeminfo等程序。
+
+要想从LibreHardwareMonitorLib获取硬件指标，首先需要与其通信获取hardware list，其具体形式为一个JSON字符串，储存LibreHardwareMonitorLib能获取到的各个参数，如代码\ref{hardware_list_code}所示。
+
+\begin{lstlisting}[language=json, firstnumber=1, label={hardware_list_code}, caption={LibreHardwareMonitorLib返回的hardware list}]
+[
+  {
+    "Id": "Load0",
+    "Name": "CPU Core #1",
+    "Index": 0,
+    "Type": "Sensor",
+    "Info": "CPU Core #1"
+  },
+  {
+    "Id": "Load1",
+    "Name": "CPU Core #2",
+    "Index": 1,
+    "Type": "Sensor",
+    "Info": "CPU Core #2"
+  },
+// 省略若干行
+  {
+    "Id": "Temperature0",
+    "Name": "Core Max",
+    "Index": 24,
+    "Type": "Sensor",
+    "Info": "Core Max"
+  },
+  {
+    "Id": "Temperature1",
+    "Name": "Core Average",
+    "Index": 25,
+    "Type": "Sensor",
+    "Info": "Core Average"
+  },
+  {
+    "Id": "Temperature2",
+    "Name": "CPU Core #1",
+    "Index": 26,
+    "Type": "Sensor",
+    "Info": "CPU Core #1"
+  },
+// 省略若干行
+\end{lstlisting}
+
+每一项都有index，向LibreHardwareMonitorLib发送索引即可获取对应项的值。
+
+为了储存本程序需要获取的信息在hardware list中对应的索引，我定义了JavaBean \textit{Sensor}用来表示hardware list中的每一项，如代码\ref{sensor_code}所示。
+
+\begin{lstlisting}[language=java, firstnumber=1, label={sensor_code}, caption={JavaBean Sensor}]
+package com.potato.kernel.Hardware;
+
+import com.google.gson.annotations.SerializedName;
+
+/**
+ * fits the result from lhm, represent a sensor info it gives
+ */
+public class Sensor {
+    @SerializedName("Id")
+    private String id;
+    @SerializedName("Name")
+    private String name;
+    @SerializedName("Index")
+    private  int index;
+    @SerializedName("Info")
+    private String info;
+	
+    // Getters
+}
+\end{lstlisting}
+
+随后需要遍历所有项，分析其是否需要被存储、应当归为哪类。我定义了数组\textit{int[] index}，规定了其中每项用于储存的参数，如代码\ref{index_code}所示。
+
+\begin{lstlisting}[language=java, firstnumber=1, label={index_code}, caption={数组index}]
+	/*
+    // [0, 32] for cpu
+    0 -> cpu load total
+    1 -> cpu package temperature
+    2 -> cpu core average temperature
+    3 -> cpu package power
+    4 -> cpu core voltage
+    5 -> cpu clock begin
+    6 -> cpu clock end
+
+    // 省略若干行
+     */
+    // stores the sensor index in LHM hardware list
+    private int[] index = new int[INDEX_ARRAY_SIZE];
+\end{lstlisting}
+   
+
+在得到所有需要获取的项后，每次更新数据时需要对其遍历、依次询问LibreHardwareMonitorLib获取对应值。
+
+为了使设计简单、运行高效，对每一个Sensor的分析和更新数据时获取值的方法是如代码\ref{ifs0_code}和\ref{ifs1_code}的若干简单条件判断。
+
+\begin{lstlisting}[language=java, firstnumber=1, label={ifs0_code}, caption={分析Sensor数组}]
+    if (name.equals("CPU Total") && info.equals("Load")) {
+        index[0] = ind;
+    } else if (name.equals("CPU Package") && info.equals("Temperature")) {
+        index[1] = ind;
+    } else if (name.equals("Core Average") && info.equals("Temperature")) {
+        index[2] = ind;
+	// 省略若干行
+\end{lstlisting}
+
+\begin{lstlisting}[language=java, firstnumber=1, label={ifs1_code}, caption={获取新值}]
+    if (index[0] != -1) {
+        cpu.setLoad(lhmHelper.getValue(index[0]));
+    }
+    if (index[1] != -1) {
+        cpu.setPackageTemperature(lhmHelper.getValue(index[1]));
+    }
+    if (index[2] != -1) {
+        cpu.setAverageTemperature(lhmHelper.getValue(index[2]));
+    }
+	// 省略若干行
+\end{lstlisting}
+
+代码\ref{ifs0_code}和\ref{ifs1_code}的代码简单、重复，手动编写效率低下且容易出错。因此我编写了Python脚本用于生成样板代码，如代码\ref{sensor_map_code}所示。
+
+\begin{lstlisting}[language=python, firstnumber=1, label={sensor_map_code}, caption={生成样板代码的脚本}]
+import sys
+
+sensors = [
+    (0, "CPU Total", "equals", "Load", "cpu", "setLoad"),
+    (1, "CPU Package", "equals", "Temperature", "cpu", "setPackageTemperature"),
+# 省略若干行
+]
+
+def warning_message(pos):
+    return f"// THE CODE {pos} IS SCRIPT GENERATED, DON'T CHANGE THEM DIRECTLY! CHANGE THE SCRIPT {sys.argv[0]} INSTEAD"
+
+if __name__ == "__main__":
+    below_warning = warning_message("BELOW")
+    above_warning = warning_message("ABOVE")
+    
+    print(below_warning)
+    for i in range(0, len(sensors)):
+        if i == 0:
+            print(
+                f'if (name.{sensors[i][2]}("{sensors[i][1]}") && info.equals("{sensors[i][3]}")) {{'
+            )
+        else:
+            print(
+                f'}} else if (name.{sensors[i][2]}("{sensors[i][1]}") && info.equals("{sensors[i][3]}")) {{'
+            )
+
+        if len(sensors[i]) > 6:
+            assert len(sensors[i]) > 6
+            print(f"    index[{sensors[i][0]}] = {sensors[i][6]};")
+        else:
+            print(f"    index[{sensors[i][0]}] = ind;")
+
+    print("}")
+    print(above_warning)
+
+    print("\t")
+
+    print(below_warning)
+    for i in range(0, len(sensors)):
+        print(f"if (index[{sensors[i][0]}] != -1) {{")
+        print(
+            f"    {sensors[i][4]}.{sensors[i][5]}(lhmHelper.getValue(index[{sensors[i][0]}]));"
+        )
+        print("}")
+    
+    print(above_warning)
+\end{lstlisting}
+
+关于系统信息的处理则更为复杂，因为diskpart、manage-bde和systeminfo等程序并不会按照任一数据储存格式返回结果，而是返回便于人类阅读的文本，需要按照具体形式进行特殊处理。
+
+值得一提的是，我设计使用状态机来处理manage-bde返回的数据。这是因为manage-bde返回的消息根据硬盘盘符、BitLocker状态、分区大小、文件系统等会出现不固定的格式，如果使用常规的逐行分析赋值的方法可能会导致错失信息或更严重的信息赋值错位。状态机实现如代码\ref{state_machine_code}所示。
+
+\begin{lstlisting}[language=java, firstnumber=1, label={state_machine_code}, caption={处理manage-bde返回信息的状态机（省略若干行业务代码）}]
+        // to be aware of missing info, we decide to use state machine
+        int state = 0;  // 0: looking for volume, 1: looking for size, 2: looking for percentage
+        while ((line = reader.readLine()) != null) {
+            String[] lines = line.trim().split("\\s+");
+            if (state == 0) {
+                if (lines[0].equals("Volume")) {
+                    currentPartition = lines[1].substring(0, 1);
+                    state = 1;
+                }
+            } else if (state == 1) {
+                if (lines[0].equals("Size:")) {
+                    currentSize = Integer.parseInt(lines[1]);
+                    state = 2;
+                }
+            } else if (state == 2) {
+                if (lines[0].equals("Percentage")) {
+                    currentPercentage = Double.parseDouble(lines[2].substring(0, lines[2].length() - 1));
+                    state = 0;
+                }
+            }
+
+            if (currentPartition != null && currentSize != Config.INT_DEFAULT && currentPercentage != Config.INT_DEFAULT) {
+                partitionItems.add(new PartitionItem(currentSize, currentPartition, currentPercentage));
+
+                currentPartition = null;
+                currentSize = Config.INT_DEFAULT;
+                currentPercentage = Config.INT_DEFAULT;
+            }
+        }
+        if (currentPartition != null || currentSize != Config.INT_DEFAULT || currentPercentage != Config.INT_DEFAULT) {
+            throw new IOException("Parsing partition info failed, some info is missing.");
+        }
+\end{lstlisting}
+
+关于信息的存储。除储存烤机测试信息外，本程序并没有其它向本地储存文件的需求。
