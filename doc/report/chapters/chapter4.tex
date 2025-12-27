@@ -105,7 +105,7 @@ singleton模式用于因为成员变量一定相同、实例没有功能上区�
    
 对于储存硬件信息的各个Java Bean和图形化界面的各个Controller，都定义了父类，以便减少大量重复代码，并便于进行泛型操作。
 
-借助继承关系，在Desktop模块中，我使用泛型编写了生成新的窗口（即其对应的Controller和Stage）的方法，极大减少了创建新窗口业务逻辑的重复代码量，使得创建窗口只需要调用函数即可一行解决。如代码\ref{making_window_code}所示。
+借助继承关系，在Desktop模块中，我使用泛型编写了生成新的窗口（即其对应的Controller和Stage）的方法，使得创建窗口只需要调用函数即可一行解决，极大减少了创建新窗口业务逻辑的重复代码量。如代码\ref{making_window_code}所示。
 
 \begin{lstlisting}[language=java, firstnumber=1, label={making_window_code}, caption={openWindow方法}]
     public <Con extends Controller> Pair<Con, Stage> openWindow(String fxml, String title, Class<Con> controllerClass) {

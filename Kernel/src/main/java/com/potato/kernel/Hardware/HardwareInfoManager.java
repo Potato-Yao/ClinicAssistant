@@ -300,16 +300,31 @@ public class HardwareInfoManager {
         double firstClock = 0;
         double secondClock = 0;
         double thirdClock = 0;
+        double fourthClock = 0;
         for (int i = begin; i <= end; i++) {
             if (lhmHelper.getValue(i) > firstClock) {
+                fourthClock = thirdClock;
                 thirdClock = secondClock;
                 secondClock = firstClock;
                 firstClock = lhmHelper.getValue(i);
             }
 
-            clock = firstClock * 0.5 + secondClock * 0.25 + thirdClock * 0.25;
+            if (firstClock - secondClock > 500) {
+                clock = firstClock * 0.3 + secondClock * 0.4 + thirdClock * 0.2 + fourthClock * 0.1;
+            } else {
+                clock = firstClock * 0.35 + secondClock * 0.35 + thirdClock * 0.2 + fourthClock * 0.1;
+            }
+
             clock /= 1000;
-//            clock = 3.952 * Math.pow(clock, 3) - 46.6351 * Math.pow(clock, 2) + 182.335 * clock - 232.454;  // by using Newton interpolation formula, compare to task manager
+//            if (clock < 1) {
+//                clock = 1;
+//            } else  {
+//                clock = 30.79 * Math.pow(clock, 6) - 405.53 * Math.pow(clock, 5) + 2179.9 * Math.pow(clock, 4) -
+//                        6102.36 * Math.pow(clock, 3) + 9345.26 * Math.pow(clock, 2) - 7382.76 * clock + 2334.43;
+//            }
+            // by using Newton interpolation formula, compare to task manager
+//            clock = 5.48 * Math.pow(clock, 6) - 67.02 * Math.pow(clock, 5) + 321.38 * Math.pow(clock, 4) -
+//                    757.17 * Math.pow(clock, 3) + 863.99 * Math.pow(clock, 2) - 385.02 * clock;
         }
 
         return clock;
