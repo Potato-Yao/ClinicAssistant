@@ -22,11 +22,15 @@ import java.util.ResourceBundle;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import static com.potato.desktop.Utils.DialogUtil.*;
 import static com.potato.kernel.Utils.Admin.*;
 
 public class MainFrameController extends Controller {
+    private static final Logger LOG = Logger.getLogger(MainFrameController.class.getName());
+
     @FXML
     private VBox monitorView;
     @FXML
@@ -111,22 +115,59 @@ public class MainFrameController extends Controller {
     public void initialize() {
         panes = new Node[]{monitorView, toolsView, externalsView};
 
-        // todo error handling
-        try {
-            executor = Executors.newSingleThreadScheduledExecutor();
-            hardwareInfoManager = HardwareInfoManager.getHardwareInfoManager();
-            diskManager = DiskManager.getDiskManager();
-            opHelper = OPHelper.getOpHelper();
-            networkUtil = NetworkUtil.getNetworkUtil();
-            windows = Windows.getWindows();
+        executor = Executors.newSingleThreadScheduledExecutor();
 
+        // These may fail on VMs / non-admin runs. Don't crash the whole UI.
+        opHelper = OPHelper.getOpHelper();
+        networkUtil = NetworkUtil.getNetworkUtil();
+
+        try {
+            windows = Windows.getWindows();
+        } catch (Exception e) {
+            windows = null;
+            LOG.log(Level.WARNING, "Windows info disabled", e);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText(resources != null ? resources.getString("app.title.main") : "ClinicAssistant");
+            alert.setContentText("System info disabled: " + e.getMessage());
+            alert.show();
+        }
+
+        try {
+            diskManager = DiskManager.getDiskManager();
+        } catch (Exception e) {
+            diskManager = null;
+            LOG.log(Level.WARNING, "Disk info disabled", e);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText(resources != null ? resources.getString("app.title.main") : "ClinicAssistant");
+            alert.setContentText("Disk info disabled (try Run as Administrator): " + e.getMessage());
+            alert.show();
+        }
+
+        try {
             makeExternalsPane();
-            updateMonitorData();
+        } catch (Exception e) {
+            LOG.log(Level.WARNING, "External tools pane disabled", e);
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText(resources != null ? resources.getString("app.title.main") : "ClinicAssistant");
+            alert.setContentText("External tools pane disabled: " + e.getMessage());
+            alert.show();
+        }
+
+            try {
+                hardwareInfoManager = HardwareInfoManager.getHardwareInfoManager();
+                updateMonitorData();
+            } catch (Exception e) {
+                hardwareInfoManager = null;
+                // Keep running: monitor pane will show N/A; tools/external panes still work.
+                adminStatus.setText(isAdmin() ? resources.getString("lang.true") : resources.getString("lang.false"));
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setHeaderText(resources.getString("app.title.main"));
+                String hint = isAdmin() ? "" : "\nHint: run ClinicAssistant as Administrator to enable hardware monitor.";
+                alert.setContentText("Hardware monitor disabled: " + e.getMessage() + hint);
+                alert.show();
+            }
 
             switchPane(monitorView);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private void makeExternalsPane() {
@@ -143,9 +184,18 @@ public class MainFrameController extends Controller {
                 toolBtn.setMaxWidth(Double.MAX_VALUE);
                 toolBtn.setOnAction(event -> {
                     try {
-                        Runtime.getRuntime().exec(path.toAbsolutePath().toString());
+                        // Use ProcessBuilder so paths with spaces work reliably.
+                        ProcessBuilder pb = new ProcessBuilder(path.toAbsolutePath().toString());
+                        Path parent = path.toAbsolutePath().getParent();
+                        if (parent != null) {
+                            pb.directory(parent.toFile());
+                        }
+                        pb.start();
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        Alert alert = new Alert(Alert.AlertType.ERROR);
+                        alert.setHeaderText(resources != null ? resources.getString("app.title.main") : "ClinicAssistant");
+                        alert.setContentText("Failed to launch: " + path + "\n" + e.getMessage());
+                        alert.show();
                     }
                 });
 
@@ -167,54 +217,86 @@ public class MainFrameController extends Controller {
     }
 
     public void updateDataInternal() {
-        CPU cpu = hardwareInfoManager.getCpu();
-        GPU gpu = hardwareInfoManager.getGpu();
-        Battery battery = hardwareInfoManager.getBattery();
-        RAM ram = hardwareInfoManager.getRam();
+        if (hardwareInfoManager != null) {
+            CPU cpu = hardwareInfoManager.getCpu();
+            GPU gpu = hardwareInfoManager.getGpu();
+            Battery battery = hardwareInfoManager.getBattery();
+            RAM ram = hardwareInfoManager.getRam();
 
-        cpuTemp.setText(updatedLabelText("lab.cpuTemp", cpu.getPackageTemperature(), "°C"));
-        cpuPower.setText(updatedLabelText("lab.cpuPower", cpu.getPower(), "W"));
-        cpuClock.setText(updatedLabelText("lab.cpuClock", String.format("%.2f", cpu.getClock()), "GHz"));
+            cpuTemp.setText(updatedLabelText("lab.cpuTemp", cpu.getPackageTemperature(), "°C"));
+            cpuPower.setText(updatedLabelText("lab.cpuPower", cpu.getPower(), "W"));
+            cpuClock.setText(updatedLabelText("lab.cpuClock", String.format("%.2f", cpu.getClock()), "GHz"));
 
-        gpuTemp.setText(updatedLabelText("lab.gpuTemp", gpu.getTemperature(), "°C"));
-        gpuPower.setText(updatedLabelText("lab.gpuPower", gpu.getPower(), "W"));
-        gpuClock.setText(updatedLabelText("lab.gpuClock", gpu.getSpeed(), "MHz"));
+            gpuTemp.setText(updatedLabelText("lab.gpuTemp", gpu.getTemperature(), "°C"));
+            gpuPower.setText(updatedLabelText("lab.gpuPower", gpu.getPower(), "W"));
+            gpuClock.setText(updatedLabelText("lab.gpuClock", gpu.getSpeed(), "MHz"));
 
-        batteryChargingStatus.setText(updatedLabelText("lab.batCharging",
+            batteryChargingStatus.setText(updatedLabelText("lab.batCharging",
                 battery.isCharging() ? resources.getString("lang.true") : resources.getString("lang.false")));
-        batteryHealth.setText(updatedLabelText("lab.batHealth",
+            batteryHealth.setText(updatedLabelText("lab.batHealth",
                 String.format("%.2f", battery.getHealthPercentage()), "%"));
-        batteryRemain.setText(updatedLabelText("lab.batRemain",
+            batteryRemain.setText(updatedLabelText("lab.batRemain",
                 String.format("%.2f", battery.getRemainPercentage()), "%"));
-        batteryRate.setText(updatedLabelText("lab.batRate", battery.getRate(), "W"));
+            batteryRate.setText(updatedLabelText("lab.batRate", battery.getRate(), "W"));
 
-        ramTotal.setText(updatedLabelText("lab.ramTotal", ram.getTotalSize(), "GB"));
-        ramUsage.setText(updatedLabelText("lab.ramUsage", String.format("%.2f", ram.getUsedPercentage()), "%"));
+            ramTotal.setText(updatedLabelText("lab.ramTotal", ram.getTotalSize(), "GB"));
+            ramUsage.setText(updatedLabelText("lab.ramUsage", String.format("%.2f", ram.getUsedPercentage()), "%"));
+        } else {
+            cpuTemp.setText(updatedLabelText("lab.cpuTemp", "N/A"));
+            cpuPower.setText(updatedLabelText("lab.cpuPower", "N/A"));
+            cpuClock.setText(updatedLabelText("lab.cpuClock", "N/A"));
 
-        systemName.setText(updatedLabelText("lab.systemName", windows.getSystemName()));
-        osVersion.setText(updatedLabelText("lab.osVersion", windows.getSystemVersion()));
-        laptopModel.setText(updatedLabelText("lab.laptopModel", windows.getSystemModel()));
-        systemType.setText(updatedLabelText("lab.systemType",
+            gpuTemp.setText(updatedLabelText("lab.gpuTemp", "N/A"));
+            gpuPower.setText(updatedLabelText("lab.gpuPower", "N/A"));
+            gpuClock.setText(updatedLabelText("lab.gpuClock", "N/A"));
+
+            batteryChargingStatus.setText(updatedLabelText("lab.batCharging", "N/A"));
+            batteryHealth.setText(updatedLabelText("lab.batHealth", "N/A"));
+            batteryRemain.setText(updatedLabelText("lab.batRemain", "N/A"));
+            batteryRate.setText(updatedLabelText("lab.batRate", "N/A"));
+
+            ramTotal.setText(updatedLabelText("lab.ramTotal", "N/A"));
+            ramUsage.setText(updatedLabelText("lab.ramUsage", "N/A"));
+        }
+
+        if (windows != null) {
+            systemName.setText(updatedLabelText("lab.systemName", windows.getSystemName()));
+            osVersion.setText(updatedLabelText("lab.osVersion", windows.getSystemVersion()));
+            laptopModel.setText(updatedLabelText("lab.laptopModel", windows.getSystemModel()));
+            systemType.setText(updatedLabelText("lab.systemType",
                 windows.getSystemType() == SystemType.X86 ? resources.getString("lang.bit32") : resources.getString("lang.bit64")));
-        activationStatus.setText(updatedLabelText("lab.activationStatus",
+            activationStatus.setText(updatedLabelText("lab.activationStatus",
                 windows.isActivated() ? resources.getString("lang.true") : resources.getString("lang.false")));
+        } else {
+            systemName.setText(updatedLabelText("lab.systemName", "N/A"));
+            osVersion.setText(updatedLabelText("lab.osVersion", "N/A"));
+            laptopModel.setText(updatedLabelText("lab.laptopModel", "N/A"));
+            systemType.setText(updatedLabelText("lab.systemType", "N/A"));
+            activationStatus.setText(updatedLabelText("lab.activationStatus", "N/A"));
+        }
 
         adminStatus.setText(isAdmin() ? resources.getString("lang.true") : resources.getString("lang.false"));
 
-        StringBuilder disksTextBuilder = new StringBuilder();
-        diskManager.getDiskItems().forEach((item) -> {
-            disksTextBuilder.append(item.getId())
-                    .append("\t")
-                    .append(String.format("%.2f", item.getSize()))
-                    .append(resources.getString("lang.GB"))
-                    .append("\n");
-        });
-        disksInfo.setText(disksTextBuilder.toString());
+        if (diskManager != null) {
+            StringBuilder disksTextBuilder = new StringBuilder();
+            diskManager.getDiskItems().forEach((item) -> {
+                disksTextBuilder.append(item.getId())
+                        .append("\t")
+                        .append(String.format("%.2f", item.getSize()))
+                        .append(resources.getString("lang.GB"))
+                        .append("\n");
+            });
+            disksInfo.setText(disksTextBuilder.toString());
+        } else {
+            disksInfo.setText("N/A");
+        }
     }
 
     @Override
     public void onClose() {
-        hardwareInfoManager.close();
+        if (hardwareInfoManager != null) {
+            hardwareInfoManager.close();
+        }
         executor.shutdownNow();
     }
 

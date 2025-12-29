@@ -5,9 +5,13 @@ import com.potato.kernel.Config;
 import java.io.*;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
+import static com.potato.kernel.External.ExternalTools.resolveToolsDir;
 import static com.potato.kernel.Utils.ProcessUtil.*;
 
 /**
@@ -49,10 +53,13 @@ public class LHMHelper {
      * @throws IOException
      */
     public static LHMHelper connect() throws IOException {
-        String toolsDirProp = System.getProperty("clinic.externalToolsDir");
-        Path toolsDir = (toolsDirProp == null || toolsDirProp.isBlank())
-                ? Paths.get(System.getProperty("user.dir"), "ExternalTools")
-                : Paths.get(toolsDirProp);
+        Path toolsDir = resolveToolsDir();
+
+        // Put wrapper logs in a writable per-user directory.
+        Path logDir = Paths.get(System.getProperty("user.home"), ".ClinicAssistant", "logs");
+        Files.createDirectories(logDir);
+        String ts = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+        Path wrapperLog = logDir.resolve("LibreHardwareMonitorWrapper_" + ts + ".log");
 
         File lhmExe = new File(toolsDir.toFile(), Config.WRAPPER_LOCATION);
         if (!lhmExe.exists()) {
@@ -62,7 +69,13 @@ public class LHMHelper {
             );
         }
 
-        ProcessBuilder processBuilder = new ProcessBuilder(lhmExe.getAbsolutePath(), "--log=error").inheritIO();
+        ProcessBuilder processBuilder = new ProcessBuilder(lhmExe.getAbsolutePath(), "--log=error");
+        File wrapperWorkDir = lhmExe.getParentFile();
+        if (wrapperWorkDir != null && wrapperWorkDir.isDirectory()) {
+            processBuilder.directory(wrapperWorkDir);
+        }
+        processBuilder.redirectErrorStream(true);
+        processBuilder.redirectOutput(wrapperLog.toFile());
         Process process = processBuilder.start();
 
         Socket socket = null;
@@ -72,6 +85,15 @@ public class LHMHelper {
 
         // the wrapper needs some time to start, so we just need to make sure the connection is successful within the timeout limitation
         while (System.currentTimeMillis() < timeoutSeconds && !connected) {
+            if (!process.isAlive()) {
+                int exit = -1;
+                try {
+                    exit = process.exitValue();
+                } catch (IllegalThreadStateException ignored) {
+                }
+                throw new IOException("LibreHardwareMonitorWrapper exited early (exitCode=" + exit + "). See log: " + wrapperLog.toAbsolutePath());
+            }
+
             int port = DEFAULT_PORT;
             while (port < DEFAULT_PORT + PORT_FIND_RANGE) {  // to match the implementation of wrapper
                 try {
@@ -91,7 +113,7 @@ public class LHMHelper {
         }
 
         if (!connected) {
-            throw new IOException("Connection to LHM timed out");
+            throw new IOException("Connection to LHM timed out. See log: " + wrapperLog.toAbsolutePath());
         }
 
         OutputStream outputStream = socket.getOutputStream();

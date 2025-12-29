@@ -145,7 +145,7 @@ public class Windows {
             return;
         }
 
-        Path toolsDir = Paths.get(System.getProperty("clinic.externalToolsDir"));
+        Path toolsDir = com.potato.kernel.External.ExternalTools.resolveToolsDir();
         File activateTool = new File(toolsDir.toFile(), "./win-activate/MAS_AIO.cmd");
         if (!activateTool.exists()) {
             throw new RuntimeException("Activation tool not found, which should locate at " + activateTool.getAbsolutePath());

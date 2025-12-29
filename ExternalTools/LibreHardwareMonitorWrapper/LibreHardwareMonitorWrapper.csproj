@@ -4,24 +4,20 @@
         <OutputType>Exe</OutputType>
         <PlatformName>windows</PlatformName>
         <ImplicitUsings>enable</ImplicitUsings>
-        <SelfContained>false</SelfContained>
+      <SelfContained>true</SelfContained>
         <Platforms>AnyCPU</Platforms>
         <Nullable>enable</Nullable>
         <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+      <PublishSingleFile>true</PublishSingleFile>
+      <PublishTrimmed>false</PublishTrimmed>
+      <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
         <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
-        <OutputPath>.\..\..\res\lhmbuild</OutputPath>
-        <TargetFramework>net10.0</TargetFramework>
+      <TargetFramework>net8.0</TargetFramework>
     </PropertyGroup>
 
-    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <PropertyGroup>
       <PlatformTarget>AnyCPU</PlatformTarget>
-      <OutputPath>.</OutputPath>
-    </PropertyGroup>
-
-    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-      <PlatformTarget>AnyCPU</PlatformTarget>
-      <OutputPath>.</OutputPath>
     </PropertyGroup>
 
     <ItemGroup>
@@ -31,6 +27,13 @@
 
     <ItemGroup>
       <Folder Include="build\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Include="LibreHardwareMonitorWrapper.sys">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      </None>
     </ItemGroup>
 
 </Project>

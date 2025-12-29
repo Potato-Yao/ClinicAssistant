@@ -59,7 +59,7 @@ Desktop是程序交互界面的实现，使用JavaFX实现，分为Component、C
 
 本项目在设计上充分采取面向对象设计中的封装思想。为了便于对权限进行控制、避免因修改权限导致下游代码需要修改，本项目中所有成员变量均为private标记，使用public的Getter和Setter对外开放。
 
-本项目还使用了若干设计模式，使得代码组织良好、后期改动成本下降。最常用的是builder模式和singleton模式。builder模式用于可能加入更多需要赋值、可有默认值的类。如代码\ref{stress_test_builder_code}所示。
+本项目还使用了若干设计模式，使得代码组织良好、后期改动成本下降。最常用的是Builder模式和Singleton模式。B uilder模式用于可能加入更多需要赋值、可有默认值的类。如代码\ref{stress_test_builder_code}所示。
 
 \begin{lstlisting}[language=java, firstnumber=1, label={stress_test_builder_code}, caption={StressTestUtilBuilder}]
 /**
@@ -81,7 +81,7 @@ public class StressTestUtilBuilder {
 }
 \end{lstlisting}
 
-singleton模式用于因为成员变量一定相同、实例没有功能上区别从而本就不应出现多个实例的类，如各个manager类和helper类。如代码\ref{singleton_code}所示。
+Singleton模式用于因为成员变量一定相同、实例没有功能上区别从而本就不应出现多个实例的类，如各个Manager类和Helper类。如代码\ref{singleton_code}所示。
 
 \begin{lstlisting}[language=java, firstnumber=1, label={singleton_code}, caption={HardwareInfoManager}]
     private static HardwareInfoManager manager;
@@ -124,4 +124,4 @@ singleton模式用于因为成员变量一定相同、实例没有功能上区�
     }
 \end{lstlisting}
 
-关于异常。除部分可预料到、可以简单处理的异常外，Kernel遇到异常不会做任何处理，而是直接向上抛出。这是为了将异常处理置于调用端，增强程序的可定制性，同时降低程序业务逻辑的复杂性。由于时间紧迫，目前版本的Desktop遇到异常将会直接退出。
+关于异常。除部分可预料到、可以简单处理的异常外，Kernel遇到异常不会做任何处理，而是直接向上抛出。这是为了将异常处理置于调用端，增强程序的可定制性，同时降低程序业务逻辑的复杂性。由于时间紧迫，我并没有在前端做好报错的处理。目前版本中，当启动时发生错误，程序会弹出弹窗报错，但是在运行时产生的错误将会直接被忽略。

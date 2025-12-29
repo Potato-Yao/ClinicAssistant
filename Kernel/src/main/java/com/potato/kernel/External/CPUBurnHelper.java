@@ -3,8 +3,6 @@ package com.potato.kernel.External;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.concurrent.TimeUnit;
 
 import static com.potato.kernel.Utils.ProcessUtil.forceKillProcess;
 
@@ -18,7 +16,7 @@ public class CPUBurnHelper {
     private Process runningProcess;
 
     public CPUBurnHelper() {
-        Path toolsDir = Paths.get(System.getProperty("clinic.externalToolsDir"));
+        Path toolsDir = ExternalTools.resolveToolsDir();
         File exe = new File(toolsDir.toFile(), "./cpuburn/cpuburn.exe");
         this.exe = exe;
     }

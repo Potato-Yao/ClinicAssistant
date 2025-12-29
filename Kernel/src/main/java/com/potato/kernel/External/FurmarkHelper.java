@@ -3,7 +3,6 @@ package com.potato.kernel.External;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import static com.potato.kernel.Utils.ProcessUtil.forceKillProcess;
 
@@ -17,7 +16,7 @@ public class FurmarkHelper {
     private Process runningProcess;
 
     public FurmarkHelper() {
-        Path toolsDir = Paths.get(System.getProperty("clinic.externalToolsDir"));
+        Path toolsDir = ExternalTools.resolveToolsDir();
         File exe = new File(toolsDir.toFile(), "./Furmark_win64/furmark.exe");
         this.exe = exe;
     }

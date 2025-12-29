@@ -13,11 +13,16 @@ import javafx.util.Pair;
 
 import java.awt.*;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
+import java.util.logging.FileHandler;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import static com.potato.desktop.Utils.DialogUtil.*;
 
@@ -31,6 +36,8 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage stage) {
+        setupFileLogging();
+
         Thread.setDefaultUncaughtExceptionHandler((t, e) -> {
             LOG.log(Level.SEVERE, "Uncaught exception on thread " + t.getName(), e);
             e.printStackTrace();
@@ -50,6 +57,35 @@ public class MainApp extends Application {
         } catch (Exception e) {
             LOG.log(Level.SEVERE, "Failed during startup window load", e);
             e.printStackTrace();
+
+            try {
+                javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
+                alert.setTitle(Config.APP_NAME);
+                alert.setHeaderText("Startup failed");
+                alert.setContentText(String.valueOf(e.getMessage()));
+                alert.showAndWait();
+            } catch (Exception ignored) {
+            }
+        }
+    }
+
+    private static void setupFileLogging() {
+        try {
+            // Prefer a writable per-user location (works even if app is under Program Files).
+            Path logDir = Paths.get(System.getProperty("user.home"), ".ClinicAssistant", "logs");
+            Files.createDirectories(logDir);
+
+            Path logFile = logDir.resolve("ClinicAssistant.log");
+            FileHandler handler = new FileHandler(logFile.toString(), true);
+            handler.setFormatter(new SimpleFormatter());
+
+            Logger root = Logger.getLogger("");
+            root.addHandler(handler);
+            root.setLevel(Level.INFO);
+
+            LOG.info(() -> "Logging to " + logFile.toAbsolutePath());
+        } catch (Exception ignored) {
+            // If logging setup fails, keep going (we still have stdout/stderr in dev).
         }
     }
 
@@ -98,7 +134,6 @@ public class MainApp extends Application {
     }
 
     public <Con extends Controller> Pair<Con, Stage> openWindow(String fxml, String title, Class<Con> controllerClass) {
-        // todo error handling
         try {
             Locale locale = new Locale("en", "US");
             ResourceBundle languageBundle = ResourceBundle.getBundle("messages", locale);
@@ -139,10 +174,9 @@ public class MainApp extends Application {
 
             return new Pair<>(controller, stage);
         } catch (Exception e) {
-            e.printStackTrace();
+            LOG.log(Level.SEVERE, "Failed to open window: fxml=" + fxml + ", titleKey=" + title, e);
+            throw new RuntimeException(e);
         }
-
-        return null;
     }
 
     private boolean judgeDivisible(int number) {

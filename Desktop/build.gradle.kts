@@ -1,3 +1,4 @@
+import org.gradle.api.tasks.Exec
 import org.gradle.api.tasks.bundling.Zip
 
 plugins {
@@ -82,6 +83,7 @@ jlink {
         imageOptions.addAll(
             listOf(
                 "--java-options", "-Dclinic.externalToolsDir=ExternalTools"
+                ,"--java-options", "-Dprism.order=sw"
             )
         )
     }
@@ -89,6 +91,61 @@ jlink {
 
 val externalToolsDir = (rootProject.findProperty("externalToolsDir") as String?) ?: "ExternalTools"
 val externalToolsAbs = rootProject.projectDir.resolve(externalToolsDir).absolutePath
+
+// Ensure LibreHardwareMonitorWrapper is self-contained for distribution (VMs often lack .NET runtime).
+val publishLhmWrapper by tasks.registering(Exec::class) {
+    group = "distribution"
+    description = "Publishes LibreHardwareMonitorWrapper as a self-contained single-file exe into ExternalTools."
+
+    val wrapperProject = rootProject.projectDir.resolve("ExternalTools/LibreHardwareMonitorWrapper/LibreHardwareMonitorWrapper.csproj")
+    val wrapperOutput = rootProject.projectDir.resolve("ExternalTools/LibreHardwareMonitorWrapper/build")
+
+    inputs.file(wrapperProject)
+    outputs.dir(wrapperOutput)
+
+    doFirst {
+        // Avoid stale outputs (e.g., old net10 runtimeconfig) causing VM failures.
+        if (wrapperOutput.exists()) {
+            wrapperOutput.deleteRecursively()
+        }
+        wrapperOutput.mkdirs()
+    }
+
+    // Publish into the exact folder the Java app expects.
+    commandLine(
+        "dotnet", "publish",
+        wrapperProject.absolutePath,
+        "-c", "Release",
+        "-r", "win-x64",
+        "--self-contained", "true",
+        "-p:PublishDir=${wrapperOutput.absolutePath}\\"
+    )
+
+    doLast {
+        val sys = rootProject.projectDir.resolve("ExternalTools/LibreHardwareMonitorWrapper/LibreHardwareMonitorWrapper.sys")
+        if (sys.exists()) {
+            sys.copyTo(wrapperOutput.resolve(sys.name), overwrite = true)
+        }
+    }
+}
+
+// Copy ExternalTools into the jpackage app-image so the packaged app can find it
+tasks.named("jpackageImage").configure {
+    dependsOn(publishLhmWrapper)
+    doLast {
+        val sourceExternalTools = rootProject.layout.projectDirectory.dir("ExternalTools")
+        val targetExternalTools = layout.buildDirectory.dir("jpackage/ClinicAssistant/ExternalTools")
+        
+        // Delete target if it exists
+        targetExternalTools.get().asFile.deleteRecursively()
+        
+        // Copy ExternalTools into the app-image
+        copy {
+            from(sourceExternalTools)
+            into(targetExternalTools)
+        }
+    }
+}
 
 tasks.withType<JavaExec>().configureEach {
     jvmArgs("-Dclinic.externalToolsDir=$externalToolsAbs")
