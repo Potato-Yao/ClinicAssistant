@@ -16,5 +16,5 @@ public class Config {
 
     public final static int INT_DEFAULT = -1;
 
-    public final static String CAFILE = "CAFiles";
+    public final static String CAFILE = "../CAFiles";
 }

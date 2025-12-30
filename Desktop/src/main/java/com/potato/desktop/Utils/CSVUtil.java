@@ -1,6 +1,7 @@
 package com.potato.desktop.Utils;
 
 import com.potato.kernel.Config;
+import com.potato.kernel.External.ExternalTools;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
@@ -19,8 +20,10 @@ public class CSVUtil {
     private CSVPrinter printer;
 
     public CSVUtil(String fileName, boolean overview, boolean flushEachTime, String... headers) throws IOException {
-        Path projectRoot = Path.of(System.getProperty("user.dir")).toAbsolutePath().resolve("..");
-        Path outputPath = projectRoot.resolve(Config.CAFILE);
+//        Path projectRoot = Path.of(System.getProperty("user.dir")).toAbsolutePath().resolve("..");
+//        Path outputPath = projectRoot.resolve(Config.CAFILE);
+        Path programDir = ExternalTools.resolveToolsDir();
+        Path outputPath = programDir.resolve(Config.CAFILE);
 
         this.filePath = outputPath.resolve(fileName);
         this.flushEachTime = flushEachTime;
