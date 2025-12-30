@@ -186,10 +186,10 @@ public class StressTestUtil {
 
         // based on experience, power of cpu and gpu will be stable after 10 seconds of stress test
         if (durationTime > 10) {
-            if (cpu.getPower() + gpu.getPower() < expectedPower * 0.6) {
+            if (cpu.getPower() + gpu.getPower() < expectedPower * 0.4) {
                 testStates[2].setTestStatus(TestStatus.CRITICAL);
                 testStates[2].setInfo("The total power is too low! Check the cooling system.");
-            } else if (cpu.getPower() + gpu.getPower() < expectedPower * 0.8) {
+            } else if (cpu.getPower() + gpu.getPower() < expectedPower * 0.6) {
                 testStates[2].setTestStatus(TestStatus.WARNING);
                 testStates[2].setInfo("The total power is low! Check system power mode and charger.");
             } else {
